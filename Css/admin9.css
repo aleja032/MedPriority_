@@ -1,0 +1,550 @@
+@import url('https://fonts.googleapis.com/css2?family=Adamina&display=swap');
+
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Adamina", serif;
+    font-style: normal;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #F9F9F9;
+    height: 99vh;
+}
+
+.general_todo{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    justify-content: space-around;
+    /* border: 1px solid greenyellow; */
+}
+
+.conheader {
+    /* border: 1px solid red; */
+    width: 90%;
+    height: 15%;
+    display: flex;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    background-image: url(../Img/corner-4.png);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.logo{
+    width: 30%;
+    height: 100%;
+    display: flex;
+}
+
+.img_logo{
+
+    background-image: url(../Img/logo.jpeg);
+    width: 20%;
+    height: 60%;
+    background-size: 100% 100%;
+    margin-top: 5%;
+    margin-left: 10%;
+}
+
+.letras_logo{
+    width: 50%;
+    height: 100%;
+    margin-left: -6%;
+    align-items: center;
+    text-align: center;
+    align-content: center;
+    font-family: "Adamina", serif;
+    font-style: normal;
+    font-size: 130%;
+}
+
+.datos_barra{
+    width: 30%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.img_notificaion
+{
+    width: 15%;
+    height: 60%;
+    background-image: url(../Img/alarma.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+
+
+.img_usuario{
+    width: 15%;
+    height: 60%;
+
+    background-image: url(../Img/usuarios-50.png);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+}
+
+
+
+.congeneral {
+    width: 90%;
+    height: 80%;
+    display: flex;
+    /* border-radius: 10px; */
+    justify-content: space-between;
+    align-items: center;
+    /* border: 1px solid red; */
+}
+
+
+.con_menu {
+    width: 20%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background-image: url(../Img/authentication-corner.png);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-size: contain;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    /* border: 1px solid blue; */
+}
+
+.cont_menu_sub{
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.inicio{
+    /* border: 1px solid fuchsia; */
+    width: 100%;
+    height: 15%;
+    display: flex;
+    text-align: center;
+    align-items: center;
+
+}
+.con_imagen img{
+    /* border: 1px solid rebeccapurple; */
+    width: 80%;
+    height: 80%;
+    background-size: 100% 100%;
+}
+
+.con_opcion{
+    /* border: 1px solid black; */
+    width: 50%;
+    height: 30%;
+    text-align: center;
+    align-items: center;
+  
+}
+
+
+.secion1{
+    display: flex;
+}
+.seci_notificaiones{
+    width: 50%;
+    color: #8d8d8d;
+    
+
+}
+h2{
+    font-size: 60%;
+}
+h4{
+    font-size: 70%;
+    /* justify-self: flex-end; */
+}
+.linecita{
+    width: 50%;
+    height: 30%;
+   margin-top: 4.8%;
+}
+
+.con_menu a {
+    text-decoration: none; 
+    color: inherit; 
+    display: block; 
+}
+.icono_menu{
+    margin-left: 4%;
+}
+.icono_menu img {
+    width: 10%;
+    height: 10%;
+}
+.select{
+    width: 100%;
+    border: none;
+    outline: none;
+    appearance: none;
+    background-color: blue;
+}
+
+/*----------------------------------------  estilos contenedor formulario -------------------------------------*/
+
+main {
+    height: 100%;
+    width: 76%;
+    display: flex;
+    flex-direction: column; 
+    overflow: hidden;
+    /* border: 1px solid green; */
+}
+
+.contain_main{
+    /* border: 1px solid fuchsia; */
+    width: 100%;
+    height: 100%; 
+    flex: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;            
+    justify-content: space-around;
+}
+
+
+/*estilos notificaciones */
+
+
+.cont_titulo {
+    /* border: 1px solid blueviolet; */
+    width: 98%;
+    height: 15%;
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    background-image: url(../Img/corner-4.png);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+    padding-left: 1%;
+}
+
+.cont_titulo p{
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.cont_general_all{
+    /* border: 1px solid greenyellow; */
+    width: 98%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    align-items: center;
+    background-image: url(../Img/corner-7.png);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    background-size: calc(100%)calc(100%);
+    background-position: bottom;
+    background-repeat: no-repeat;
+    justify-content: center;
+}
+
+
+/* -------------------REGISTRAR MEDICOS------------------ */
+
+.survey-container{
+    /* padding-top: 5%; */
+    /* border: 1px solid blue; */
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: calc(1%);
+    padding-left: 2%;
+    align-items: center;
+    justify-content: center;
+}
+.question{
+    /* border: 1px solid; */
+    height: 11%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+.question label{
+    width: 40%;
+    /* border: 1px solid; */
+    font-size: 110%;
+}
+.question input{
+    background-color: #D9D9D9;
+    height: 50%;
+    width: 60%;
+    border-radius: 15px;
+    border: transparent;
+    padding-left: 3%;
+}
+.save{
+    /* border: 1px solid red; */
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
+.save-button{
+    /* border: 1px solid blue; */
+    height: 60%;
+    width: 25%;
+    background-color: rgba(18, 18, 221, 0.856);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+.save-button:hover{
+    cursor: pointer;
+}
+.save-button a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* ---------------PANEL MEDICOS------------------- */
+
+.panel-main{
+    /* border: 1px solid fuchsia; */
+    display: flex;
+    width: 100%;
+    height: 90%;
+    overflow: auto;
+}
+table{
+    /* border: 1px solid red; */
+    width: 100%;
+    /* height: 90%; */
+    text-align: left;
+    justify-self: flex-end;
+}
+table th{
+    /* border: 1px solid black; */
+    font-size: larger;
+}
+table td{
+    /* border: 1px solid black; */
+    font-size: medium;
+}
+table tr{
+    justify-content: center;
+    text-align: center;
+}
+table button{
+    background-color: rgba(18, 18, 221, 0.856);
+    border: transparent;
+    border-radius: 15px;
+    width: 60%;
+    color: #ffffff;
+    font-size: large;
+    box-shadow: 1px 15px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+/* ----------------register paciente--------------------- */
+
+.pat-survey-container{
+    /* border: 1px solid green; */
+    width: 80%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: calc(1%);
+}
+.pat-question{
+    /* border: 1px solid; */
+    height: 11%;
+    display: flex;
+    align-items: center;
+}
+
+.pat-question label{
+    width: 40%;
+    font-size: 110%;
+    /* border: 1px solid blueviolet; */
+}
+
+.pat-question input{
+    background-color: #D9D9D9;
+    height: 50%;
+    width: 60%;
+    border-radius: 15px;
+    border: transparent;
+    padding-left: 3%;
+}
+
+.pat-question select{
+    background-color: #D9D9D9;
+    height: 50%;
+    width: 60%;
+    border-radius: 15px;
+    border: transparent;
+    padding-left: 3%;
+}
+
+.save-patient{
+    /* border: 1px solid fuchsia; */
+    height: 10%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+}
+.save-pat-button{
+    /* border: 1px solid blue; */
+    height: 60%;
+    width: 25%;
+    background-color: rgba(18, 18, 221, 0.856);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+}
+.save-pat-button:hover{
+    cursor: pointer;
+}
+.save-pat-button a{
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* ----------------PATIENT PANEL----------------- */
+
+.patient-main{
+    /* border: 1px solid fuchsia; */
+    display: flex;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+}
+
+/* -------------------------------------------------- MODAL -------------------------------------------- */
+
+.modal{
+    border: 1px solid;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 0.2s ease-in-out;
+    border-radius: 15px;
+    z-index: 10;
+    background-color: #F5F5F5;
+    width: 40%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal.active{
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header{
+    display: flex;
+    border-bottom: 1px solid;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2%;
+    /* border: 1px solid red; */
+}
+
+.modal-header span{
+    font-size: x-large;
+    font-weight: bold;
+    color: rgba(18, 18, 221, 0.856);
+}
+
+.modal-header .close-button{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: xx-large;
+}
+
+.modal-body{
+    padding: 2%;
+    /* border: 1px solid blue; */
+}
+
+#overlay{
+    /* border: 1px solid blue; */
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    backdrop-filter: blur(5px);
+    pointer-events: none;
+    transition: 0.2s ease-in-out;
+}
+
+#overlay.active{
+    opacity: 1;
+    pointer-events: all;
+}
+
+/* ---------------------------- MODAL CONTENT -------------------------*/
+
+.modal-body{
+    /* border: 1px solid black; */
+    height: 100%;
+}
+
+.modal-savebutton{
+    /* border: 1px solid red; */
+    height: 9%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-savebutton button{
+    background-color: rgba(18, 18, 221, 0.856);
+    border-radius: 15px;
+    width: 30%;
+    border: transparent;
+    height: 55%;
+    color: #ffffff;
+    font-size:small;
+}
+
+.edit-modal{
+    /* border: 1px solid red; */
+    display: flex;
+    width: 100%;
+    height: 10%;
+    align-items: center;
+    gap: 3%;
+}
+
+.edit-modal input{
+    background-color: #D9D9D9;
+    height: 50%;
+    width: 40%;
+    border-radius: 15px;
+    border: transparent;
+    padding-left: 3%;
+    justify-self: end;
+}
