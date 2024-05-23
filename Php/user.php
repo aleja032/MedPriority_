@@ -2,7 +2,6 @@
     session_start(); 
     require_once ('conexion.php');
 
-
     if($_SESSION["id"]==null){
         echo "<script>window.location.href = '../index.php'</script>";
     }
@@ -173,45 +172,45 @@
                     <div class="preguntas_formulario">
                         <div class="cont_preguntas">
                             <p>Identificación</p>
-                            <input type="text" id="identificacion" name="identificacion" value="<?php echo $_SESSION['id'] ?>">
+                            <input type="text" id="identificacion" name="identificacion" value="<?php echo $_SESSION['id'] ?>" disabled>
                         </div>
                         <div class="cont_preguntas" id="tipo_identificacion">
                             <p>Tipo de Identificación</p>
-                            <input type="text" id="tipo_identificacion" name="tipo_identificacion" value="<?php echo $_SESSION['tipo_documento'] ?>">
+                            <input type="text" id="tipo_identificacion" name="tipo_identificacion" value="<?php echo $_SESSION['tipo_documento'] ?>" disabled>
                         </div>
                         <div class="cont_preguntas" id="nombre">
                             <p>Nombres</p>
-                            <input type="text" id="nombre" name="nombre" value="<?php echo $_SESSION['nombre_completo'] ?>">
+                            <input type="text" id="nombre" name="nombre" value="<?php echo $_SESSION['nombre_completo'] ?>" disabled>
                         </div>
                     </div>
     
-                    <form action="procesar_cita.php" method="post" class="contenedor_formulario" id="formulario_general">
+                    <form action="./Usuario/procesar_cita.php" method="post" class="contenedor_formulario" id="formulario_general">
                         
                         <div class="preguntas_formulario2">
                             <div class="cont_preguntas2">
                                 <p>Edad</p>
-                                <input type="text" id="edad" name="edad" value="<?php echo $_SESSION['edad'] ?>">
+                                <input type="text" id="edad" name="edad" value="<?php echo $_SESSION['edad'] ?>" disabled>
                             </div>
                             <div class="cont_preguntas2" id="tipo_afiliacion">
                                 <p>Tipo de Afiliación</p>
-                                <input type="text" id="tipo_afiliacion" name="tipo_afiliacion" value="<?php echo $_SESSION['tipo_afiliacion'] ?>">
+                                <input type="text" id="tipo_afiliacion" name="tipo_afiliacion" value="<?php echo $_SESSION['tipo_afiliacion'] ?>" disabled>
                             </div>
                             <div class="cont_preguntas2" id="trabajo">
                                 <p>Trabajo</p>
-                                <input type="text" id="trabajo" name="trabajo" value="<?php echo $_SESSION['estado'] ?>">
+                                <input type="text" id="trabajo" name="trabajo" value="<?php echo $_SESSION['estado'] ?>" disabled>
                             </div>
                         </div>
 
                         <div class="preguntas_formulario2">
                             <div class="cont_preguntas2" id="enfermedads">
                                 <p>Enfermedad </p>
-                                <input type="text" id="enfermedad" name="enfermedad" value="<?php echo $_SESSION['patologia'] ?>">
+                                <input type="text" id="enfermedad" name="enfermedad" value="<?php echo $_SESSION['patologia'] ?>" disabled>
                             </div>
                             <div class="cont_preguntas" id="tipo_identificacion">
                             </div>
                             <div class="cont_preguntas2" id="nivel_gravedad">
                                 <p>Nivel de Gravedad</p>
-                                <input type="text" id="nivel_gravedad" name="nivel_gravedad" value="<?php  ?>">
+                                <input type="text" id="nivel_gravedad" name="nivel_gravedad" value="<?php  ?>" disabled>
                             </div>
                         </div>
 
@@ -555,7 +554,7 @@
         console.log("Opción seleccionada 1: ", opcion_actual);        
 
         $.ajax({
-            url: "horarios.php",
+            url: "Usuario/horarios.php",
             type: "POST",
             data: { opcion_actual: opcion_actual },
             success: function(respon3) {
@@ -573,7 +572,7 @@
         console.log("Opción seleccionada 2: ", opcion_actual2);        
 
         $.ajax({
-            url: "horarios.php",
+            url: "Usuario/horarios.php",
             type: "POST",
             data: { opcion_actual2: opcion_actual2 },
             success: function(respon4) {

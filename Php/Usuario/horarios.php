@@ -1,5 +1,5 @@
 <?php
-require_once("conexion.php");
+require_once("../conexion.php");
 
 if(isset($_POST['opcion_actual'])){
     $rango1= $_POST['opcion_actual'];

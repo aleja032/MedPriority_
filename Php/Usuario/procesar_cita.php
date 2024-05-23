@@ -1,6 +1,6 @@
 <?php
 
-require_once("conexion.php");
+require_once("../conexion.php");
 
 
 session_start();
@@ -48,7 +48,17 @@ if($ejecutar_consulta){
         $array_consulta = mysqli_fetch_array($consulta_orden);
         
         $a= count($array_consulta);
-         echo "<script>window.location.href = './user.php?success=1'</script>";
+        // $to="alejandra03fajardo@gmail.com";
+        // $subject="Prueba correo";
+        // $message="este es mi primer correo de prueba";
+        // $headers='From: alejandra03fajardo@gmail.com'."\r\n".'Reply-To: fajardo@gmail.com';
+        // if(mail($to,$subject,$message,$headers)){
+        //     echo"Se ha mandado el correo exitosamente $to";
+        // }else{
+        //     echo"Algo paso :(";
+        // }
+       
+        echo "<script>window.location.href = '../user.php?success=1'</script>";
     }
 }else{
     header("Location: ./user.php?success=0");
