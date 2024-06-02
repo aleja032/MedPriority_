@@ -25,7 +25,9 @@ if(mysqli_num_rows($consulta)>0){
     $_SESSION['telefono']=$datos['telefono'];
     $_SESSION['tipo_documento']=$datos['tipo_documento'];
     $_SESSION['tipo_afiliacion']=$datos['tipo_afiliacion'];
-    $_SESSION['patologia']=$datos['nombre_patologia'];
+    $_SESSION['patologia']=$datos['nombre_patologia'];    
+    $_SESSION['puntuacion']=$datos['puntuacion'];
+
     $_SESSION['estado']=$datos['estado'];
     $_SESSION['id_rol']=$datos['id_rol'];
 

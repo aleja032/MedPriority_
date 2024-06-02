@@ -182,21 +182,63 @@ class Consultas{
     }
 
     
-    public function datos_filter3($nodosNoAsignados, $fecha, $horaInicio, $horaFin,$id_user,$band) {        
+    public function datos_filter3($nodosNoAsignados, $fecha, $horaInicio, $horaFin,$id_user) {        
         // Consulta para verificar los horarios disponibles en la fecha proporcionada
-        $sql = mysqli_query($this->Conexion, "SELECT hora_inicio FROM horarios WHERE hora_inicio NOT IN (SELECT HoraAsignado FROM citas_agendadas WHERE FechaAsignada = '$fecha')");
-        
+        $sql = mysqli_query($this->Conexion, "SELECT hora_inicio  FROM horarios WHERE hora_inicio NOT IN (SELECT HoraAsignado FROM citas_agendadas  WHERE FechaAsignada = '$fecha')  AND hora_inicio NOT IN (SELECT hora_reservada FROM sugerencias_citas WHERE fecha = '$fecha')");
+
         $horariosDisponibles = array();
-        
+        $sugerencias= array();
         // Obtener los horarios disponibles
         while ($row = mysqli_fetch_assoc($sql)) {
             $horariosDisponibles[] = $row['hora_inicio'];
+            
         }
-        $sql2 = mysqli_query($this->Conexion, "SELECT * FROM sugerencias_citas WHERE id_preagendamiento = '$nodosNoAsignados'");
+
+
+       $sql2 = mysqli_query($this->Conexion, "SELECT * FROM sugerencias_citas WHERE id_preagendamiento = '$nodosNoAsignados' ");
         if(mysqli_num_rows($sql2)>0){
 
         }else{
-            $consulta=mysqli_query($this->Conexion, "INSERT INTO sugerencias_citas (id_usuario, fecha,hora_reservada,estado,id_preagendamiento) VALUES ('$id_user','$fecha','$horariosDisponibles[$band]','Reservado','$nodosNoAsignados')");
+            
+            if (isset($horariosDisponibles[0])) {
+              $consulta=mysqli_query($this->Conexion, "INSERT INTO sugerencias_citas (id_usuario, fecha,hora_reservada,estado,id_preagendamiento) VALUES ('$id_user','$fecha','$horariosDisponibles[0]','Reservado','$nodosNoAsignados')");
+            
+            }else{
+               if (empty($horariosDisponibles[0])) {
+                        $diasPosteriores = 7; // Número de días posteriores para buscar
+                        $fechaTimestamp = strtotime($fecha);
+
+                            echo "Preagendamiento:". $nodosNoAsignados;
+                        for ($i = 1; $i <= $diasPosteriores; $i++) {
+                            // Buscar en fechas posteriores
+                            $fechaPosterior = date('Y-m-d', strtotime("+$i days", $fechaTimestamp));
+                            $sqlPosterior = mysqli_query($this->Conexion, "SELECT * FROM horarios WHERE hora_inicio NOT IN ( SELECT HoraAsignado FROM citas_agendadas WHERE FechaAsignada = '$fechaPosterior' ) AND hora_inicio NOT IN (SELECT hora_reservada FROM sugerencias_citas  WHERE fecha = '$fechaPosterior')");
+
+                           // $sqlPosterior = mysqli_query($this->Conexion, "SELECT hora_inicio FROM horarios WHERE hora_inicio NOT IN (SELECT HoraAsignado FROM citas_agendadas WHERE FechaAsignada = '$fechaPosterior')");
+                            if (mysqli_num_rows($sqlPosterior) > 0) {
+                                echo "<br>";
+                                echo "tercer filtro----- Horarios disponibles en la fecha $fechaPosterior:<br>";
+                                echo "<br>";
+                                while ($row = mysqli_fetch_assoc($sqlPosterior)) {
+                                    // Filtrar los horarios disponibles en el rango de horaInicio y horaFin
+                                    if ($row['id_horario'] >= $horaInicio && $row['id_horario'] <= $horaFin) {
+                                       // $horariosDisponibles[] = $row['hora_inicio'];
+                                        echo "Horario disponible dentro del rango: " . $row['hora_inicio'] . "<br>";
+
+                                        
+                                    } else {
+                                        // Guardar como sugerencia si está fuera del rango pero tiene disponibilidad
+                                        $sugerencias[] = array('fecha' => $fechaPosterior, 'hora' => $row['hora_inicio']);
+                                        echo "Sugerencia fuera del rango: Fecha - " . $fechaPosterior . ", Hora - " . $row['hora_inicio'] . "<br>";
+            
+                                    }
+                                }
+                               
+                            }
+                        }
+                    }
+            
+            }
         }
 
         return $horariosDisponibles;
@@ -206,6 +248,54 @@ class Consultas{
         $consulta=mysqli_query($this->Conexion, "INSERT INTO sugerencias_citas (id_usuario, fecha,hora_reservada,estado,id_preagendamiento) VALUES ('$id_user','$fecha','$hora','$estado','$pre')");
         
     }*/
+    // public function filter_nulls($nodosNoAsignados, $fecha, $horaInicio, $horaFin,$id_user,$band) {        
+     
+    //     // if (empty($horariosDisponibles)) {
+    //     //     $diasPosteriores = 7; // Número de días posteriores para buscar
+    //     //     $fechaTimestamp = strtotime($fecha);
+    
+    //     //     for ($i = 1; $i <= $diasPosteriores; $i++) {
+    //     //         // Buscar en fechas posteriores
+    //     //         $fechaPosterior = date('Y-m-d', strtotime("+$i days", $fechaTimestamp));
+    //     //         $sqlPosterior = mysqli_query($this->Conexion, "SELECT hora_inicio FROM horarios WHERE hora_inicio NOT IN (SELECT HoraAsignado FROM citas_agendadas WHERE FechaAsignada = '$fechaPosterior')");
+    //     //         if (mysqli_num_rows($sqlPosterior) > 0) {
+    //     //             echo "<br>";
+    //     //             echo "Segundo filtro----- Horarios disponibles en la fecha $fechaPosterior:<br>";
+    //     //             echo "<br>";
+    //     //             while ($row = mysqli_fetch_assoc($sqlPosterior)) {
+    //     //                 // Filtrar los horarios disponibles en el rango de horaInicio y horaFin
+    //     //                 if ($row['hora_inicio'] >= $horaInicio && $row['hora_inicio'] <= $horaFin) {
+    //     //                     $horariosDisponibles[] = $row['hora_inicio'];
+    //     //                     echo "Horario disponible dentro del rango: " . $row['hora_inicio'] . "<br>";
+
+    //     //                 } else {
+    //     //                     // Guardar como sugerencia si está fuera del rango pero tiene disponibilidad
+    //     //                     $sugerencias[] = array('fecha' => $fechaPosterior, 'hora' => $row['hora_inicio']);
+    //     //                     echo "Sugerencia fuera del rango: Fecha - " . $fechaPosterior . ", Hora - " . $row['hora_inicio'] . "<br>";
+
+    //     //                 }
+    //     //             }
+                   
+    //     //         }
+    //     //     }
+    //     // }
+
+
+    //    $sql2 = mysqli_query($this->Conexion, "SELECT * FROM sugerencias_citas WHERE id_preagendamiento = '$nodosNoAsignados' ");
+    //     if(mysqli_num_rows($sql2)>0){
+
+    //     }else{
+    //         if($horariosDisponibles[$band] != null){
+    //             $consulta=mysqli_query($this->Conexion, "INSERT INTO sugerencias_citas (id_usuario, fecha,hora_reservada,estado,id_preagendamiento) VALUES ('$id_user','$fecha','$horariosDisponibles[$band]','Reservado','$nodosNoAsignados')");
+
+    //         }else{
+    //             echo "hay datos nulos---";
+    //         }
+    //     }
+
+    //     return $horariosDisponibles;
+    // }
 }
+        
 
 ?>

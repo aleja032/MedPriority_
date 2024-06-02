@@ -192,7 +192,6 @@ body {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: end;
     width: 90%;
 }
 
@@ -209,6 +208,7 @@ body {
     background-image: url(../Img/cita1.png);
     background-size: calc(100%)calc(100%);
 }
+
 .menu-title .enunciado2{
     display: flex;
     align-items: center;
@@ -245,6 +245,29 @@ body {
 
 .menu-item:hover .submenu {
     display: block;
+}
+.close_sesion{
+    display: flex;
+    align-items: end;
+    height: 15%;
+}
+
+.close_sesion i{
+    font-size: 120%;
+}
+.close_sesion a{
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.texto_sesion{
+    display: flex;
+    width: 100%;
+}
+.texto_sesion p{
+    display: flex;
+    justify-content: end;
+    width: 40%;
 }
 
 /* ---------------------contenido principal ------------*/
@@ -283,8 +306,7 @@ main{
 }
 .cont_titulo p{
     display: flex;
-    justify-content: end;
-    width: 15%;
+    margin-left: 2%;
     font-size: 140%;
     color: rgba(0, 0, 0, 0.61);
 }
@@ -298,9 +320,7 @@ main{
     background-size: calc(100%)calc(100%);
     background-repeat: no-repeat; 
     background-color: white;
-
 }
-
 
 .preguntas_formulario{
     display: flex;
@@ -385,6 +405,175 @@ input, select{
 .logo label i{
     display: none;
 }
+/*-------------contenido de historia clinica -------------------------*/
+
+.cont_general_all2{
+    width: 95%;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: top;
+    align-items: center;
+    background-image: url(../Img/corner-7.png);
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    background-size: calc(100%)calc(100%);
+    background-repeat: no-repeat; 
+    background-color: white;
+}
+.cont2_elegir{
+    display: flex;
+    width: 90%;
+    height: 15%;
+    }
+
+.cont2_elegir h4{
+    width: 35%;
+    display: flex;
+    align-items: center;
+}
+.comb{
+    display: flex;
+    width: 25%;
+    align-items:center ;
+}
+.comb p{
+    width: 98%;
+    display: flex;
+    align-items: end;
+}
+#radio, #radio1{
+    height: 35%;
+    width: 20%;
+    box-shadow: none;
+}
+
+.historial_clinico{
+    /* border: 1px solid; */
+    width: 95%;
+    height: 100%;
+    background-color: #fafafa; 
+    /*backdrop-filter: blur(1px); /* Ajusta el valor de blur según desees */
+    /* opacity: 0.5;  */
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    /* background-color: rgba(128, 128, 128, 0.5);  */
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.cont_logo_name{
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    height: 35%;
+    width: 20%;
+}
+.cont_logo_name p{
+    height: 70%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 110%;
+}
+.img_log{
+    width: 30%;
+    height: 75%;
+    background-image: url(../Img/logo.png);
+    background-size: calc(100%)calc(100%);
+}
+.nit{
+    color:#10AE16;
+    font-size: 90%;
+    height: 10%;
+}
+.datos_historia{
+    width: 99%;
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content:space-around;
+    font-size: 90%;
+}
+.title{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 90%;
+    height: 15%;
+    width: 95%;
+    background-color: #f2f2f2;
+
+}
+.general{
+    display: flex;
+    height: 50%;
+    width: 95%;
+    font-size: 95%;
+}
+.container1{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+}
+.cont-1{
+    display: flex;
+    height: 100%;
+    margin-bottom: 1%;
+}
+.negrita{
+    width: 36%;
+    font-weight: bold;
+}
+.afil{
+    width: 95%;
+    height: 40%;
+
+}
+.afi{
+    font-weight: bold;
+    width: 25%;
+}
+.cont-2{
+    display: flex;
+    font-size: 95%;
+    height: 50%;
+    align-items: center;
+}
+.title2{
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    height: 50%;
+    font-size: 90%;
+    background-color: #f2f2f2;
+}
+.descripcion_paciente{
+    height: 20%;
+    width: 95%;
+}
+.negrita2{
+    width: 36%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+}
+.negrita_grave{
+    font-weight: bold;
+    display: flex;
+    width: 45%;
+}
+.cont_gravedad{
+    width: 50%;
+    display: flex;
+    height: 15%;
+    margin-bottom: 1%;
+}
+.demas{
+    font-size: 90%;
+}
+/* Estilos del Alerta tanto para agendar como para eliminar*/
 .custom-alert {
     display: none;
     position: fixed;
