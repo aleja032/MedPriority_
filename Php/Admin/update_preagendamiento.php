@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Decode JSON data sent via AJAX
     $data = json_decode(file_get_contents("php://input"), true);
 
-    // Prepare SQL statement
+    // Prepare SQL statement 
     $esonoedeganstel = "UPDATE preagendamiento SET 
                 id_tipo_cita = ?, 
                 fecha = ?, 
