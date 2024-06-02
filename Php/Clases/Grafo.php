@@ -107,7 +107,8 @@ class Grafo{
         $NodosOrdenados = $this->AsginarHora();
         $NodosFiltrados = array();
        $NodosFilter3= array();
-       $band=0;
+       //$band=0;
+       
         for($i=0 ; $i<count($NodosOrdenados);$i++){
 
            $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
@@ -129,15 +130,25 @@ class Grafo{
                     $horaInicio = $NodosOrdenados[$i]->datos["HoraInicio"];
                     $horaFin = $NodosOrdenados[$i]->datos["HoraFin"];
                     $user = $NodosOrdenados[$i]->datos["idUsuario"];
-                    $band++;
+                   
+                    
                     // Llamar a la función datos_filter3() con la fecha y horas como parámetros
-                    $horariosDisponibles = $consulta->datos_filter3($NodosOrdenados[$i]->id, $fecha, $horaInicio, $horaFin,$user,$band);
+                    $horariosDisponibles = $consulta->datos_filter3($NodosOrdenados[$i]->id, $fecha, $horaInicio, $horaFin,$user);
                    
                   //  $consulta->insertar_sugerencias($NodosOrdenados[$i]->datos['idUsuario'], $fecha,$horariosDisponibles[$band],'reservado',$NodosOrdenados[$i]->id);
-                    
-                    echo "id : ".$NodosOrdenados[$i]->id. "Horarios disponibles para la fecha " . $fecha . ": ";
-                    print_r($horariosDisponibles);
-                    echo "<br>";
+                      // Verificar si la clave existe en el array antes de acceder a ella
+                        if (isset($horariosDisponibles[0])) {
+                               // echo "band: " . $band . "<br>";
+                                echo "id: " . $NodosOrdenados[$i]->id . " Horarios disponibles para la fecha " . $fecha . ": ";
+                                print_r($horariosDisponibles);
+                                echo "<br>";
+                            
+                        } else {
+                            echo "band:   hay datos nulos<br>";
+
+                        }
+                       // $band++;
+                   
                 }
            }
 

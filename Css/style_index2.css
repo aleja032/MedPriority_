@@ -582,8 +582,8 @@ i{
     backdrop-filter: blur(5px);
 }
 .container{
-    width: 30%;
-    height: 70%;
+    width: 28%;
+    height: 60%;
     flex-direction: column;
     display: flex;
     justify-content: center;
@@ -594,7 +594,7 @@ i{
     background-color: rgb(255, 255, 255);
 }
 .form_sesion{
-    height: 70%;
+    height: 90%;
     width: 80%;
     display: flex;
     flex-direction: column;
@@ -748,13 +748,16 @@ hr{
     color: #333733;
 }
 .cont-alert button{
-    width: 15%;
-    height: 15%;
+    width: 18%;
+    height: 18%;
     background-color:#23DA06;
     border-radius: 5px; 
     outline: none;
     border: none;
+    cursor: pointer;
+    color: white;
 }
+
 /*DISEÑO MOVIL */
 @media screen and (max-width:436px){
 

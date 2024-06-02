@@ -4,6 +4,8 @@
 
     if($_SESSION["id"]==null){
         echo "<script>window.location.href = '../index.php'</script>";
+    }else{
+        $id_user = $_SESSION['id'];
     }
 
 ?>
@@ -17,8 +19,9 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="../Css/style_user4.css">
+    <link rel="stylesheet" href="../Css/style_user9.css">
     <title>MedPriority</title>
 </head>
 <body>
@@ -90,21 +93,103 @@
                             <i class="fas fa-caret-down"></i>
                         </div>
                         <ul class="submenu">
-                            <li><a href="#AgregarCita" id="add_cita">Agregar Citas</a></li>
+                            <li><a href="#AgregarCita" id="add_cita">Agendar Citas</a></li>
                             <li><a href="#HistorialCitas">Historial de Citas</a></li>
                             <li><a href="#EstadoCitas" id="estado_cita">Estado Citas</a></li>
                         </ul>
                     </div>
                 </div>
+
+                
+                <div class="close_sesion" >
+                    <a href="cerrarsesion.php" class="texto_sesion">
+                        <i class="fa-solid fa-power-off" style="color: #080808;"></i> <p>Cerrar Sesión</p>
+                    </a>
+                </div>
         </div>
         <main class="principal">
+            <!--------- -----------------HISTORIA CLINICA---------------------- -->
 
             <div id="prueba2" class="historialcita">
                 <div class="cont_titulo">
                     <p> Historia Clinica</p>
                 </div>
-                <div class="cont_general_all" >
-                    hola
+
+                <div class="cont_general_all2" >
+                    <div class="cont2_elegir" id="cont2_historial">
+                            <h4>Elige el tipo de historia clinica:</h4>
+                            
+                            <div class="comb" id="form_1">
+                                <input type="radio" name="consulta" id="radio" value="1" checked>
+                                <p>Consulta Externa</p>
+                            </div>  
+
+                            <div class="comb">
+                                <input type="radio" name="consulta" id="radio1" value="3">
+                                <p>Consulta Odontológica</p>
+                            </div>
+                            <div class="comb">
+                            <button id="download-pdf">Descargar PDF</button>
+
+                            </div>
+                    </div>
+                    <div class="historial_clinico" id="historial" >
+                        <div class="cont_logo_name">
+                            <div class="img_log"></div>
+                            <p>MEDPRIORITY</p>
+                        </div>
+                        <p class="nit">Nit:  1122540000-1</p>
+
+                        <div class="datos_historia" id="datos"> </div>
+                        
+                            <div class="title">DATOS PERSONALES</div>
+
+                            <div class="general">
+                                <?php
+                                $sql = "SELECT * FROM usuario WHERE id_usuario = '$id_user'";
+                                $consulta = mysqli_query($conn, $sql);
+
+                                if(mysqli_num_rows($consulta) > 0){
+                                    $datos = mysqli_fetch_assoc($consulta);
+                                ?>
+                                    <div class="container1">
+                                         <div class="cont-1">    <p class="negrita">Nombre Paciente: </p> <p class="resultados"><?php echo $datos['nombre']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita">Fecha de Nacimiento: </p><p class="resultados"><?php echo $datos['fecha_nacimiento']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita">Dirección:</p><p class="resultados"><?php echo $datos['direccion']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita">Procedencia:</p><p class="resultados"><?php echo $datos['procedencia']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita">Estado Civil:</p><p class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
+                                    </div>
+
+                                    <div class="container1">
+                                    <div class="cont-1">        <p class="negrita">Identificación:</p><p class="resultados"><?php echo $datos['id_usuario']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita">Edad: </p><p class="resultados"><?php echo $datos['edad']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita">Teléfono: </p><p class="resultados"><?php echo $datos['telefono']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita">Tipo de Documento: </p><p class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita">Sexo: </p><p class="resultados"><?php echo $datos['genero']; ?></p></div>
+    
+                                </div>
+                            </div>
+                                    <div class="afil">
+                                        <div class="title2">DATOS AFILIACION</div>
+                                        <div class="cont-2">    <p class="afi">Tipo de Afiliación: </p> <p class="resultados"><?php echo $datos['tipo_afiliacion']; ?></p></div>
+
+                                        <!-- <p class="afi">Tipo de Afiliación: <?php echo $datos['tipo_afiliacion']; ?></p> -->
+
+                                    </div>
+                                            <?php
+                                            } else {
+                                                echo '<p>No se encontraron resultados.</p>';
+                                            }
+                                            ?>
+                            <div class="title">ANAMNESIS</div>
+
+                            <div class="descripcion_paciente" id="anamesis">
+
+                            <!-- <div class="title2">ASPECTO Y ESTADO GENERAL DEL PACIENTE</div> -->
+
+                            </div>
+                    </div>
+
                 </div>
             </div>
             <!----------------------NOTIFICACIONES--------------------------------------- -->
@@ -115,55 +200,13 @@
 
                     <div class="cont_general_all">
                         <div class="notificacion">
-                            <?php
-                            $id_user = $_SESSION['id'];
-                            $sql2 = "SELECT * FROM preagendamiento p
-                                    INNER JOIN sugerencias_citas sc ON p.id_preagendamiento = sc.id_preagendamiento 
-                                    WHERE p.id_usuario = '$id_user'";
-
-                            $consulta_sugerencias = mysqli_query($conn, $sql2);
-                            ?>
-
-                            <?php if (mysqli_num_rows($consulta_sugerencias) > 0): ?>
-                                <table class="tabla">
-                                    <thead>
-                                        <tr>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
-                                            <th>Estado</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php while ($resultado = mysqli_fetch_array($consulta_sugerencias)): ?>
-                                        <tr>
-                                            <td><?php echo $resultado['fecha']; ?></td>
-                                            <td><?php echo $resultado['hora_reservada']; ?></td>
-                                            <td><?php echo $resultado['estado']; ?></td>
-                                            <td>
-                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
-                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-                                                    <button type="submit">Agendar</button>
-                                                </form>
-                                                <form method="POST" action="liberar_citas.php" style="display:inline;">
-                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-                                                    <button type="submit">No Agendar</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    <?php endwhile; ?>
-                                    </tbody>
-                                </table>
-                            <?php else: ?>
-                                <div class="no-citas">
-                                    <p>No se encontraron citas para este usuario.</p>
-                                </div>
-                            <?php endif; ?>
+                       
                         </div>
                     </div>
             </div>
 
-    
+            <!----------------------Agendar Cita--------------------------------------- -->
+
             <div id="agregar_cita" class="historialcita">
                 <div class="cont_titulo">
                     <p>Agregar Cita</p>
@@ -203,14 +246,14 @@
 
                         <div class="preguntas_formulario2">
                             <div class="cont_preguntas2" id="enfermedads">
-                                <p>Enfermedad </p>
+                                <p>Patología </p>
                                 <input type="text" id="enfermedad" name="enfermedad" value="<?php echo $_SESSION['patologia'] ?>" disabled>
                             </div>
                             <div class="cont_preguntas" id="tipo_identificacion">
                             </div>
                             <div class="cont_preguntas2" id="nivel_gravedad">
                                 <p>Nivel de Gravedad</p>
-                                <input type="text" id="nivel_gravedad" name="nivel_gravedad" value="<?php  ?>" disabled>
+                                <input type="text" id="nivel_gravedad" name="nivel_gravedad"  disabled>
                             </div>
                         </div>
 
@@ -221,21 +264,38 @@
                                 <p>Tipo de Cita</p>
                                 <select class="tipocita" name="tipocita">
                                 <?php
+                                        $validar_citas="SELECT * FROM citas_agendadas ca  INNER JOIN preagendamiento p ON ca.id_preagendamiento= p.id_preagendamiento WHERE id_usuario='$id_user'";
+                                        $consul2= mysqli_query($conn,$validar_citas);
                                         $sql="SELECT * FROM tipo_cita";
                                         $consul= mysqli_query($conn,$sql);
-
-                                            if($consul){
-                                                while($desplegar= $consul->fetch_assoc()){
-                                                    echo "<option value='".$desplegar['id']."'>".$desplegar['enombre']."</option>";
-                                                }
+                                        $num=0;
+                                        if(mysqli_num_rows($consul2)>0){
+                                            while($sihay= $consul2->fetch_assoc()){
+                                                $dato=$sihay['id_tipo_cita'];
+                                                    if($consul){
+                                                        while($desplegar= $consul->fetch_assoc()){
+                                                            if($desplegar['id']== $dato || $num==3){
+                                                                echo "<option value='".$desplegar['id']."' disabled>".$desplegar['enombre']."</option>";
+                                                            }else{
+                                                                echo "<option value='".$desplegar['id']."'>".$desplegar['enombre']."</option>";
+                                                            }
+                                                        }
+                                                    }
                                             }
-                                        ?>
+                                        }else{
+                                                    if($consul){
+                                                        while($desplegar= $consul->fetch_assoc()){
+                                                            echo "<option value='".$desplegar['id']."'>".$desplegar['enombre']."</option>";
+                                                        }
+                                                    }
+                                        }
+                                ?>
                                 </select>
 
                             </div>
                         <div class="cont_preguntas3" id="fecha">
                             <p>Fecha</p>
-                            <input type="date" id="fecha1" name="fecha"  min="<?php echo date('Y-m-d', strtotime('+1 day')); ?>" required>
+                            <input type="date" id="fecha1" name="fecha"  min="<?php echo date('Y-m-d', strtotime('+2 day')); ?>" required>
 
                         </div>
                         <div class="cont_preguntas3" id="hora_inicio">
@@ -304,7 +364,8 @@
                     </form>
                 </div>
             </div>
-            <!----------------------------------Estado de la cita ------------------------------------->
+        
+        <!----------------------------------Estado de la cita ------------------------------------->
                 
         <div id="estadocita" class="historialcita">
             <div class="cont_titulo">
@@ -347,7 +408,7 @@
                                 <td><?php echo $resultado['nombre']; ?></td>
                                 <td><?php echo $resultado['id_consultorio']; ?></td>
                                 <td>Agendada</td>
-                                <td><form method="POST" action="cancelar_cita.php" style="display:inline;">
+                                <td><form method="POST" action="Usuario/cancelar_cita.php" style="display:inline;">
                                     <input type="hidden" name="id_preagendamiento" value="<?php echo $resultado['id_preagendamiento']; ?>">
                                     <button type="submit">Cancelar Cita</button>
                                 </form></td>
@@ -359,37 +420,48 @@
                     
                 <?php else: ?>
                     <?php
-                    $sql2 = "SELECT * FROM preagendamiento p
-                            INNER JOIN sugerencias_citas sc ON p.id_preagendamiento = sc.id_preagendamiento 
-                            WHERE p.id_usuario = '$id_user'";
+                            $sql2 = "SELECT * FROM preagendamiento p
+                                    INNER JOIN sugerencias_citas sc ON p.id_preagendamiento = sc.id_preagendamiento 
+                                    WHERE p.id_usuario = '$id_user'";
 
-                    $consulta_sugerencias = mysqli_query($conn, $sql2);
-                    ?>
+                            $consulta_sugerencias = mysqli_query($conn, $sql2);
+                            ?>
 
-                    <?php if (mysqli_num_rows($consulta_sugerencias) > 0): ?>
-                        <table class="tabla">
-                            <thead>
-                                <tr>
-                                    <th>Fecha</th>
-                                    <th>Hora</th>
-                                    <th>Estado</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            <?php while ($resultado = mysqli_fetch_array($consulta_sugerencias)): ?>
-                                <tr>
-                                    <td><?php echo $resultado['fecha']; ?></td>
-                                    <td><?php echo $resultado['hora_reservada']; ?></td>
-                                    <td><?php echo $resultado['estado']; ?></td>
-                                </tr>
-                            <?php endwhile; ?>
-                            </tbody>
-                        </table>
-                    <?php else: ?>
-                        <div class="no-citas">
-                            <p>No se encontraron citas para este usuario.</p>
-                        </div>
-                    <?php endif; ?>
+                            <?php if (mysqli_num_rows($consulta_sugerencias) > 0): ?>
+                                <table class="tabla">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php while ($resultado = mysqli_fetch_array($consulta_sugerencias)): ?>
+                                        <tr>
+                                            <td><?php echo $resultado['fecha']; ?></td>
+                                            <td><?php echo $resultado['hora_reservada']; ?></td>
+                                            <td><?php echo $resultado['estado']; ?></td>
+                                            <td>
+                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+                                                    <button type="submit">Agendar</button>
+                                                </form>
+                                                <form method="POST" action="liberar_citas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+                                                    <button type="submit">No Agendar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                    </tbody>
+                                </table>
+                            <?php else: ?>
+                                <div class="no-citas">
+                                    <p>No se encontraron citas para este usuario.</p>
+                                </div>
+                            <?php endif; ?>
                 <?php endif; ?>
                 </div>
             </div>
@@ -404,190 +476,87 @@
             </div>
         </div>
 
-    </div>
-    <script>
-        function showAlert(title, message) {
-        document.getElementById('alert-title').innerText = title;
-        document.getElementById('alert-message').innerText = message;
-        document.getElementById('custom-alert').style.display = 'block';
-        }
+    </div>  
+    <script src="../Js/User/aler_cita_cancelar.js"></script>
+    <script src="../Js/User/desplegar_menu.js"></script>
+    <script src="../Js/User/desplegar_containers.js"></script>
+    <script src="../Js/User/desabilitadias_calendario.js"></script>                    
+    <script src="../Js/User/ajax.js"></script>
+<script>
+    // document.getElementById('download-pdf').addEventListener('click', function () {
+    //     // Seleccionar el contenedor que deseas convertir a PDF
+    //     var element =  document.getElementById('.historial');
 
-        document.getElementById('close-alert').addEventListener('click', function() {
-            document.getElementById('custom-alert').style.display = 'none';
-        });
+    //     // Opciones de configuración para html2pdf
+    //     var opt = {
+    //         margin:       1,
+    //         filename:     'historial_clinico.pdf',
+    //         image:        { type: 'jpeg', quality: 0.98 },
+    //         html2canvas:  { scale: 2 },
+    //         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    //     };
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('success')) {
-                const success = urlParams.get('success');
-                console.log(success);
-                switch (success) {
-                    case '1':
-                        showAlert('Solicitud Enviada', 'La solicitud de su cita ha sido enviada. Tendrá respuesta el día de mañana en horas de la mañana.');
-                        break;
-                    case '3':
-                        showAlert('Cita cancelada correctamente', 'Ahora tienes disponible el formulario para agendar otra cita.');
-                        break;
-                    default:
-                        showAlert('Error', 'Hubo un problema al enviar la solicitud. Por favor, inténtelo nuevamente.');
-                        break;
-                }
-                // Limpiar los parámetros de la URL
-                window.history.replaceState(null, null, window.location.pathname);
-            }
-        });
-
-    </script>
-    <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            var toggleMenu = document.getElementById('toggleMenu');
-            var menuContainer = document.querySelector('.con_menu');
-            var closeMenu = document.getElementById('closemenu');
-
-            toggleMenu.addEventListener('change', function () {
-                if (toggleMenu.checked) {
-                    menuContainer.classList.add('menu-abierto');
-                    menuContainer.style.display='flex';
-                    menuContainer.style.visibility='visible';
-                    console.log("chekeado");
-
-                } 
-            });
-
-            closeMenu.addEventListener('click', function () {
-                toggleMenu.checked = false;
-                menuContainer.classList.remove('menu-abierto');
-            });
-        });
-
-         // Obtener referencias a los enlaces y sections
-        const notificacion = document.querySelector('#notificacion');
-        const historia_clini = document.querySelector('#historia_clinica');
-        const addcita = document.querySelector('#add_cita');
-        const mirarcita = document.querySelector('#estado_cita');
-
-
-        const sectionNotifi = document.querySelector('#prueba');
-        const sectionhistoria = document.querySelector('#prueba2');
-        const agregarcita = document.querySelector('#agregar_cita');
-        const vercita = document.querySelector('#estadocita');
-
-
-
-        // Función para mostrar la sección de Agendar citas
-        function showNotifi() {
-            sectionNotifi.style.display = 'flex';
-            sectionNotifi.style.visibility = 'visible';
-            sectionhistoria.style.display = 'none';
-            sectionhistoria.style.visibility = 'hidden';
-            agregarcita.style.visibility='hidden';
-            agregarcita.style.display='none';
-            vercita.style.visibility='hidden';
-            vercita.style.display='none';
-
-        }
-
-        // Función para mostrar la sección de Mis citas
-        function showhistoria_clinica() {
-            sectionNotifi.style.display = 'none';
-            sectionNotifi.style.visibility = 'hidden';
-            sectionhistoria.style.display = 'flex';
-            sectionhistoria.style.visibility = 'visible';
-            agregarcita.style.visibility='hidden';
-            agregarcita.style.display='none';
-            vercita.style.visibility='hidden';
-            vercita.style.display='none';
-        }
-        function show_agregarcitas() {
-            sectionNotifi.style.display = 'none';
-            sectionNotifi.style.visibility = 'hidden';
-            sectionhistoria.style.display = 'none';
-            sectionhistoria.style.visibility = 'hidden';
-            agregarcita.style.visibility='visible';
-            agregarcita.style.display='flex';
-            vercita.style.visibility='hidden';
-            vercita.style.display='none';
-        }
-        function mirarcitas_estado() {
-            sectionNotifi.style.display = 'none';
-            sectionNotifi.style.visibility = 'hidden';
-            sectionhistoria.style.display = 'none';
-            sectionhistoria.style.visibility = 'hidden';
-            agregarcita.style.visibility='none';
-            agregarcita.style.display='none';
-            vercita.style.visibility='visible';
-            vercita.style.display='flex';
-        }
-        // Agregar eventos a los enlaces
-        notificacion.addEventListener('click', showNotifi);
-        historia_clini.addEventListener('click', showhistoria_clinica);
-        addcita.addEventListener('click', show_agregarcitas);
-        mirarcita.addEventListener('click', mirarcitas_estado);
-
-
-        // Por defecto, mostramos la sección de Agendar citas al cargar la página
-        show_agregarcitas();
+    //     // Generar y descargar el PDF
+    //     html2pdf().set(opt).from(element).save();
+    // });
 
 </script>
+
     <script>
- 
-    // Función para deshabilitar la fecha seleccionada en fecha2 y un día más
-    document.getElementById('fecha1').addEventListener('input', function() {
-            // Obtener la fecha seleccionada en fecha1
-            const fechaSeleccionada = new Date(this.value);
-            // Agregar un día a la fecha seleccionada
-            fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1);
-            // Formatear la fecha seleccionada con el formato YYYY-MM-DD
-            const fechaMinima = fechaSeleccionada.toISOString().split('T')[0];
-            // Establecer la fecha mínima en fecha2
-            document.getElementById('fecha2').setAttribute('min', fechaMinima);
-        });
         
-    let hora_rango1 = document.getElementById("hora_rango1");
-    let opcion_actual;
-    
-    let hora_rango2 = document.getElementById("hora_rango2");
-    let opcion_actual2;
-    $(document).ready(function() {
-    $("#hora_rango1").change(function() {
-        opcion_actual = $(this).val();
-        console.log("Opción seleccionada 1: ", opcion_actual);        
+          document.addEventListener('DOMContentLoaded', function() {
+        // Función para enviar la opción seleccionada
+        function enviarOpcionSeleccionada(opcionSeleccionada) {
+            $.ajax({
+                url: "./Usuario/historia_clinica.php",
+                type: "POST",
+                data: { 
+                    opcion_actual: opcionSeleccionada,
+                    id_user: <?php echo json_encode($id_user); ?>
+                },
+                success: function(respon3) {
+                    console.log("Respuesta del servidor:", respon3);
+                    document.getElementById('datos').innerHTML = respon3;
+                },
+                error: function() {
+                    alert("Error al cargar la opción seleccionada");
+                }
+            });
+        }
+        function enviarOpcionSeleccionada2(opcionSeleccionada) {
+            $.ajax({
+                url: "./Usuario/enfermedades.php",
+                type: "POST",
+                data: { 
+                    opcion_actual: opcionSeleccionada,
+                    id_user: <?php echo json_encode($id_user); ?>
+                },
+                success: function(respon3) {
+                    console.log("Respuesta del servidor2-------:", respon3);
+                    document.getElementById('anamesis').innerHTML = respon3;
+                },
+                error: function() {
+                    alert("Error al cargar la opción seleccionada");
+                }
+            });
+        }
+        // Enviar la opción por defecto al cargar la página
+        const opcionPorDefecto = document.querySelector('input[name="consulta"]:checked').value;
+        enviarOpcionSeleccionada(opcionPorDefecto);
+        enviarOpcionSeleccionada2(opcionPorDefecto);
 
-        $.ajax({
-            url: "Usuario/horarios.php",
-            type: "POST",
-            data: { opcion_actual: opcion_actual },
-            success: function(respon3) {
-                console.log("Respuesta del servidor:", respon3);
-                $("#rango").html(respon3);
-            },
-            error: function() {
-                alert("Error al cargar las opciones del select rango_2");
-            }
+        // Asignar evento click a los radios
+        document.querySelectorAll('input[name="consulta"]').forEach(radio => {
+            radio.addEventListener('click', () => {
+                const opcionSeleccionada = radio.value;
+                console.log('Valor seleccionado:', opcionSeleccionada);
+                enviarOpcionSeleccionada(opcionSeleccionada);
+                enviarOpcionSeleccionada2(opcionSeleccionada);
+
+            });
         });
     });
-
-    $("#hora_rango2").change(function() {
-        opcion_actual2 = $(this).val();
-        console.log("Opción seleccionada 2: ", opcion_actual2);        
-
-        $.ajax({
-            url: "Usuario/horarios.php",
-            type: "POST",
-            data: { opcion_actual2: opcion_actual2 },
-            success: function(respon4) {
-                console.log("Respuesta del servidor:", respon4);
-                $("#rango_2").html(respon4);
-            },
-            error: function() {
-                alert("Error al cargar las opciones del select rango_2");
-            }
-        });
-    });
-});
-
 
 </script>
-
 </body>
 </html>

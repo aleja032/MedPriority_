@@ -6,7 +6,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Css/style_index.css">
+    <link rel="stylesheet" href="Css/style_index2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
@@ -250,18 +250,14 @@ session_start();
                 <input type="email" name="correo" placeholder="Correo" required>
 
                 <input type="password" name="pass" id="pass" placeholder="Contraseña">
-                <p>Si olvido su contraseña da click <a href="./citas/contrase.php">Recuperar</a></p>
+                <p>Si olvido su contraseña da click <a href="./Php/Usuario/recu_password.php">Recuperar</a></p>
 
                 <button type="submit" class="boto">Enviar</button>
                 <div class="raya">
-                    <hr>
-                    <P>O</P>
-                    <hr>
+                        
                 </div>
 
             </form>
-            <a href="./citas/registro.php" id="botosesion">Registrar</a>
-            <br>
         </div>
     </div>
     <!--Cerrar sesion-->
@@ -274,12 +270,12 @@ session_start();
         <div class="cont-alert">
             <div class="icon"><i class="fa-solid fa-exclamation"></i></div>
             <div class="mensaje"><p>Debe Iniciar Sesión </p></div>
-            <button type="submit" id="close"><p>Ok</p></button>
+            <button type="submit" id="close1" onclick="cerrar2()" >Ok</button>
         </div>
     </div>
 </body>
 
 </html>
 <script src="./Js/Slider.js"></script> <!--slide medico aun defectuoso cada que se recarga la pagina se alcanza a mirar el section de odontologia que se supone que esta escondido-->
-<script src="./Js/alertas1.js"></script> <!--Daña mi stilo original de la pagina-->
+<script src="./Js/alertas1.js"></script> <!--abrir debe iniciar sesion-->
 <script src="./Js/abrir_iniciar_sesion1.js"></script> <!--abrir formulario-->

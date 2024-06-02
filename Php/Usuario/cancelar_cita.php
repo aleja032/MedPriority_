@@ -1,6 +1,6 @@
 <?php
 
-require_once("conexion.php");
+require_once("../conexion.php");
 
 session_start();
 $id_preagendamiento=$_POST['id_preagendamiento'];
@@ -11,7 +11,7 @@ if($consulta2>0){
     $sql3="DELETE FROM preagendamiento WHERE id_preagendamiento='$id_preagendamiento'";
     $consulta3= mysqli_query($conn,$sql3);
     if($consulta3>0){
-        echo "<script>window.location.href = './user.php?success=3'</script>";
+        echo "<script>window.location.href = '../user.php?success=3'</script>";
     }
 }
 
