@@ -20,6 +20,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <link rel="stylesheet" href="../Css/style_user2.css">
@@ -213,7 +214,51 @@
 
                     <div class="cont_general_all">
                         <div class="notificacion">
-                                            
+                        <?php
+                            $sql2 = "SELECT * FROM preagendamiento p
+                                    INNER JOIN sugerencias_citas sc ON p.id_preagendamiento = sc.id_preagendamiento 
+                                    WHERE p.id_usuario = '$id_user'";
+
+                            $consulta_sugerencias = mysqli_query($conn, $sql2);
+                            ?>
+
+                            <?php if (mysqli_num_rows($consulta_sugerencias) > 0): ?>
+                                <table class="tabla">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php while ($resultado = mysqli_fetch_array($consulta_sugerencias)): ?>
+                                        <tr>
+                                            <td><?php echo $resultado['fecha']; ?></td>
+                                            <td><?php echo $resultado['hora_reservada']; ?></td>
+                                            <td><?php echo $resultado['estado']; ?></td>
+                                            <td>
+                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_sugerencia" value="<?php echo $id_user; ?>">
+                                                    <button type="submit">Agendar</button>
+                                                </form>
+                                                <form method="POST" action="liberar_citas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+                                                    <button type="submit">No Agendar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                    </tbody>
+                                </table>
+                            <?php else: ?>
+                                <div class="no-citas">
+                                    <p>No se encontraron citas para este usuario.</p>
+                                </div>
+                            <?php endif; ?>
+                
+                       
                         </div>
                     </div>
             </div>
@@ -581,6 +626,70 @@
     <script src="../Js/User/desplegar_containers2.js"></script>
     <script src="../Js/User/desabilitadias_calendario.js"></script>                    
     <script src="../Js/User/ajax.js"></script>
+<script>
+    document.getElementById('download-pdf').addEventListener('click', function () {
+        // Seleccionar el contenedor que deseas convertir a PDF
+        // var element =  document.getElementById('historial');
+
+        // // Opciones de configuración para html2pdf
+        // var opt = {
+        //     margin:       1,
+        //     filename:     'historial_clinico.pdf',
+        //     image:        { type: 'jpeg', quality: 0.98 },
+        //     html2canvas:  { scale: 2 },
+        //     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        // };
+
+        // // Generar y descargar el PDF
+        // html2pdf().set(opt).from(element).save();
+            window.jsPDF = window.jspdf.jsPDF;
+
+
+            //     // Crear una nueva instancia de jsPDF
+            // const doc = new jsPDF();
+
+            //     // Seleccionar el contenido HTML que queremos convertir en PDF
+            // const content = document.getElementById('historial').innerHTML;
+
+            //     // Agregar el contenido HTML al PDF
+            // doc.text(content, 10, 10);
+
+            //     // Descargar el PDF
+            // doc.save('HistoriaClinica.pdf');
+
+            const content = document.getElementById('historial');
+
+            html2canvas(content).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const doc = new jsPDF();
+
+                const imgProps = doc.getImageProperties(imgData);
+                const pdfWidth = doc.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                doc.save('documento.pdf');
+            });
+            
+    });
+
+//     window.jsPDF = window.jspdf.jsPDF;
+
+// function generatePDF() {
+//     // Crear una nueva instancia de jsPDF
+//     const doc = new jsPDF();
+
+//     // Seleccionar el contenido HTML que queremos convertir en PDF
+//     const content = document.getElementById('historial').innerHTML;
+
+//     // Agregar el contenido HTML al PDF
+//     doc.text(content, 10, 10);
+
+//     // Descargar el PDF
+//     doc.save('documento.pdf');
+//}
+
+</script>
 
     <script>
         

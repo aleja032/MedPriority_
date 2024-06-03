@@ -169,6 +169,22 @@ class Consultas{
         return false;
 
     }
+
+    
+    public function ValidarExistenciaSugerencia($idNodo){
+
+        $SQL = mysqli_query($this->Conexion,"SELECT * FROM sugerencias_citas WHERE id_preagendamiento='$idNodo'");
+
+        if(mysqli_num_rows($SQL)>0){
+
+            return true;
+
+        }
+
+        return false;
+
+    }
+
     public function datos_filtro2($nodoSinHora){
         $array = array();       
         $consul=mysqli_query($this->Conexion,"SELECT * FROM preagendamiento WHERE id_preagendamiento= '$nodoSinHora'");
