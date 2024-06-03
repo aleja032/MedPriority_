@@ -60,22 +60,54 @@ foreach ($nodosOrdenados as $nodo) {
 // }
 //-----------------------------------------------
 
-echo "<br><br>NODOS FILTRADOS NO FUNCIONA<br><br>";
-$nodoshoras1 = $grafo->AsignarMedicoNofunciona();
+// echo "<br><br>NODOS FILTRADOS NO FUNCIONA<br><br>";
+// $nodoshoras1 = $grafo->AsignarMedicoNofunciona();
 
 
-foreach ($nodoshoras1 as $nodo) {
+// foreach ($nodoshoras1 as $nodo) {
+//     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
+
+// }
+
+// $a= $consultar->ContarMEspecialidadActivo(1);
+// echo $a;
+// //echo var_dump($nodosOrdenados);
+// $NodosProcesados =$nodoshoras1;
+// echo "<br><br>INSERTS Y UPDATES BD<br><br>";
+
+// foreach ($NodosProcesados as $nodo) {
+
+//     if($consultar->ValidarExistenciaCita($nodo->id)) {
+
+//         $actualizar->ActualizarCitasAsignadas($nodo);
+
+//     }else{
+
+//         $insertar->InsertarCitasOrdenadas($nodo);
+
+//     }
+
+// }
+
+$NodosProcesados = $grafo->AsignarMedicoNodos();
+echo "NODOS QUE IRAN A CITAS AGENDADAS <br>";
+foreach ($NodosProcesados[0] as $nodo) {
     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
-
+}
+echo "NODOS QUE IRAN A SUGERENCIA CITAS <br>";
+foreach ($NodosProcesados[1] as $nodo) {
+    echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
 }
 
-$a= $consultar->ContarMEspecialidadActivo(1);
-echo $a;
-//echo var_dump($nodosOrdenados);
-$NodosProcesados =$nodoshoras1;
-echo "<br><br>INSERTS Y UPDATES BD<br><br>";
 
-foreach ($NodosProcesados as $nodo) {
+
+// echo "<br>VER<br>";
+// $NodosProcesados2 = $grafo->filtro2();
+// foreach ($NodosProcesados2 as $nodo) {
+//     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
+// }
+/*
+foreach ($NodosProcesados[0] as $nodo) {
 
     if($consultar->ValidarExistenciaCita($nodo->id)) {
 
@@ -89,5 +121,18 @@ foreach ($NodosProcesados as $nodo) {
 
 }
 
+foreach ($NodosProcesados[1] as $nodo) {
+
+    if($consultar->ValidarExistenciaCita($nodo->id)) {
+
+        $actualizar->ActualizarCitasAsignadas($nodo);
+
+    }else{
+
+        $insertar->InsertarCitasOrdenadas($nodo);
+
+    }
+
+}*/
 
 ?>

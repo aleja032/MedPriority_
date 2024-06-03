@@ -19,7 +19,8 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <link rel="stylesheet" href="../Css/style_user2.css">
     <title>MedPriority</title>
@@ -635,6 +636,9 @@
             });
         });
     });
+
+
+
 
 </script>
     <script>
