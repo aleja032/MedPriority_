@@ -106,7 +106,8 @@ class Grafo{
         $consulta = new Consultas($this->Conexion);
         $NodosOrdenados = $this->AsginarHora();
         $NodosFiltrados = array();
-       $NodosFilter3= array();
+        $NodosFilter3= array();
+        $Nodos_2Partes=array();
        //$band=0;
        
         for($i=0 ; $i<count($NodosOrdenados);$i++){
@@ -124,35 +125,104 @@ class Grafo{
             $HoraDisponibilidad =$this->CompararHorasNodos($NodosOrdenados[$i],$ArregloDeHoras,$NodosFiltrados);
             $NodosOrdenados[$i]->ModificarHora($HoraDisponibilidad);
             
-                if ($NodosOrdenados[$i]->datos['HoraAsignada'] === null) {
-                    
-                    $fecha = $NodosOrdenados[$i]->datos["FechaSolicitada"];
-                    $horaInicio = $NodosOrdenados[$i]->datos["HoraInicio"];
-                    $horaFin = $NodosOrdenados[$i]->datos["HoraFin"];
-                    $user = $NodosOrdenados[$i]->datos["idUsuario"];
-                   
-                    
-                    // Llamar a la función datos_filter3() con la fecha y horas como parámetros
-                    $horariosDisponibles = $consulta->datos_filter3($NodosOrdenados[$i]->id, $fecha, $horaInicio, $horaFin,$user);
-                   
-                  //  $consulta->insertar_sugerencias($NodosOrdenados[$i]->datos['idUsuario'], $fecha,$horariosDisponibles[$band],'reservado',$NodosOrdenados[$i]->id);
-                      // Verificar si la clave existe en el array antes de acceder a ella
-                        if (isset($horariosDisponibles[0])) {
-                               // echo "band: " . $band . "<br>";
-                                echo "id: " . $NodosOrdenados[$i]->id . " Horarios disponibles para la fecha " . $fecha . ": ";
-                                print_r($horariosDisponibles);
-                                echo "<br>";
-                            
-                        } else {
-                            echo "band:   hay datos nulos<br>";
 
-                        }
-                       // $band++;
+
+                if ($NodosOrdenados[$i]->datos['HoraAsignada'] == null) {
+
+                    array_push($NodosFilter3,$NodosOrdenados[$i]);
+                    /*$NodosOrdenados[$i] ->ModificaInicio(1);
+                    $NodosOrdenados[$i] ->ModificaFin(34);*/
+                    
+
+
+                    
+
+                    
+                    // $fecha = $NodosOrdenados[$i]->datos["FechaSolicitada"];
+                    // $horaInicio = $NodosOrdenados[$i]->datos["HoraInicio"];
+                    // $horaFin = $NodosOrdenados[$i]->datos["HoraFin"];
+                    // $user = $NodosOrdenados[$i]->datos["idUsuario"];
+                   
+                    
+                //     // Llamar a la función datos_filter3() con la fecha y horas como parámetros
+                //     $horariosDisponibles = $consulta->datos_filter3($NodosOrdenados[$i]->id, $fecha, $horaInicio, $horaFin,$user);
+                   
+                //   //  $consulta->insertar_sugerencias($NodosOrdenados[$i]->datos['idUsuario'], $fecha,$horariosDisponibles[$band],'reservado',$NodosOrdenados[$i]->id);
+                //       // Verificar si la clave existe en el array antes de acceder a ella
+                //         if (isset($horariosDisponibles[0])) {
+                //                // echo "band: " . $band . "<br>";
+                //                 echo "id: " . $NodosOrdenados[$i]->id . " Horarios disponibles para la fecha " . $fecha . ": ";
+                //                 print_r($horariosDisponibles);
+                //                 echo "<br>";
+                            
+                //         } else {
+                //             echo "band:   hay datos nulos<br>";
+
+                //         }
+                //        // $band++;
                    
                 }
            }
 
            array_push($NodosFiltrados,$NodosOrdenados[$i]);
+        }
+
+        array_push($Nodos_2Partes,$NodosOrdenados);
+        array_push($Nodos_2Partes,$NodosFilter3);
+        
+        return $Nodos_2Partes;
+
+    }
+
+
+    public function filtro3(){
+       
+        $consulta = new Consultas($this->Conexion);
+        $NodosOrdenados = $this->filtro2();
+        $NodosOrdenados = $NodosOrdenados[1];
+        $NodosFiltrados = array();
+
+       
+        for($i=0 ; $i<count($NodosOrdenados);$i++){
+
+            if ($NodosOrdenados[$i]->datos['HoraAsignada'] == null) {
+                    $NodosOrdenados[$i] ->ModificaInicio(1);
+                    $NodosOrdenados[$i] ->ModificaFin(34);
+
+                $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
+
+                if($i==0){
+
+                    //$NodosOrdenados[$i]->AgregarDatoHora($ArregloDeHoras[$i]);
+                    $NodosOrdenados[$i]->ModificarHora($ArregloDeHoras[$i]);
+
+                }else{
+
+                // $NodosOrdenados[$i]->AgregarDatoHora(null);
+                    $HoraDisponibilidad =$this->CompararHorasNodos($NodosOrdenados[$i],$ArregloDeHoras,$NodosFiltrados);
+                    $NodosOrdenados[$i]->ModificarHora($HoraDisponibilidad);
+                    
+
+
+                        if ($NodosOrdenados[$i]->datos['HoraAsignada'] === null) {
+
+                            $datetime = new DateTime($NodosOrdenados[$i] ->datos["FechaSolicitada"]);
+
+                            // Sumar un día a la fecha
+                            $datetime->modify('+1 day');
+
+                            // Obtener la fecha resultante en formato 'Y-m-d'
+                            $Nueva_fecha = $datetime->format('Y-m-d');
+
+                            $NodosOrdenados[$i] ->fecha2($Nueva_fecha);
+
+                            $i--;
+                        
+                        }
+                }
+
+            array_push($NodosFiltrados,$NodosOrdenados[$i]);
+            }
         }
 
         
@@ -178,6 +248,7 @@ class Grafo{
                 $contador++;
 
                 if($contador==$comparador){
+
 
                     $clave = array_search($OtrosNodos->datos["HoraAsignada"], $ArregloHorasNodo);
 
@@ -207,6 +278,14 @@ class Grafo{
     public function FiltrarNodosNoNull($Nodos){
         $NodosFiltrados = array_filter($Nodos,function($nodo){
             return $nodo->datos["HoraAsignada"] != null;
+        });
+
+        return $NodosFiltrados;
+    }
+
+    public function FiltrarNodosNull($Nodos){
+        $NodosFiltrados = array_filter($Nodos,function($nodo){
+            return $nodo->datos["HoraAsignada"] == null;
         });
 
         return $NodosFiltrados;
@@ -248,8 +327,8 @@ class Grafo{
 
 
 
-    public function AsignarMedicoNofunciona(){
-        $NodosConHoras = $this->FiltrarNodosNoNull($this->filtro2());
+    public function AsignarMedico($Nodos){
+        $NodosConHoras = $Nodos; //$this->FiltrarNodosNoNull($this->filtro2());
 
         //$NodosConHoras = $this->AsginarHora();
         $Consultar = new Consultas($this->Conexion);
@@ -278,6 +357,16 @@ class Grafo{
 
         return $NodosConHoras;
 
+    }
+
+    public function AsignarMedicoNodos(){
+        $Arreglo_final=array();
+        $NodosAgendados=$this->AsignarMedico($this->FiltrarNodosNoNull($this->filtro2()[0]));
+        $NodosSugerencias=$this->AsignarMedico($this->filtro3());
+        array_push($Arreglo_final,$NodosAgendados);
+        array_push($Arreglo_final,$NodosSugerencias);
+        
+        return $Arreglo_final;
     }
 
 }
