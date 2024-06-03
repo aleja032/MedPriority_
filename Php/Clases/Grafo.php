@@ -186,25 +186,25 @@ class Grafo{
         for($i=0 ; $i<count($NodosOrdenados);$i++){
 
             if ($NodosOrdenados[$i]->datos['HoraAsignada'] == null) {
-                    $NodosOrdenados[$i] ->ModificaInicio(1);
-                    $NodosOrdenados[$i] ->ModificaFin(34);
+                $NodosOrdenados[$i] ->ModificaInicio(1);
+                $NodosOrdenados[$i] ->ModificaFin(33);
 
                 $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
+                echo $NodosOrdenados[$i]->datos["HoraInicio"].$NodosOrdenados[$i]->datos["HoraFin"];
 
-                if($i==0){
-
-                    //$NodosOrdenados[$i]->AgregarDatoHora($ArregloDeHoras[$i]);
-                    $NodosOrdenados[$i]->ModificarHora($ArregloDeHoras[$i]);
-
-                }else{
 
                 // $NodosOrdenados[$i]->AgregarDatoHora(null);
+                    $NodosOrdenados[$i]->ModificarHora($ArregloDeHoras[0]);
                     $HoraDisponibilidad =$this->CompararHorasNodos($NodosOrdenados[$i],$ArregloDeHoras,$NodosFiltrados);
+                    echo "<br><br>";
+                    var_dump($HoraDisponibilidad);
                     $NodosOrdenados[$i]->ModificarHora($HoraDisponibilidad);
                     
 
 
                         if ($NodosOrdenados[$i]->datos['HoraAsignada'] === null) {
+
+                            echo "entro en bucle";
 
                             $datetime = new DateTime($NodosOrdenados[$i] ->datos["FechaSolicitada"]);
 
@@ -223,7 +223,7 @@ class Grafo{
 
             array_push($NodosFiltrados,$NodosOrdenados[$i]);
             }
-        }
+        
 
         
         return $NodosOrdenados;

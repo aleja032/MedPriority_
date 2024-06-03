@@ -90,6 +90,7 @@ foreach ($nodosOrdenados as $nodo) {
 // }
 
 $NodosProcesados = $grafo->AsignarMedicoNodos();
+
 echo "NODOS QUE IRAN A CITAS AGENDADAS <br>";
 foreach ($NodosProcesados[0] as $nodo) {
     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
@@ -106,7 +107,9 @@ foreach ($NodosProcesados[1] as $nodo) {
 // foreach ($NodosProcesados2 as $nodo) {
 //     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
 // }
-/*
+
+
+//INSERTAR O ACTUALIZAR CITAS YA AGENDADAS
 foreach ($NodosProcesados[0] as $nodo) {
 
     if($consultar->ValidarExistenciaCita($nodo->id)) {
@@ -121,18 +124,20 @@ foreach ($NodosProcesados[0] as $nodo) {
 
 }
 
+
+//INSERTAR O ACTUALIZAR CITAS SUGERIDAS
 foreach ($NodosProcesados[1] as $nodo) {
 
-    if($consultar->ValidarExistenciaCita($nodo->id)) {
+    if($consultar->ValidarExistenciaSugerencia($nodo->id)) {
 
-        $actualizar->ActualizarCitasAsignadas($nodo);
+        $actualizar->ActualizarCitasSugerencias($nodo);
 
     }else{
 
-        $insertar->InsertarCitasOrdenadas($nodo);
+        $insertar->InsertarCitasSugerencias($nodo);
 
     }
 
-}*/
+}
 
 ?>

@@ -20,6 +20,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
     <link rel="stylesheet" href="../Css/style_user9.css">
@@ -227,7 +228,7 @@
                                             <td><?php echo $resultado['estado']; ?></td>
                                             <td>
                                                 <form method="POST" action="citas_confirmadas.php" style="display:inline;">
-                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+                                                    <input type="hidden" name="id_sugerencia" value="<?php echo $id_user; ?>">
                                                     <button type="submit">Agendar</button>
                                                 </form>
                                                 <form method="POST" action="liberar_citas.php" style="display:inline;">
@@ -546,17 +547,31 @@
             window.jsPDF = window.jspdf.jsPDF;
 
 
-                // Crear una nueva instancia de jsPDF
-            const doc = new jsPDF();
+            //     // Crear una nueva instancia de jsPDF
+            // const doc = new jsPDF();
 
-                // Seleccionar el contenido HTML que queremos convertir en PDF
-            const content = document.getElementById('historial').innerHTML;
+            //     // Seleccionar el contenido HTML que queremos convertir en PDF
+            // const content = document.getElementById('historial').innerHTML;
 
-                // Agregar el contenido HTML al PDF
-            doc.text(content, 10, 10);
+            //     // Agregar el contenido HTML al PDF
+            // doc.text(content, 10, 10);
 
-                // Descargar el PDF
-            doc.save('HistoriaClinica.pdf');
+            //     // Descargar el PDF
+            // doc.save('HistoriaClinica.pdf');
+
+            const content = document.getElementById('historial');
+
+            html2canvas(content).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const doc = new jsPDF();
+
+                const imgProps = doc.getImageProperties(imgData);
+                const pdfWidth = doc.internal.pageSize.getWidth();
+                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+                doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                doc.save('documento.pdf');
+            });
             
     });
 
