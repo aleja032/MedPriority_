@@ -34,13 +34,15 @@ if(mysqli_num_rows($consulta)>0){
 
     $_SESSION['autenticado']=true;
    // $_SESSION['id_patologia']=$datos[''];  INNER JOIN historia_clinica ON historio_clinica.id_usuario= usuario.id_usuario
-    echo "<script> window.location='../index.php'</script>";
+    // echo "<script> window.location='../index.php'</script>";
+            echo "<script>window.location.href = '../index.php?success=1'</script>";
+
 }else{
 
     if(mysqli_num_rows($consulta2)>0){
         echo "<script> window.location='admin.php'</script>";
     }else{
-        // echo "<script> window.location='../index.php'</script>";
+        echo "<script> window.location='../index.php'</script>";
     }
 }
 
