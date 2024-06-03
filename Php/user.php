@@ -21,7 +21,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="../Css/style_user9.css">
+    <link rel="stylesheet" href="../Css/style_user2.css">
     <title>MedPriority</title>
 </head>
 <body>
@@ -73,6 +73,15 @@
                         <div class="enunciado2" id="notificacion">  Notificaciones</div>
                     </a>
                 </div>
+                <div class="notificaciones"> <p class="letras">Sesion Modificar datos</p> <div class="linea"><p></p></div> </div>
+                <div class="combo1_notificacion" >
+                    <a href="#modificar_datos" id="modificar_datos">
+                            
+                        <div class="con_imagen_editar" id="icono"> </div>
+                    
+                        <div class="enunciado2" id="modificar_datos">  Modificar mis datos</div>
+                    </a>
+                </div>
                 <div class="notificaciones"> <p class="letras">Sesion Hisotria Clinica </p> <div class="linea"><p></p></div> </div>
 
                 <div class="combo1_notificacion" >
@@ -94,7 +103,7 @@
                         </div>
                         <ul class="submenu">
                             <li><a href="#AgregarCita" id="add_cita">Agendar Citas</a></li>
-                            <li><a href="#HistorialCitas">Historial de Citas</a></li>
+                            <li><a href="#HistorialCitas" id="historial_cita">Historial de Citas</a></li>
                             <li><a href="#EstadoCitas" id="estado_cita">Estado Citas</a></li>
                         </ul>
                     </div>
@@ -129,7 +138,8 @@
                                 <p>Consulta Odontológica</p>
                             </div>
                             <div class="comb">
-                            <button id="download-pdf">Descargar PDF</button>
+                                <!-- <a href="prueba.php">descargar</a> -->
+                                <button id="generate-pdf">Generar PDF</button>
 
                             </div>
                     </div>
@@ -190,6 +200,8 @@
                             </div>
                     </div>
 
+                
+                                         
                 </div>
             </div>
             <!----------------------NOTIFICACIONES--------------------------------------- -->
@@ -200,8 +212,48 @@
 
                     <div class="cont_general_all">
                         <div class="notificacion">
-                       
+                                            
                         </div>
+                    </div>
+            </div>
+
+            <!-- ------------------------MODIFICAR MIS DATOS ----------------------------------->
+            <div id="modificar" class="historialcita">
+                <div class="cont_titulo">
+                    <p>Mis datos</p>
+                </div>
+
+                    <div class="cont_general_all_modi">
+                            <form action="./Usuario/actualizar_user.php" method="post" class="actualizar">
+                            <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+                            <div class="part1">
+                                <p class="labels">Telefono</p>
+                                <input type="text" name="telefono" id="input_modi2" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <p class="labels">Correo</p>
+                                <input type="email" name="correo" id="input_modi2" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <p class="labels">Estado civil</p>
+                                <input type="text" name="estado_civil" id="input_modi2" placeholder="<?php echo $_SESSION['telefono']?>">
+                            </div>
+
+                            <div class="cont_part3"> 
+                                <div class="cont_img_subir">
+                                    <button type="submit" class="bto-foto">Subir foto</button>
+                                    <div class="imagen_subir"></div>
+                                </div>   
+                                <button type="submit" class="bto-modi">Actualizar</button>
+
+                            </div>
+
+                            <div class="part2">
+                                <p class="labels">Direccion</p>
+                                <input type="text" name="direccion" id="input_modi" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <p class="labels">Ciudad-Departamento</p>
+                                <input type="text" name="procedencia" id="input_modi" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <p class="labels">Contraseña</p>
+                                <input type="text" name="pass" id="input_modi" placeholder="<?php echo $_SESSION['telefono']?>">
+                            </div>
+                            </form>
+                    
                     </div>
             </div>
 
@@ -466,8 +518,54 @@
                 </div>
             </div>
         </div>
-    
+        <!-------------------------- HISTORIAL CITA ------------------------------- -->
+        <div id="histo" class="historialcita">
+                <div class="cont_titulo">
+                    <p>Historial Citas</p>
+                </div>
+
+                    <div class="cont_general_all">
+                        <div class="notificacion">
+                        <?php
+                        $id_user = $_SESSION['id'];
+                        $sql1 = "SELECT * FROM preagendamiento p
+                                INNER JOIN citas_agendadas ca ON p.id_preagendamiento = ca.id_preagendamiento 
+                                INNER JOIN doctores d ON d.id_doctor = ca.id_DoctorAsignado 
+                                INNER JOIN doctor_consultorio dc ON dc.id_doctor = d.id_doctor 
+                                INNER JOIN usuario u ON u.id_usuario = d.id_usuario 
+                                WHERE p.id_usuario = '$id_user'";
+
+                        $consulta_citas = mysqli_query($conn, $sql1);
+                        ?>
+
+                        <?php if (mysqli_num_rows($consulta_citas) > 0): ?>
+                            <table class="tabla">
+                                <thead>
+                                    <tr>
+                                        <th>Fecha Asignada</th>
+                                        <th>Hora Asignada</th>
+                                        <th>Doctor</th>
+                                        <th>Consultorio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php while ($resultado = mysqli_fetch_array($consulta_citas)): ?>
+                                    <tr>
+                                        <td><?php echo $resultado['FechaAsignada']; ?></td>
+                                        <td><?php echo $resultado['HoraAsignado']; ?></td>
+                                        <td><?php echo $resultado['nombre']; ?></td>
+                                        <td><?php echo $resultado['id_consultorio']; ?></td>
+                                    </tr>
+                                <?php endwhile; ?>
+                                </tbody>
+                            </table>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+            </div>
         </main>
+            <!-- HTML del alerta de todas las notificaciones-->
+
         <div id="custom-alert" class="custom-alert">
             <div class="alert-content">
                 <h2 id="alert-title"></h2>
@@ -479,28 +577,9 @@
     </div>  
     <script src="../Js/User/aler_cita_cancelar.js"></script>
     <script src="../Js/User/desplegar_menu.js"></script>
-    <script src="../Js/User/desplegar_containers.js"></script>
+    <script src="../Js/User/desplegar_containers2.js"></script>
     <script src="../Js/User/desabilitadias_calendario.js"></script>                    
     <script src="../Js/User/ajax.js"></script>
-<script>
-    // document.getElementById('download-pdf').addEventListener('click', function () {
-    //     // Seleccionar el contenedor que deseas convertir a PDF
-    //     var element =  document.getElementById('.historial');
-
-    //     // Opciones de configuración para html2pdf
-    //     var opt = {
-    //         margin:       1,
-    //         filename:     'historial_clinico.pdf',
-    //         image:        { type: 'jpeg', quality: 0.98 },
-    //         html2canvas:  { scale: 2 },
-    //         jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-    //     };
-
-    //     // Generar y descargar el PDF
-    //     html2pdf().set(opt).from(element).save();
-    // });
-
-</script>
 
     <script>
         
@@ -558,5 +637,52 @@
     });
 
 </script>
+    <script>
+
+       document.getElementById('generate-pdf').addEventListener('click', function () {
+            //Opciones de configuración para html2pdf
+            var opt = {
+                margin:       1,
+                filename:     'historial_clinico.pdf',
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            //Generar y descargar el PDF
+            html2pdf().from('<h1>Hola</h1>').set(opt).save();
+        });
+
+    </script>
+    <!-- <script>
+            //    document.addEventListener('DOMContentLoaded', function () {
+            //     document.getElementById('generate-pdf').addEventListener('click', function () {
+            //         // Opciones de configuración para html2pdf
+            //         var opt = {
+            //             margin: 1,
+            //             filename: 'historial_clinico.pdf',
+            //             image: { type: 'jpeg', quality: 0.98 },
+            //             html2canvas: { scale: 2 },
+            //             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            //         };
+
+            //         // Obtener el contenido del contenedor con el id "historial" y generar el PDF
+            //         var element = document.getElementById('historial');
+            //         html2pdf().from(element).set(opt).outputPdf()
+            //         .then(function(pdf) {
+            //             pdf.save();
+            //         })
+            //         .catch(function(error) {
+            //             console.error('Error al generar el PDF:', error);
+            //         });
+            //     });
+            // });
+
+        
+
+
+</script> -->
+<!-- 0ms html2canvas: html2canvas $npm_package_version
+html2pdf.bundle.min.js:6 133ms html2canvas: Canvas renderer initialized (624x569 at 59.60000228881836,0) with scale 2 -->
 </body>
 </html>

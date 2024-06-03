@@ -1,5 +1,11 @@
 <?php
-session_start();    
+session_start();  
+// Comprobamos si hay un parámetro de error en la URL
+if(isset($_GET['error']) && $_GET['error'] == 1) {
+    echo "<script>alert('Los datos son incorrectos. Por favor, inténtalo de nuevo.');</script>";
+    echo "<script>history.replaceState({}, document.title, window.location.pathname);</script>";
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
