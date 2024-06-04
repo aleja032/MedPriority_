@@ -185,6 +185,7 @@ class Consultas{
 
     }
 
+
     public function datos_filtro2($nodoSinHora){
         $array = array();       
         $consul=mysqli_query($this->Conexion,"SELECT * FROM preagendamiento WHERE id_preagendamiento= '$nodoSinHora'");

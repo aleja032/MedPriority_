@@ -37,7 +37,7 @@ class UpdateBD{
         $id_DoctorAsignado =$Nodo->datos["MedicoAsignado"];
         $Prioridad = $Nodo->peso;
 
-        $SQL = mysqli_query($this->Conexion,"UPDATE sugerencias_citas SET fecha='$FechaAsignada' , hora_reservada='$HoraAsignada' , doctor_asignado='$id_DoctorAsignado'  WHERE id_preagendamiento ='$id_preagendamiento'");
+        $SQL = mysqli_query($this->Conexion,"UPDATE sugerencias_citas SET fecha='$FechaAsignada' , hora_reservada='$HoraAsignada' , doctor_asignado='$id_DoctorAsignado' , prioridad_sug='$Prioridad'  WHERE id_preagendamiento ='$id_preagendamiento'");
 
         if($SQL){
 

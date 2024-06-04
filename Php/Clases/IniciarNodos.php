@@ -26,18 +26,18 @@ if(mysqli_num_rows($ejecutar_consulta)>0){
 }
 
 
-echo "NODOS CON HORA ASIGNADA<br><br>";
-$nodosOrdenados = $grafo->AsginarHora();
-$NodosSinHoraAsignada = array();
+// echo "NODOS 3<br><br>";
+// $nodosOrdenados = $grafo->FiltrarNodosNoNull($grafo->filtro2());
+// $NodosSinHoraAsignada = array();
 
-foreach ($nodosOrdenados as $nodo) {
-    echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
-    if ($nodo->datos['HoraAsignada'] === null) {
-        // Si es nula, agregamos el nodo a $NodosSinServir
-        $NodosSinHoraAsignada[] = $nodo;
+// foreach ($nodosOrdenados as $nodo) {
+//     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
+//     if ($nodo->datos['HoraAsignada'] === null) {
+//         // Si es nula, agregamos el nodo a $NodosSinServir
+//         $NodosSinHoraAsignada[] = $nodo;
         
-    }
-}
+//     }
+// }
 
 
 
@@ -95,6 +95,7 @@ echo "NODOS QUE IRAN A CITAS AGENDADAS <br>";
 foreach ($NodosProcesados[0] as $nodo) {
     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
 }
+
 echo "NODOS QUE IRAN A SUGERENCIA CITAS <br>";
 foreach ($NodosProcesados[1] as $nodo) {
     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
@@ -107,7 +108,6 @@ foreach ($NodosProcesados[1] as $nodo) {
 // foreach ($NodosProcesados2 as $nodo) {
 //     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
 // }
-
 
 //INSERTAR O ACTUALIZAR CITAS YA AGENDADAS
 foreach ($NodosProcesados[0] as $nodo) {

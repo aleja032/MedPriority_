@@ -20,6 +20,9 @@
                     case '3':
                         showAlert('Cita cancelada correctamente', 'Ahora tienes disponible el formulario para agendar otra cita.');
                         break;
+                    case '5':
+                        showAlert('Ya tienes una cita agendada');
+                        break;
                     default:
                         showAlert('Error', 'Hubo un problema al enviar la solicitud. Por favor, inténtelo nuevamente.');
                         break;
