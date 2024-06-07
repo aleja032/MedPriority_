@@ -6,8 +6,19 @@
         echo "<script>window.location.href = '../index.php'</script>";
     }else{
         $id_user = $_SESSION['id'];
+        
     }
+   
+    $sacar_query = "SELECT * FROM usuario WHERE id_usuario='$id_user'";
+    $resultado_query = mysqli_query($conn, $sacar_query);
 
+    if($resultado_query) {
+        $usuario = mysqli_fetch_assoc($resultado_query);
+    } else {
+        echo "Error al obtener la información del usuario: " . mysqli_error($conn);
+        exit;
+    }
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,9 +31,10 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-    <link rel="stylesheet" href="../Css/style_user2.css">
+    <link rel="stylesheet" href="../Css/style_user.css">
     <title>MedPriority</title>
 </head>
 <body>
@@ -43,8 +55,14 @@
 
         <div class="datos_barra">
             <div class="name"><p> <?php echo htmlspecialchars($_SESSION['nombre']) ?> </p>  
-            <div class="img_notificaion"></div>   </div>
-            <div class="img_usuario"></div>
+            
+
+                <div class="img_notificaion" ></div>   </div>
+               
+
+                <!-- <div class="img_usuario"></div> -->
+                <div class="img_usuario" style="background-image: url('../<?php echo htmlspecialchars($usuario['imagen']); ?>');"></div>
+
         </div>
 
     </div>
@@ -212,51 +230,107 @@
                 </div>
 
                     <div class="cont_general_all">
-                        <div class="notificacion">
-                                            
+                        <div class="notificacion2">
+                        <?php
+                            $sql2 = "SELECT * FROM preagendamiento p
+                                    INNER JOIN sugerencias_citas sc ON p.id_preagendamiento = sc.id_preagendamiento 
+                                    WHERE p.id_usuario = '$id_user'";
+
+                            $consulta_sugerencias = mysqli_query($conn, $sql2);
+                            ?>
+
+                            <?php if (mysqli_num_rows($consulta_sugerencias) > 0): ?>
+                                <table class="tabla">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Hora</th>
+                                            <th>Estado</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php while ($resultado = mysqli_fetch_array($consulta_sugerencias)): ?>
+                                        <tr>
+                                            <td><?php echo $resultado['fecha']; ?></td>
+                                            <td><?php echo $resultado['hora_reservada']; ?></td>
+                                            <td><?php echo $resultado['estado']; ?></td>
+                                            <td>
+                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_sugerencia" value="<?php echo $id_user; ?>">
+                                                    <button type="submit" class="boton_tabla">Agendar</button>
+                                                </form>
+                                                <form method="POST" action="liberar_citas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
+                                                    <button type="submit" class="boton_tabla_eli">No Agendar</button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endwhile; ?>
+                                    </tbody>
+                                </table>
+                            <?php else: ?>
+                                <div class="no-citas">
+                                    <p>No se encontraron citas para este usuario.</p>
+                                </div>
+                            <?php endif; ?>
+                
+                       
                         </div>
                     </div>
             </div>
 
             <!-- ------------------------MODIFICAR MIS DATOS ----------------------------------->
             <div id="modificar" class="historialcita">
-                <div class="cont_titulo">
-                    <p>Mis datos</p>
-                </div>
+                <?php
+                $sql2 = "SELECT * FROM usuario WHERE id_usuario = '$id_user'";
+                $consulta = mysqli_query($conn, $sql2);
 
+                if(mysqli_num_rows($consulta) > 0){
+                    $datos = mysqli_fetch_assoc($consulta);
+                ?>
+                    <div class="cont_titulo">
+                        <p>Mis datos</p>
+                    </div>
                     <div class="cont_general_all_modi">
-                            <form action="./Usuario/actualizar_user.php" method="post" class="actualizar">
+                        <form action="./Usuario/actualizar_user.php" method="post" class="actualizar" enctype="multipart/form-data">
                             <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
                             <div class="part1">
                                 <p class="labels">Telefono</p>
-                                <input type="text" name="telefono" id="input_modi2" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <input type="text" name="telefono" id="input_modi2" value="<?php echo $datos['telefono']; ?>">
                                 <p class="labels">Correo</p>
-                                <input type="email" name="correo" id="input_modi2" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <input type="email" name="correo" id="input_modi2" value="<?php echo htmlspecialchars($datos['correo']); ?>">
                                 <p class="labels">Estado civil</p>
-                                <input type="text" name="estado_civil" id="input_modi2" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <input type="text" name="estado_civil" id="input_modi2" value="<?php echo htmlspecialchars($datos['estado_civil']); ?>">
                             </div>
 
-                            <div class="cont_part3"> 
-                                <div class="cont_img_subir">
-                                    <button type="submit" class="bto-foto">Subir foto</button>
-                                    <div class="imagen_subir"></div>
-                                </div>   
-                                <button type="submit" class="bto-modi">Actualizar</button>
-
+                            <div class="cont_part3">
+                                            <div class="cont_img_subir">
+                                                <input type="file" id="input-foto" name="foto" accept="image/*" style="display:none;">
+                                                <button type="button" class="bto-foto" onclick="document.getElementById('input-foto').click();">Subir foto</button>
+                                                <div class="imagen_subir"></div>
+                                                
+                                            </div>
+                                            <button type="submit" class="bto-modi">Actualizar</button>
                             </div>
 
                             <div class="part2">
                                 <p class="labels">Direccion</p>
-                                <input type="text" name="direccion" id="input_modi" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <input type="text" name="direccion" id="input_modi" value="<?php echo htmlspecialchars($datos['direccion']); ?>">
                                 <p class="labels">Ciudad-Departamento</p>
-                                <input type="text" name="procedencia" id="input_modi" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <input type="text" name="procedencia" id="input_modi" value="<?php echo htmlspecialchars($datos['procedencia']); ?>">
                                 <p class="labels">Contraseña</p>
-                                <input type="text" name="pass" id="input_modi" placeholder="<?php echo $_SESSION['telefono']?>">
+                                <input type="text" name="pass" id="input_modi" value="<?php echo htmlspecialchars($datos['contrasena']); ?>">
                             </div>
-                            </form>
-                    
+                        </form>
                     </div>
+                <?php
+                } else {
+                    echo "<p>No se encontraron datos para este usuario.</p>";
+                }
+                ?>
             </div>
+                    
 
             <!----------------------Agendar Cita--------------------------------------- -->
 
@@ -349,7 +423,6 @@
                         <div class="cont_preguntas3" id="fecha">
                             <p>Fecha</p>
                             <input type="date" id="fecha1" name="fecha"  min="<?php echo date('Y-m-d', strtotime('+2 day')); ?>" required>
-
                         </div>
                         <div class="cont_preguntas3" id="hora_inicio">
                             <p>Hora Inicio</p>
@@ -426,7 +499,7 @@
             </div>
 
             <div class="cont_general_all">
-                <div class="notificacion">
+                <div class="notificacion2">
 
                 <?php
                 $id_user = $_SESSION['id'];
@@ -463,7 +536,7 @@
                                 <td>Agendada</td>
                                 <td><form method="POST" action="Usuario/cancelar_cita.php" style="display:inline;">
                                     <input type="hidden" name="id_preagendamiento" value="<?php echo $resultado['id_preagendamiento']; ?>">
-                                    <button type="submit">Cancelar Cita</button>
+                                    <button type="submit" class="boton_tabla_eli">Cancelar Cita</button>
                                 </form></td>
                             </tr>
                         <?php endwhile; ?>
@@ -499,11 +572,11 @@
                                             <td>
                                                 <form method="POST" action="citas_confirmadas.php" style="display:inline;">
                                                     <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-                                                    <button type="submit">Agendar</button>
+                                                    <button type="submit" class="boton_tabla">Agendar</button>
                                                 </form>
                                                 <form method="POST" action="liberar_citas.php" style="display:inline;">
                                                     <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-                                                    <button type="submit">No Agendar</button>
+                                                    <button type="submit" class="boton_tabla">No Agendar</button>
                                                 </form>
                                             </td>
                                         </tr>
@@ -526,7 +599,7 @@
                 </div>
 
                     <div class="cont_general_all">
-                        <div class="notificacion">
+                        <div class="notificacion2">
                         <?php
                         $id_user = $_SESSION['id'];
                         $sql1 = "SELECT * FROM preagendamiento p
@@ -552,7 +625,7 @@
                                 <tbody>
                                 <?php while ($resultado = mysqli_fetch_array($consulta_citas)): ?>
                                     <tr>
-                                        <td><?php echo $resultado['FechaAsignada']; ?></td>
+                                        <td class="t"><?php echo $resultado['FechaAsignada']; ?></td>
                                         <td><?php echo $resultado['HoraAsignado']; ?></td>
                                         <td><?php echo $resultado['nombre']; ?></td>
                                         <td><?php echo $resultado['id_consultorio']; ?></td>
@@ -574,14 +647,81 @@
                 <button id="close-alert">Aceptar</button>
             </div>
         </div>
+        
+                                  
 
     </div>  
-    <script src="../Js/User/aler_cita_cancelar.js"></script>
+    <script src="../Js/User/alertas.js"></script>
     <script src="../Js/User/desplegar_menu.js"></script>
     <script src="../Js/User/desplegar_containers2.js"></script>
     <script src="../Js/User/desabilitadias_calendario.js"></script>                    
     <script src="../Js/User/ajax.js"></script>
+    <script src="../Js/User/cargar_img.js"></script>
+<script>
+    // document.getElementById('download-pdf').addEventListener('click', function () {
+        // Seleccionar el contenedor que deseas convertir a PDF
+        // var element =  document.getElementById('historial');
 
+        // // Opciones de configuración para html2pdf
+        // var opt = {
+        //     margin:       1,
+        //     filename:     'historial_clinico.pdf',
+        //     image:        { type: 'jpeg', quality: 0.98 },
+        //     html2canvas:  { scale: 2 },
+        //     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+        // };
+
+        // // Generar y descargar el PDF
+        // html2pdf().set(opt).from(element).save();
+            // window.jsPDF = window.jspdf.jsPDF;
+
+
+            //     // Crear una nueva instancia de jsPDF
+            // const doc = new jsPDF();
+
+            //     // Seleccionar el contenido HTML que queremos convertir en PDF
+            // const content = document.getElementById('historial').innerHTML;
+
+            //     // Agregar el contenido HTML al PDF
+            // doc.text(content, 10, 10);
+
+            //     // Descargar el PDF
+            // doc.save('HistoriaClinica.pdf');
+
+    //         const content = document.getElementById('historial');
+
+    //         html2canvas(content).then(canvas => {
+    //             const imgData = canvas.toDataURL('image/png');
+    //             const doc = new jsPDF();
+
+    //             const imgProps = doc.getImageProperties(imgData);
+    //             const pdfWidth = doc.internal.pageSize.getWidth();
+    //             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+    //             doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+    //             doc.save('documento.pdf');
+    //         });
+            
+    // });
+
+//     window.jsPDF = window.jspdf.jsPDF;
+
+// function generatePDF() {
+//     // Crear una nueva instancia de jsPDF
+//     const doc = new jsPDF();
+
+//     // Seleccionar el contenido HTML que queremos convertir en PDF
+//     const content = document.getElementById('historial').innerHTML;
+
+//     // Agregar el contenido HTML al PDF
+//     doc.text(content, 10, 10);
+
+//     // Descargar el PDF
+//     doc.save('documento.pdf');
+//}
+
+</script>
+<!-- CAMBIO DE HISTORIA CLINICA DEPENDIENDO EL TIPO DE CITA -->
     <script>
         
           document.addEventListener('DOMContentLoaded', function() {
@@ -688,5 +828,37 @@
 </script> -->
 <!-- 0ms html2canvas: html2canvas $npm_package_version
 html2pdf.bundle.min.js:6 133ms html2canvas: Canvas renderer initialized (624x569 at 59.60000228881836,0) with scale 2 -->
+
+<?php
+// $sql="SELECT * FROM preagendamiento WHERE id_usuario='$id_user'";
+// $consulta=mysqli_query($conn,$sql);
+// if(mysqli_num_rows($consulta)>0){
+//     $datos= mysqli_fetch_array($consulta);
+//     $scheduledDates =  $dato[];
+// }
+
+
+?>
+<script>
+    // Pass the PHP array to JavaScript no dejar agendar fechas  que el usuario ya tiene agendado
+    // const scheduledDates = <?php // echo json_encode($scheduledDates); ?>;
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const dateInput = document.getElementById('fecha1');
+
+        dateInput.addEventListener('input', function() {
+            const selectedDate = this.value;
+            if (scheduledDates.includes(selectedDate)) {
+                alert('This date is already scheduled. Please choose another date.');
+                this.value = '';
+            }
+        });
+
+        dateInput.addEventListener('focus', function() {
+            this.setAttribute('type', 'text');
+            this.setAttribute('type', 'date');
+        });
+    });
+</script>
 </body>
 </html>
