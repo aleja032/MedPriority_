@@ -571,6 +571,7 @@
 
                 doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
                 doc.save('documento.pdf');
+                
             });
             
     });
