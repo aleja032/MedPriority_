@@ -38,11 +38,12 @@ if(mysqli_num_rows($consulta)>0){
     else if($datos['id_rol']==2){
        // $_SESSION['id_patologia']=$datos[''];  INNER JOIN historia_clinica ON historio_clinica.id_usuario= usuario.id_usuario
         // echo "<script> window.location='../index.php'</script>";
-                echo "<script>window.location.href = '../index.php?success=1'</script>";
+        echo "<script>window.location.href = '../index.php?success=1'</script>";
     }else{
         echo "Ventana doctor";
     }
-
+}else{
+    echo "<script>window.location.href = '../index.php?success=3'</script>";
 }
 
 ?>

@@ -14,6 +14,7 @@ if(isset($_POST['opcion_actual']) && isset($_POST['id_user'])) {
 
             while($datos = $consulta->fetch_assoc()){
                 // $result .= ' <div class="title2">ANAMNESIS</div>';
+                
 
                 $result .= '<p class="negrita2">Sintomático Respiratorio: </p><p class="demas">' . $datos['sintomatico_respiratorio'] . '</p>';
                 $result .= '<p class="negrita2">Enfermedad Actual: </p><p class="demas">' . $datos['enfermedad_actual'] . '</p>';
@@ -32,9 +33,6 @@ if(isset($_POST['opcion_actual']) && isset($_POST['id_user'])) {
                 $result .= '<div class="cont_gravedad">';
                 $result .= '<p class="negrita_grave">Gravedad-patologia:</p><p>' . $datos['puntuacion'] . '</p>';
                 $result .= '</div>';
-
-                $result .= '</div>';
-
 
             }
             
