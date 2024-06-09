@@ -30,11 +30,14 @@
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-    <link rel="stylesheet" href="../Css/style_user.css">
+    <link rel="stylesheet" href="../Css/style_user1.css">
     <title>MedPriority</title>
 </head>
 <body>
@@ -214,7 +217,6 @@
 
                             <div class="descripcion_paciente" id="anamesis">
 
-                            <!-- <div class="title2">ASPECTO Y ESTADO GENERAL DEL PACIENTE</div> -->
 
                             </div>
                     </div>
@@ -658,176 +660,82 @@
     <script src="../Js/User/ajax.js"></script>
     <script src="../Js/User/cargar_img.js"></script>
 <script>
-    // document.getElementById('download-pdf').addEventListener('click', function () {
-        // Seleccionar el contenedor que deseas convertir a PDF
-        // var element =  document.getElementById('historial');
+    document.addEventListener('DOMContentLoaded', function() {
+    function enviarOpcionSeleccionada(opcionSeleccionada) {
+        $.ajax({
+            url: "./Usuario/historia_clinica.php",
+            type: "POST",
+            data: { 
+                opcion_actual: opcionSeleccionada,
+                id_user: <?php echo json_encode($id_user); ?>
+            },
+            success: function(respon3) {
+                document.getElementById('datos').innerHTML = respon3;
+            },
+            error: function() {
+                alert("Error al cargar la opción seleccionada");
+            }
+        });
+    }
 
-        // // Opciones de configuración para html2pdf
-        // var opt = {
-        //     margin:       1,
-        //     filename:     'historial_clinico.pdf',
-        //     image:        { type: 'jpeg', quality: 0.98 },
-        //     html2canvas:  { scale: 2 },
-        //     jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-        // };
+    function enviarOpcionSeleccionada2(opcionSeleccionada) {
+        $.ajax({
+            url: "./Usuario/enfermedades.php",
+            type: "POST",
+            data: { 
+                opcion_actual: opcionSeleccionada,
+                id_user: <?php echo json_encode($id_user); ?>
+            },
+            success: function(respon3) {
+                document.getElementById('anamesis').innerHTML = respon3;
+            },
+            error: function() {
+                alert("Error al cargar la opción seleccionada");
+            }
+        });
+    }
 
-        // // Generar y descargar el PDF
-        // html2pdf().set(opt).from(element).save();
-            // window.jsPDF = window.jspdf.jsPDF;
+    const opcionPorDefecto = document.querySelector('input[name="consulta"]:checked').value;
+    enviarOpcionSeleccionada(opcionPorDefecto);
+    enviarOpcionSeleccionada2(opcionPorDefecto);
 
-
-            //     // Crear una nueva instancia de jsPDF
-            // const doc = new jsPDF();
-
-            //     // Seleccionar el contenido HTML que queremos convertir en PDF
-            // const content = document.getElementById('historial').innerHTML;
-
-            //     // Agregar el contenido HTML al PDF
-            // doc.text(content, 10, 10);
-
-            //     // Descargar el PDF
-            // doc.save('HistoriaClinica.pdf');
-
-    //         const content = document.getElementById('historial');
-
-    //         html2canvas(content).then(canvas => {
-    //             const imgData = canvas.toDataURL('image/png');
-    //             const doc = new jsPDF();
-
-    //             const imgProps = doc.getImageProperties(imgData);
-    //             const pdfWidth = doc.internal.pageSize.getWidth();
-    //             const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-    //             doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-    //             doc.save('documento.pdf');
-    //         });
-            
-    // });
-
-//     window.jsPDF = window.jspdf.jsPDF;
-
-// function generatePDF() {
-//     // Crear una nueva instancia de jsPDF
-//     const doc = new jsPDF();
-
-//     // Seleccionar el contenido HTML que queremos convertir en PDF
-//     const content = document.getElementById('historial').innerHTML;
-
-//     // Agregar el contenido HTML al PDF
-//     doc.text(content, 10, 10);
-
-//     // Descargar el PDF
-//     doc.save('documento.pdf');
-//}
-
-</script>
-<!-- CAMBIO DE HISTORIA CLINICA DEPENDIENDO EL TIPO DE CITA -->
-    <script>
-        
-          document.addEventListener('DOMContentLoaded', function() {
-        // Función para enviar la opción seleccionada
-        function enviarOpcionSeleccionada(opcionSeleccionada) {
-            $.ajax({
-                url: "./Usuario/historia_clinica.php",
-                type: "POST",
-                data: { 
-                    opcion_actual: opcionSeleccionada,
-                    id_user: <?php echo json_encode($id_user); ?>
-                },
-                success: function(respon3) {
-                    console.log("Respuesta del servidor:", respon3);
-                    document.getElementById('datos').innerHTML = respon3;
-                },
-                error: function() {
-                    alert("Error al cargar la opción seleccionada");
-                }
-            });
-        }
-        function enviarOpcionSeleccionada2(opcionSeleccionada) {
-            $.ajax({
-                url: "./Usuario/enfermedades.php",
-                type: "POST",
-                data: { 
-                    opcion_actual: opcionSeleccionada,
-                    id_user: <?php echo json_encode($id_user); ?>
-                },
-                success: function(respon3) {
-                    console.log("Respuesta del servidor2-------:", respon3);
-                    document.getElementById('anamesis').innerHTML = respon3;
-                },
-                error: function() {
-                    alert("Error al cargar la opción seleccionada");
-                }
-            });
-        }
-        // Enviar la opción por defecto al cargar la página
-        const opcionPorDefecto = document.querySelector('input[name="consulta"]:checked').value;
-        enviarOpcionSeleccionada(opcionPorDefecto);
-        enviarOpcionSeleccionada2(opcionPorDefecto);
-
-        // Asignar evento click a los radios
-        document.querySelectorAll('input[name="consulta"]').forEach(radio => {
-            radio.addEventListener('click', () => {
-                const opcionSeleccionada = radio.value;
-                console.log('Valor seleccionado:', opcionSeleccionada);
-                enviarOpcionSeleccionada(opcionSeleccionada);
-                enviarOpcionSeleccionada2(opcionSeleccionada);
-
-            });
+    document.querySelectorAll('input[name="consulta"]').forEach(radio => {
+        radio.addEventListener('click', () => {
+            const opcionSeleccionada = radio.value;
+            enviarOpcionSeleccionada(opcionSeleccionada);
+            enviarOpcionSeleccionada2(opcionSeleccionada);
         });
     });
 
+    document.getElementById('generate-pdf').addEventListener('click', () => {
+        const historialElement = document.getElementById('historial');
 
+        // Añadir clase CSS antes de la captura
+        historialElement.classList.add('expand-height');
+        historialElement.classList.add('pdf-style');
 
+        html2canvas(historialElement, {
+            useCORS: true
+        }).then(canvas => {
+            // Quitar clase CSS después de la captura
+            historialElement.classList.remove('expand-height');
+            historialElement.classList.remove('pdf-style');
+
+            const imgData = canvas.toDataURL('image/png');
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF('p', 'mm', 'a4');
+            const imgProps = doc.getImageProperties(imgData);
+            const pdfWidth = doc.internal.pageSize.getWidth();
+            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+
+            doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+            doc.save('historia_clinica.pdf');
+        });
+    });
+});
 
 </script>
-    <script>
 
-       document.getElementById('generate-pdf').addEventListener('click', function () {
-            //Opciones de configuración para html2pdf
-            var opt = {
-                margin:       1,
-                filename:     'historial_clinico.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
-            };
-
-            //Generar y descargar el PDF
-            html2pdf().from('<h1>Hola</h1>').set(opt).save();
-        });
-
-    </script>
-    <!-- <script>
-            //    document.addEventListener('DOMContentLoaded', function () {
-            //     document.getElementById('generate-pdf').addEventListener('click', function () {
-            //         // Opciones de configuración para html2pdf
-            //         var opt = {
-            //             margin: 1,
-            //             filename: 'historial_clinico.pdf',
-            //             image: { type: 'jpeg', quality: 0.98 },
-            //             html2canvas: { scale: 2 },
-            //             jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-            //         };
-
-            //         // Obtener el contenido del contenedor con el id "historial" y generar el PDF
-            //         var element = document.getElementById('historial');
-            //         html2pdf().from(element).set(opt).outputPdf()
-            //         .then(function(pdf) {
-            //             pdf.save();
-            //         })
-            //         .catch(function(error) {
-            //             console.error('Error al generar el PDF:', error);
-            //         });
-            //     });
-            // });
-
-        
-
-
-</script> -->
-<!-- 0ms html2canvas: html2canvas $npm_package_version
-html2pdf.bundle.min.js:6 133ms html2canvas: Canvas renderer initialized (624x569 at 59.60000228881836,0) with scale 2 -->
 
 <?php
 // $sql="SELECT * FROM preagendamiento WHERE id_usuario='$id_user'";
@@ -836,7 +744,6 @@ html2pdf.bundle.min.js:6 133ms html2canvas: Canvas renderer initialized (624x569
 //     $datos= mysqli_fetch_array($consulta);
 //     $scheduledDates =  $dato[];
 // }
-
 
 ?>
 <script>
@@ -860,5 +767,6 @@ html2pdf.bundle.min.js:6 133ms html2canvas: Canvas renderer initialized (624x569
         });
     });
 </script>
+
 </body>
 </html>
