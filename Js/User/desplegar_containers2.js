@@ -5,13 +5,18 @@ const sections = {
     historia_clinica: document.querySelector('#prueba2'),
     add_cita: document.querySelector('#agregar_cita'),
     estado_cita: document.querySelector('#estadocita'),
+    modificar_datos: document.querySelector('#modificar'),
+    historial: document.querySelector('#histo'),
+
 };
 
 const links = {
     notificacion: document.querySelector('#notificacion'),
     historia_clinica: document.querySelector('#historia_clinica'),
     add_cita: document.querySelector('#add_cita'),
-    estado_cita: document.querySelector('#estado_cita')
+    estado_cita: document.querySelector('#estado_cita'),
+    modificar_datos: document.querySelector('#modificar_datos'),
+    historial: document.querySelector('#historial_cita'),
 };
 
 // Función para mostrar una sección y ocultar las demás
@@ -32,6 +37,10 @@ links.notificacion.addEventListener('click', () => showSection('notificacion'));
 links.historia_clinica.addEventListener('click', () => showSection('historia_clinica'));
 links.add_cita.addEventListener('click', () => showSection('add_cita'));
 links.estado_cita.addEventListener('click', () => showSection('estado_cita'));
+links.modificar_datos.addEventListener('click', () => showSection('modificar_datos'));
+links.historial.addEventListener('click', () => showSection('historial'));
+
+
 
 // Por defecto, mostramos la sección de Agendar citas al cargar la página
 showSection('add_cita');

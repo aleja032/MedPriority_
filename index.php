@@ -1,12 +1,16 @@
 <?php
-session_start();    
+session_start();  
+// Comprobamos si hay un parámetro de error en la URL
+
+$success = isset($_GET['success']) ? $_GET['success'] : '';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="Css/style_index2.css">
+    <link rel="stylesheet" href="Css/style_index.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
@@ -269,13 +273,13 @@ session_start();
     <div class="alerta_modal" id="alerta">
         <div class="cont-alert">
             <div class="icon"><i class="fa-solid fa-exclamation"></i></div>
-            <div class="mensaje"><p>Debe Iniciar Sesión </p></div>
-            <button type="submit" id="close1" onclick="cerrar2()" >Ok</button>
+            <div class="mensaje" id="alert-message"></div>
+            <button type="submit" id="close1">Ok</button>
         </div>
     </div>
 </body>
 
 </html>
 <script src="./Js/Slider.js"></script> <!--slide medico aun defectuoso cada que se recarga la pagina se alcanza a mirar el section de odontologia que se supone que esta escondido-->
-<script src="./Js/alertas1.js"></script> <!--abrir debe iniciar sesion-->
+<script src="./Js/Index/alertas.js"></script> <!--abrir debe iniciar sesion-->
 <script src="./Js/abrir_iniciar_sesion1.js"></script> <!--abrir formulario-->

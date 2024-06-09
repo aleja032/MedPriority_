@@ -39,37 +39,31 @@ if(mysqli_num_rows($consulta2)>0){
 $suma = $point_patologia + $point_embarazo + $point_edad;
 $fechaHoraActual = date('Y-m-d H:i:s');
 $ahora_mismo ="".$fechaHoraActual;
-$validacion=mysqli_query($conn,"SELECT * FROM preagendamiento WHERE id_usuario='$id_user'");
-    if(mysqli_num_rows($validacion)>0){
-        header("Location: ../user.php?success=5");
-    }else{
-        $sql_insertar_cita = " INSERT INTO preagendamiento (id_usuario,id_tipo_cita,fecha,fecha_2,hora_inicio,valoracion,hora_fin,hora_inicio_2,hora_fin_2,registro)  VALUES ('$id_user','$id_tipo_cita','$fecha','$fecha2','$hora_inicio','$suma','$hora_fin','$hora_inicio2','$hora_fin2','$ahora_mismo')";
-        $ejecutar_consulta = mysqli_query($conn,$sql_insertar_cita);
-        if($ejecutar_consulta){
-            $sql_ordenar_citas = " SELECT * FROM preagendamiento";
-            $consulta_orden = mysqli_query($conn,$sql_ordenar_citas);
-            if(mysqli_num_rows($consulta_orden)>0){
-                $array_consulta = mysqli_fetch_array($consulta_orden);
-                
-                $a= count($array_consulta);
-                // $to="riseofrochy@gmail.com";
-                // $subject="Prueba correo";
-                // $message="este es mi primer correo de prueba";
-                // $headers='From: alejandra03fajardo@gmail.com'."\r\n".'Reply-To: fajardo@gmail.com';
-                // if(mail($to,$subject,$message,$headers)){
-                //     echo"Se ha mandado el correo exitosamente $to";
-                // }else{
-                //     echo"Algo paso :(";
-                // }
-            
-                echo "<script>window.location.href = '../user.php?success=1'</script>";
-            }
-        }else{
-            header("Location: ./user.php?success=0");
-    
-            echo "no sirve";
-        }
+$sql_insertar_cita = " INSERT INTO preagendamiento (id_usuario,id_tipo_cita,fecha,fecha_2,hora_inicio,valoracion,hora_fin,hora_inicio_2,hora_fin_2,registro)  VALUES ('$id_user','$id_tipo_cita','$fecha','$fecha2','$hora_inicio','$suma','$hora_fin','$hora_inicio2','$hora_fin2','$ahora_mismo')";
+$ejecutar_consulta = mysqli_query($conn,$sql_insertar_cita);
+if($ejecutar_consulta){
+    $sql_ordenar_citas = " SELECT * FROM preagendamiento";
+    $consulta_orden = mysqli_query($conn,$sql_ordenar_citas);
+    if(mysqli_num_rows($consulta_orden)>0){
+        $array_consulta = mysqli_fetch_array($consulta_orden);
+        
+        $a= count($array_consulta);
+        // $to="riseofrochy@gmail.com";
+        // $subject="Prueba correo";
+        // $message="este es mi primer correo de prueba";
+        // $headers='From: alejandra03fajardo@gmail.com'."\r\n".'Reply-To: fajardo@gmail.com';
+        // if(mail($to,$subject,$message,$headers)){
+        //     echo"Se ha mandado el correo exitosamente $to";
+        // }else{
+        //     echo"Algo paso :(";
+        // }
+       
+        echo "<script>window.location.href = '../user.php?success=1'</script>";
     }
+}else{
+    header("Location: ./user.php?success=0");
 
+    echo "no sirve";
+}
 
 ?>

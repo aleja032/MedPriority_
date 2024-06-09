@@ -67,7 +67,7 @@ body {
     align-items: center;
 }
 .name p{
-    width: 60%;
+    width: 50%;
     font-size: 110%;
 }
 .img_notificaion
@@ -77,16 +77,16 @@ body {
     background-image: url(../Img/notification.png);
     background-size: calc(100%)calc(100%);
     background-repeat: no-repeat;
-
 }
 
 
 .img_usuario{
-    width: 18%;
-    height: 43%;
+    width: 23%;
+    height: 50%;
     background-image: url(../Img/profile-user_64572.png);
     background-size: calc(100%)calc(100%);
     background-repeat: no-repeat;
+    border-radius: 20px;
 
 }
 .congeneral{
@@ -107,7 +107,7 @@ body {
     display: flex;
     justify-content: center;
     width: 90%;
-    height: 17%;
+    height: 15%;
     border-bottom: 1px solid rgba(0, 0, 0, 0.49);
 }
 .inicio a{
@@ -163,7 +163,7 @@ body {
 .combo1_notificacion{
     display: flex;
     width: 100%;
-    height: 12%;
+    height: 8%;
 }
 .combo1_notificacion a{
     display: flex;
@@ -175,15 +175,20 @@ body {
 }
 
 .combo1_notificacion .con_imagen2{
-    width:12%;
-    height: 47%;
+    width:13%;
+    height: 75%;
     background-image: url(../Img/notification.png);
     background-size: calc(100%)calc(100%);
 }
-
+.combo1_notificacion .con_imagen_editar{
+    width:13%;
+    height: 75%;
+    background-image: url(../Img/edit.png);
+    background-size: calc(100%)calc(100%);
+}
 .combo1_notificacion .con_imagen3{
-    width:12%;
-    height: 47%;
+    width:13%;
+    height: 75%;
     background-image: url(../Img/historiaclinica.png);
     background-size: calc(100%)calc(100%);
 }
@@ -203,8 +208,8 @@ body {
     cursor: pointer;
 }
 .combo1_notificacion .con_imagen4{
-    width:16%;
-    height: 60%;
+    width:17%;
+    height: 83%;
     background-image: url(../Img/cita1.png);
     background-size: calc(100%)calc(100%);
 }
@@ -335,7 +340,7 @@ main{
     flex-direction: column;
     justify-content: space-between;
 }
-form{
+.contenedor_formulario{
     height: 80%;
     display: flex;
     flex-direction: column;
@@ -405,6 +410,96 @@ input, select{
 .logo label i{
     display: none;
 }
+/* CONTENIDO MODIFICAR MIIS DATOS */
+.cont_general_all_modi{
+    width: 95%;
+    height: 80%;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url(../Img/corner-7.png);
+    box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;
+    background-size: calc(100%)calc(100%);
+    background-repeat: no-repeat; 
+    background-color: white;
+}
+
+.actualizar {
+    display: flex;
+    justify-content: end;
+    width: 90%;
+    height: 90%;
+}
+.cont_img_subir{
+    height: 60%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.imagen_subir{
+    width: 70%;
+    height: 55%;
+    background-image: url(../Img/profile-user_64572.png);
+    background-size: calc(100%) calc(100%);
+    background-repeat: no-repeat;
+}
+
+.cont_part3{
+    width: 25%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.part1{
+    width: 28%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.part2{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#input_modi{
+    height: 8%;
+    width: 70%;
+}
+#input_modi2{
+    height: 8%;
+    width: 95%;
+}
+.labels{
+    height: 10%;
+    display: flex;
+    align-items: center
+    }
+.bto-modi{
+    height: 10%;
+    width: 55%;
+    background-color: #10AE16;
+    /* outline: none; */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.bto-foto{
+    height: 8%;
+    width: 50%;
+    background-color: #009d05;
+    /* outline: none; */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+
+}
 /*-------------contenido de historia clinica -------------------------*/
 
 .cont_general_all2{
@@ -451,7 +546,7 @@ input, select{
 .historial_clinico{
     /* border: 1px solid; */
     width: 95%;
-    height: 100%;
+    /* height: 100%; */
     background-color: #fafafa; 
     /*backdrop-filter: blur(1px); /* Ajusta el valor de blur según desees */
     /* opacity: 0.5;  */
@@ -537,24 +632,24 @@ input, select{
 .cont-2{
     display: flex;
     font-size: 95%;
-    height: 50%;
+    /* height: 50%; */
     align-items: center;
 }
 .title2{
     display: flex;
     align-items: center;
     font-weight: bold;
-    height: 50%;
+    /* height: 50%; */
     font-size: 90%;
     background-color: #f2f2f2;
 }
 .descripcion_paciente{
-    height: 20%;
+    /* height: 20%; */
     width: 95%;
 }
 .negrita2{
     width: 36%;
-    height: 40%;
+    /* height: 40%; */
     display: flex;
     align-items: center;
     font-weight: bold;
@@ -567,58 +662,78 @@ input, select{
 .cont_gravedad{
     width: 50%;
     display: flex;
-    height: 15%;
+    /* height: 15%; */
     margin-bottom: 1%;
 }
 .demas{
     font-size: 90%;
 }
+
 /* Estilos del Alerta tanto para agendar como para eliminar*/
+
 .custom-alert {
     display: none;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    width: 100%;
     background-color: white;
-    padding: 2.5%;
     border-radius: 5%;
     box-shadow: 0 0 3% rgba(0, 0, 0, 0.2);
-    max-width: 80%; /* Ancho máximo ajustado a un porcentaje */
-    width: 50%; /* Ancho ajustado a un porcentaje */
-    text-align: center;
+    width: 200%;
+    height: 100%;
+    background-color: transparent;
+    backdrop-filter: blur(5px);
 }
-#alert-message, #alert-title{
-    margin:2%;
-}
+
 .alert-content {
+    text-align: center;
+    font-size: 110%;
+    width: 15%;
+    height: 30%;
+    position: fixed;
+    left: 15%;
+    top: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: white;
+    border-radius: 30px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+}
+/* .alert-content {
     margin-bottom: 5%;
     text-align: center;
     font-size: 110%;
-}
+} */
 
 #close-alert {
-    margin-top: 2%;
-    padding:2%;
+      /* margin-top: 2%; */
+    /* padding: 2%; */
     background-color: #10AE16;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-size: 105%;
+    width: 50%;
+    height: 20%;
 }
 
 #close-alert:hover {
-    background-color: #1acd81;
+    background-color: #0bc649;
 }
 /*------------------tabla estado cita-----------------------*/
 .cont_general_all {
-    max-width: 100%;
     overflow-x: auto;
 }
-
+/* .notificacion2{
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+}
 .tabla {
-    width: 100%;
+    width: 95%;
+    margin-top: 2%;
     border-collapse: collapse;
     border-radius: 20px;
 
@@ -635,13 +750,75 @@ td{
 }
 .tabla th {
     background-color: #f2f2f2;
+} */
+.notificacion2 {
+    display: flex;
+    justify-content: center;
 }
+
+.tabla {
+    width: 95%;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.tabla th, .tabla td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+.tabla th {
+    background-color: #EAF0F7; /* Color azul para el encabezado */
+    font-weight: bold;
+}
+
+.tabla tr:nth-child(even) {
+    background-color: #F3F5FA; /* Color de fondo para filas pares */
+}
+
+.tabla tr:hover {
+    background-color: #e5e9ec; /* Color de fondo al pasar el mouse */
+}
+.boton_tabla{
+    border-radius: 10px;
+    padding: 6%;
+    background-color:#6ECA78 ;
+    color: white;
+    border: none;
+}   
+.boton_tabla_eli{
+    border-radius: 10px;
+    padding: 6%;
+    background-color:#e43535 ;
+    color: white;
+    border: none;
+}
+
 .no-citas p{
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 5%;
 }
+
+.pdf-style {
+    /* Estilos específicos para el PDF */
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 10px;
+    }
+
+.expand-height {
+    height: 300vh !important; 
+    overflow: none !important;
+}
+
+
 @media (max-width: 768px)  {
     .conheader{
         height: 15%;
@@ -706,7 +883,7 @@ td{
         color: black;
     }
     .inicio{
-        height: 15%;
+        height: 8%;
     }
     .inicio a{
         justify-content: center;
@@ -742,9 +919,21 @@ td{
     width: 80%;
 
    }
-
+   .submenu{
+    left: 10%;
+   }
+   .con_imagen{
+    width: 15%;
+    height: 65%;
+   }
    .congeneral{
     width: 95%;
+   }
+   .cont_general_all_modi{
+    width: 100%;
+   }
+   .actualizar{
+    width: 100%;
    }
     .cont_general_all{
         width: 100%;
@@ -766,5 +955,14 @@ td{
 
     .tabla th, .tabla td {
         font-size: 14px; /* Reduce el tamaño de fuente en dispositivos más pequeños */
+    }
+    .notificacion2{
+        justify-content: start;
+    }
+    .close_sesion{
+        height: 10%;
+    }
+    .texto_sesion{
+        justify-content: center;
     }
 }
