@@ -258,15 +258,9 @@
                                             <td><?php echo $resultado['hora_reservada']; ?></td>
                                             <td><?php echo $resultado['estado']; ?></td>
                                             <td>
-<<<<<<< HEAD
                                                 <form method="POST" action="Usuario/sugerencias.php" style="display:inline;" id="agendar_suge">
                                                     <input type="hidden" name="id_sugerencia" value="<?php echo $resultado['id']; ?>">
                                                     <button type="submit" id="agendar_suge">Agendar</button>
-=======
-                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
-                                                    <input type="hidden" name="id_sugerencia" value="<?php echo $id_user; ?>">
-                                                    <button type="submit" class="boton_tabla">Agendar</button>
->>>>>>> 3a014b5f483e9693e68c340d81024251de5951a5
                                                 </form>
                                                 <form method="POST" action="liberar_citas.php" style="display:inline;">
                                                     <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
@@ -705,114 +699,11 @@
     enviarOpcionSeleccionada(opcionPorDefecto);
     enviarOpcionSeleccionada2(opcionPorDefecto);
 
-<<<<<<< HEAD
-
-            //     // Crear una nueva instancia de jsPDF
-            // const doc = new jsPDF();
-
-            //     // Seleccionar el contenido HTML que queremos convertir en PDF
-            // const content = document.getElementById('historial').innerHTML;
-
-            //     // Agregar el contenido HTML al PDF
-            // doc.text(content, 10, 10);
-
-            //     // Descargar el PDF
-            // doc.save('HistoriaClinica.pdf');
-
-            const content = document.getElementById('historial');
-
-            html2canvas(content).then(canvas => {
-                const imgData = canvas.toDataURL('image/png');
-                const doc = new jsPDF();
-
-                const imgProps = doc.getImageProperties(imgData);
-                const pdfWidth = doc.internal.pageSize.getWidth();
-                const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-                doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-                doc.save('documento.pdf');
-                
-            });
-            
-    });
-
-//     window.jsPDF = window.jspdf.jsPDF;
-
-// function generatePDF() {
-//     // Crear una nueva instancia de jsPDF
-//     const doc = new jsPDF();
-
-//     // Seleccionar el contenido HTML que queremos convertir en PDF
-//     const content = document.getElementById('historial').innerHTML;
-
-//     // Agregar el contenido HTML al PDF
-//     doc.text(content, 10, 10);
-
-//     // Descargar el PDF
-//     doc.save('documento.pdf');
-//}
-
-</script>
-
-    <script>
-        
-          document.addEventListener('DOMContentLoaded', function() {
-        // Función para enviar la opción seleccionada
-        function enviarOpcionSeleccionada(opcionSeleccionada) {
-            $.ajax({
-                url: "./Usuario/historia_clinica.php",
-                type: "POST",
-                data: { 
-                    opcion_actual: opcionSeleccionada,
-                    id_user: <?php echo json_encode($id_user); ?>
-                },
-                success: function(respon3) {
-                    console.log("Respuesta del servidor:", respon3);
-                    document.getElementById('datos').innerHTML = respon3;
-                },
-                error: function() {
-                    alert("Error al cargar la opción seleccionada");
-                }
-            });
-        }
-        function enviarOpcionSeleccionada2(opcionSeleccionada) {
-            $.ajax({
-                url: "./Usuario/enfermedades.php",
-                type: "POST",
-                data: { 
-                    opcion_actual: opcionSeleccionada,
-                    id_user: <?php echo json_encode($id_user); ?>
-                },
-                success: function(respon3) {
-                    console.log("Respuesta del servidor2-------:", respon3);
-                    document.getElementById('anamesis').innerHTML = respon3;
-                },
-                error: function() {
-                    alert("Error al cargar la opción seleccionada");
-                }
-            });
-        }
-        // Enviar la opción por defecto al cargar la página
-        const opcionPorDefecto = document.querySelector('input[name="consulta"]:checked').value;
-        enviarOpcionSeleccionada(opcionPorDefecto);
-        enviarOpcionSeleccionada2(opcionPorDefecto);
-
-        // Asignar evento click a los radios
-        document.querySelectorAll('input[name="consulta"]').forEach(radio => {
-            radio.addEventListener('click', () => {
-                const opcionSeleccionada = radio.value;
-                console.log('Valor seleccionado:', opcionSeleccionada);
-                enviarOpcionSeleccionada(opcionSeleccionada);
-                enviarOpcionSeleccionada2(opcionSeleccionada);
-
-            });
-=======
     document.querySelectorAll('input[name="consulta"]').forEach(radio => {
         radio.addEventListener('click', () => {
             const opcionSeleccionada = radio.value;
             enviarOpcionSeleccionada(opcionSeleccionada);
             enviarOpcionSeleccionada2(opcionSeleccionada);
->>>>>>> 3a014b5f483e9693e68c340d81024251de5951a5
         });
     });
 
