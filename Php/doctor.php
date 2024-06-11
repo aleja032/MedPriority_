@@ -107,7 +107,7 @@
 
                 <div class="notificaciones"> <p class="letras">--------- Modificar datos</p> <div class="linea"><p></p></div> </div>
                 <div class="combo1_notificacion" >
-                    <a href="#modificar_datos" id="modificar_datos">
+                    <a href="#" id="modificar_datos">
                             
                         <div class="con_imagen_editar" id="icono"> </div>
                     
@@ -145,7 +145,7 @@
                     <!-------------------------- Citas programadas ------------------------------- -->
         <div id="contain_citas_programadas" class="historialcita">
                 <div class="cont_titulo">
-                    <p>Historial Citas</p>
+                    <p>Citas Programadas</p>
                 </div>
 
                     <div class="cont_general_all">
@@ -200,10 +200,10 @@
                         
                         $sql1 = "SELECT * FROM preagendamiento p
                                 INNER JOIN sugerencias_citas ca ON p.id_preagendamiento = ca.id_preagendamiento 
-                                INNER JOIN doctores d ON d.id_doctor = ca.id_DoctorAsignado 
+                                INNER JOIN doctores d ON d.id_doctor = ca.doctor_asignado 
                                 INNER JOIN doctor_consultorio dc ON dc.id_doctor = d.id_doctor 
                                 INNER JOIN usuario u ON u.id_usuario = d.id_usuario 
-                                WHERE p.id_usuario = '$id_user'";
+                                WHERE ca.doctor_asignado= '$idoc'";
 
                         $consulta_citas = mysqli_query($conn, $sql1);
                         ?>
@@ -221,8 +221,8 @@
                                 <tbody>
                                 <?php while ($resultado = mysqli_fetch_array($consulta_citas)): ?>
                                     <tr>
-                                        <td class="t"><?php echo $resultado['FechaAsignada']; ?></td>
-                                        <td><?php echo $resultado['HoraAsignado']; ?></td>
+                                        <td class="t"><?php echo $resultado['fecha']; ?></td>
+                                        <td><?php echo $resultado['hora_reservada']; ?></td>
                                         <td><?php echo $resultado['nombre']; ?></td>
                                         <td><?php echo $resultado['id_consultorio']; ?></td>
                                     </tr>
@@ -244,12 +244,8 @@
                         <div class="notificacion2">
                         <?php
                         $id_user = $_SESSION['id'];
-                        $sql1 = "SELECT * FROM preagendamiento p
-                                INNER JOIN citas_agendadas ca ON p.id_preagendamiento = ca.id_preagendamiento 
-                                INNER JOIN doctores d ON d.id_doctor = ca.id_DoctorAsignado 
-                                INNER JOIN doctor_consultorio dc ON dc.id_doctor = d.id_doctor 
-                                INNER JOIN usuario u ON u.id_usuario = d.id_usuario 
-                                WHERE p.id_usuario = '$id_user'";
+                        $sql1 = "SELECT * FROM historial_cita p
+                                WHERE p.h_doctor = '$idoc'";
 
                         $consulta_citas = mysqli_query($conn, $sql1);
                         ?>
@@ -258,19 +254,19 @@
                             <table class="tabla">
                                 <thead>
                                     <tr>
-                                        <th>Fecha Asignada</th>
-                                        <th>Hora Asignada</th>
-                                        <th>Doctor</th>
-                                        <th>Consultorio</th>
+                                        <th>Fecha </th>
+                                        <th>Hora </th>
+                                        <th>Observacion</th>
+                                        <th>Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php while ($resultado = mysqli_fetch_array($consulta_citas)): ?>
                                     <tr>
-                                        <td class="t"><?php echo $resultado['FechaAsignada']; ?></td>
-                                        <td><?php echo $resultado['HoraAsignado']; ?></td>
-                                        <td><?php echo $resultado['nombre']; ?></td>
-                                        <td><?php echo $resultado['id_consultorio']; ?></td>
+                                        <td class="t"><?php echo $resultado['h_fecha']; ?></td>
+                                        <td><?php echo $resultado['h_hora']; ?></td>
+                                        <td><?php echo $resultado['h_observacion']; ?></td>
+                                        <td><?php echo $resultado['h_estado']; ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                                 </tbody>
@@ -285,95 +281,8 @@
 
 
 
-
-            <div id="prueba2" class="historialcita">
-                <div class="cont_titulo">
-                    <p> Historia Clinica</p>
-                </div>
-
-                <div class="cont_general_all2" >
-                    <div class="cont2_elegir" id="cont2_historial">
-                            <h4>Elige el tipo de historia clinica:</h4>
-                            
-                            <div class="comb" id="form_1">
-                                <input type="radio" name="consulta" id="radio" value="1" checked>
-                                <p>Consulta Externa</p>
-                            </div>  
-
-                            <div class="comb">
-                                <input type="radio" name="consulta" id="radio1" value="3">
-                                <p>Consulta Odontológica</p>
-                            </div>
-                            <div class="comb">
-                                <!-- <a href="prueba.php">descargar</a> -->
-                                <button id="generate-pdf">Generar PDF</button>
-
-                            </div>
-                    </div>
-                    <div class="historial_clinico" id="historial" >
-                        <div class="cont_logo_name">
-                            <div class="img_log"></div>
-                            <p>MEDPRIORITY</p>
-                        </div>
-                        <p class="nit">Nit:  1122540000-1</p>
-
-                        <div class="datos_historia" id="datos"> </div>
-                        
-                            <div class="title">DATOS PERSONALES</div>
-
-                            <div class="general">
-                                <?php
-                                $sql = "SELECT * FROM usuario WHERE id_usuario = '$id_user'";
-                                $consulta = mysqli_query($conn, $sql);
-
-                                if(mysqli_num_rows($consulta) > 0){
-                                    $datos = mysqli_fetch_assoc($consulta);
-                                ?>
-                                    <div class="container1">
-                                         <div class="cont-1">    <p class="negrita">Nombre Paciente: </p> <p class="resultados"><?php echo $datos['nombre']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Fecha de Nacimiento: </p><p class="resultados"><?php echo $datos['fecha_nacimiento']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Dirección:</p><p class="resultados"><?php echo $datos['direccion']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Procedencia:</p><p class="resultados"><?php echo $datos['procedencia']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Estado Civil:</p><p class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
-                                    </div>
-
-                                    <div class="container1">
-                                    <div class="cont-1">        <p class="negrita">Identificación:</p><p class="resultados"><?php echo $datos['id_usuario']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Edad: </p><p class="resultados"><?php echo $datos['edad']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Teléfono: </p><p class="resultados"><?php echo $datos['telefono']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Tipo de Documento: </p><p class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Sexo: </p><p class="resultados"><?php echo $datos['genero']; ?></p></div>
-    
-                                </div>
-                            </div>
-                                    <div class="afil">
-                                        <div class="title2">DATOS AFILIACION</div>
-                                        <div class="cont-2">    <p class="afi">Tipo de Afiliación: </p> <p class="resultados"><?php echo $datos['tipo_afiliacion']; ?></p></div>
-
-                                        <!-- <p class="afi">Tipo de Afiliación: <?php echo $datos['tipo_afiliacion']; ?></p> -->
-
-                                    </div>
-                                            <?php
-                                            } else {
-                                                echo '<p>No se encontraron resultados.</p>';
-                                            }
-                                            ?>
-                            <div class="title">ANAMNESIS</div>
-
-                            <div class="descripcion_paciente" id="anamesis">
-
-
-                            </div>
-                    </div>
-
-                
-                                         
-                </div>
-            </div>
-
-
             <!-- ------------------------MODIFICAR MIS DATOS ----------------------------------->
-            <div id="modificar" class="historialcita">
+            <div id="modificar_datos" class="historialcita">
                 <?php
                 $sql2 = "SELECT * FROM usuario WHERE id_usuario = '$id_user'";
                 $consulta = mysqli_query($conn, $sql2);
