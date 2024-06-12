@@ -1,19 +1,19 @@
 <?php
 //require_once('../conexion.php');
 //session_start();
-
+echo "a";
 
     if(isset($_SESSION['idoc'])) {
-    
+
     $idoc=$_SESSION['idoc'];
-    echo $idoc;
+
 
     $data = array(
         "labels" => ["Total De Citas","Asistidas", "No Asistidas"],
         "datasets" => array()
     );
     
-    $sql = "SELECT h_fecha, COUNT(h_estado) AS total, COUNT(CASE WHEN h_estado = 'Asistio' THEN 1 END) AS num_asistieron, COUNT(CASE WHEN h_estado = 'No Asistio' THEN 1 END) AS num_no_asistieron FROM historial_cita WHERE h_doctor='$idoc' GROUP BY h_fecha";
+    $sql = "SELECT fecha_ingreso, COUNT(Asistencia) AS total, COUNT(CASE WHEN Asistencia = 1 THEN 1 END) AS num_asistieron, COUNT(CASE WHEN Asistencia = 0 THEN 1 END) AS num_no_asistieron FROM historia_clinica WHERE id_doctor='$idoc' GROUP BY fecha_ingreso";
 
     $resultado = mysqli_query($conn, $sql);
 
@@ -39,7 +39,7 @@
 
         // Agregar el conjunto de datos con el color de fondo aleatorio
         array_push($data['datasets'], array(
-            "label" => $fila['h_fecha'],
+            "label" => $fila['fecha_ingreso'],
             "backgroundColor" => $backgroundColor,
             "data" => [$fila['total'], $fila['num_asistieron'], $fila['num_no_asistieron']]
         ));

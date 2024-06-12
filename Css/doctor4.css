@@ -829,6 +829,137 @@ td{
 
 }
 
+.modal_oculta{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    visibility: hidden;
+    display: none;
+
+}
+
+.oculto{
+    width: 70%;
+}
+.form_detalle_cita{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form_sect1{
+    width: 95%;
+    height: 70%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: space-around;
+}
+.campos_form {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 1%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 30%;
+    height: 20%;
+    text-align: left;
+}
+
+.ampliar{
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.large{
+    width: 60%;
+}
+
+.label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+    color: #333333;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333333;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+.input-field:focus {
+    border-color: #66afe9;
+    outline: none;
+    box-shadow: 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.form_sect2{
+    width: 95%;
+    height: 20%;
+    display: flex;
+
+}
+
+.sub_form1{
+    width: 65%;
+    height: 80%;
+    padding: 1%;
+}
+
+.imagen_form{
+    width: 39%;
+    height: 100%;
+    background-image: url(../Img/historia.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.contain_botones_form{
+    display: flex;
+    gap: 10px;
+    height: 8%;
+    align-items: center;
+}
+
+.form_none{
+    margin: 0;
+}
+
+.button_detalles {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.button_detalles:hover {
+    
+    transform: scale(1.05);
+}
+
+.button_detalles:active {
+    background-color: #8b8686;
+}
+
 
 @media (max-width: 768px)  {
     .conheader{

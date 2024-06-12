@@ -39,7 +39,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-    <link rel="stylesheet" href="../Css/doctor1.css">
+    <link rel="stylesheet" href="../Css/doctor4.css">
     <title>MedPriority</title>
 </head>
 <body>
@@ -170,6 +170,7 @@
                                         <th>Hora Asignada</th>
                                         <th>Doctor</th>
                                         <th>Consultorio</th>
+                                        <th>Consultorio</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -179,6 +180,13 @@
                                         <td><?php echo $resultado['HoraAsignado']; ?></td>
                                         <td><?php echo $resultado['nombre']; ?></td>
                                         <td><?php echo $resultado['id_consultorio']; ?></td>
+                                        <td>
+                                            <form action="Doctor/CitasProgramadas" class="form_ver_detalle" data-form="<?php echo $resultado['id_preagendamiento']; ?>">
+                                                <input type="text" name="ver_detalle" value="<?php echo $resultado['id_preagendamiento']; ?>">
+                                                <button class="buton_detalles" type="submit">Detalles</button>
+                                            </form>
+                                            
+                                        </td>
                                     </tr>
                                 <?php endwhile; ?>
                                 </tbody>
@@ -244,8 +252,8 @@
                         <div class="notificacion2">
                         <?php
                         $id_user = $_SESSION['id'];
-                        $sql1 = "SELECT * FROM historial_cita p
-                                WHERE p.h_doctor = '$idoc'";
+                        $sql1 = "SELECT * FROM historia_clinica p
+                                WHERE p.id_doctor = '$idoc'";
 
                         $consulta_citas = mysqli_query($conn, $sql1);
                         ?>
@@ -263,10 +271,10 @@
                                 <tbody>
                                 <?php while ($resultado = mysqli_fetch_array($consulta_citas)): ?>
                                     <tr>
-                                        <td class="t"><?php echo $resultado['h_fecha']; ?></td>
-                                        <td><?php echo $resultado['h_hora']; ?></td>
-                                        <td><?php echo $resultado['h_observacion']; ?></td>
-                                        <td><?php echo $resultado['h_estado']; ?></td>
+                                        <td class="t"><?php echo $resultado['fecha_ingreso']; ?></td>
+                                        <td><?php echo $resultado['hora']; ?></td>
+                                        <td><?php echo $resultado['aspecto_general']; ?></td>
+                                        <td><?php echo $resultado['Asistencia']; ?></td>
                                     </tr>
                                 <?php endwhile; ?>
                                 </tbody>
@@ -333,16 +341,7 @@
             </div>
                     
 
-            <!----------------------Grafica--------------------------------------- -->
 
-            <div id="agregar_cita" class="historialcita">
-                <div class="cont_titulo">
-                    <p>Agregar Cita</p>
-                </div>
-                <div class="cont_general_all">
-
-                </div>
-            </div>
         
         
 
@@ -357,12 +356,83 @@
                 <button id="close-alert">Aceptar</button>
             </div>
         </div>
+
+
+                    <!----------------------Modal_Detalle_De_Cita--------------------------------------- -->
+                <div class="modal_oculta" id="Modal_DetalleC">
+                <!-- <div  class="historialcita oculto">
+                        <div class="cont_titulo">
+                            <p>Detalles Cita</p>
+                        </div>
+                        <div class="cont_general_all">
+                            <form action="" class="form_detalle_cita">
+
+                                <div class="form_sect1">
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Paciente:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre" disabled>
+                                    </div>
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Doctor:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre" disabled>
+                                    </div>
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Fecha Ingreso:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre" disabled>
+                                    </div>
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Hora:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre" disabled>
+                                    </div>
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Estado Paciente:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre" >
+                                    </div>
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Tipo Cita:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre" disabled>
+                                    </div>
+                                    <div class="campos_form">
+                                        <label for="nombre" class="label">Patologia:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre">
+                                    </div>
+                                    <div class="campos_form large">
+                                        <label for="nombre" class="label">Descripcion Enfermedad:</label>
+                                        <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre">
+                                    </div>
+                                </div>
+
+                                <div class="form_sect2">
+                                    <div class="sub_form1">
+                                        <div class="campos_form ampliar">
+                                            <label for="nombre" class="label">Observaciones:</label>
+                                            <input type="text" id="nombre" class="input-field" placeholder="Ingresa tu nombre">
+                                        </div>
+                                    </div>
+                                    <div class="imagen_form">
+
+                                    </div>
+                                    
+                                </div>
+                                <div class="contain_botones_form">
+                                    <form class="form_none"><button type="submit" class="button_detalles" >Confirmar</button></form>
+                                    <form class="form_none"><button type="submit" class="button_detalles" style="background-color: #d63232;">No Asistio</button></form>
+                                    <form class="form_none"><button type="submit" class="button_detalles" style="background-color: #8b8686;" onclick="cerrar_modal()">Cancelar</button></form>
+
+                                </div>
+                            </form>
+
+                        </div>
+                    </div> -->
+                </div>
+
         
                                   
 
     </div>  
     <script src="../Js/User/desplegar_menu.js"></script>
-    <script src="../Js/Doctor/Cambiar_Contain.js"></script>                
+    <script src="../Js/Doctor/Cambiar_Contain.js"></script>
+    <script src="../Js/Doctor/AjaxCitasProgramadas1.js"></script>               
     <script src="../Js/User/cargar_img.js"></script>
 
 <script>
