@@ -20,7 +20,7 @@ $hora_fin2 = isset($_POST['hora_fin2']) ? $_POST['hora_fin2'] : null;
 $id_tipo_cita= $_POST['tipocita'];
 $point_embarazo=0;
 $point_patologia=0;
-$sql="SELECT usuario.*, patologias.puntuacion AS puntuacion_patologia,
+$sql="SELECT usuario.*, patologias.puntuacion_pt AS puntuacion_patologia,
 estado.puntuacion    AS puntuacion_embarazo FROM usuario INNER JOIN historia_clinica ON historia_clinica.id_usuario= usuario.id_usuario INNER JOIN patologias ON patologias.id_patologia= historia_clinica.id_patologia INNER JOIN estado ON estado.id_estado=historia_clinica.id_estado WHERE usuario.id_usuario='$id_user'";
 $consulta= mysqli_query($conn,$sql);
 $sql2="SELECT * FROM edades_rango WHERE $edad BETWEEN inicial AND final";

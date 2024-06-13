@@ -1,0 +1,31 @@
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Adamina", serif;
+}
+
+body {
+    height: 99vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 120%;
+}
+
+table{
+    height: 60%;
+}
+.negrita2, .negrita{
+    font-weight: bold;
+}
+.cont_logo_name{
+    text-align: center;
+}
+.img_log{
+    width: 30%;
+}
+img{
+    width: 20%;
+    height: 15%;
+}

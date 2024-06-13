@@ -21,23 +21,24 @@
     
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"> 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
+    <link rel="stylesheet" href="../Css/style_user1.css">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script> 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
 
-    <link rel="stylesheet" href="../Css/style_user1.css">
+
     <title>MedPriority</title>
 </head>
 <body>
@@ -159,12 +160,18 @@
                                 <input type="radio" name="consulta" id="radio1" value="3">
                                 <p>Consulta Odontológica</p>
                             </div>
+                            <!-- <form action="pr.php" method="post" class="comb">
+                                <button type="submit">Descargar PDF</button>
+                            </form> -->
                             <div class="comb">
                                 <!-- <a href="prueba.php">descargar</a> -->
                                 <button id="generate-pdf">Generar PDF</button>
 
                             </div>
                     </div>
+                    <form class="consultar">
+                     <h4> Ingrese la fecha de su cita:</h4> <div class="div"><input type="date" name="fecha" id="lupa" required> <i class="fa-solid fa-magnifying-glass" style="color: #000000;" id="consulta_folio"></i></div>
+                    </form>
                     <div class="historial_clinico" id="historial" >
                         <div class="cont_logo_name">
                             <div class="img_log"></div>
@@ -393,31 +400,25 @@
                                 <p>Tipo de Cita</p>
                                 <select class="tipocita" name="tipocita">
                                 <?php
-                                        $validar_citas="SELECT * FROM citas_agendadas ca  INNER JOIN preagendamiento p ON ca.id_preagendamiento= p.id_preagendamiento WHERE id_usuario='$id_user'";
-                                        $consul2= mysqli_query($conn,$validar_citas);
+                                        
+                                        
                                         $sql="SELECT * FROM tipo_cita";
                                         $consul= mysqli_query($conn,$sql);
-                                        $num=0;
-                                        if(mysqli_num_rows($consul2)>0){
-                                            while($sihay= $consul2->fetch_assoc()){
-                                                $dato=$sihay['id_tipo_cita'];
-                                                    if($consul){
-                                                        while($desplegar= $consul->fetch_assoc()){
-                                                            if($desplegar['id']== $dato || $num==3){
-                                                                echo "<option value='".$desplegar['id']."' disabled>".$desplegar['enombre']."</option>";
-                                                            }else{
-                                                                echo "<option value='".$desplegar['id']."'>".$desplegar['enombre']."</option>";
-                                                            }
+                                        if(mysqli_num_rows($consul)>0){
+                                                while($desplegar= $consul->fetch_assoc()){ 
+                                                    $id=$desplegar['id'];
+                                                     $validar_citas="SELECT * FROM citas_agendadas ca  INNER JOIN preagendamiento p ON ca.id_preagendamiento= p.id_preagendamiento WHERE id_usuario='$id_user' AND id_tipo_cita = '$id'";
+                                                     $consul2= mysqli_query($conn,$validar_citas);
+                                                    if(mysqli_num_rows($consul2)>0){
+                                                        while($sihay= $consul2->fetch_assoc()){
+                                                            echo "<option value='".$desplegar['id']."' disabled>".$desplegar['enombre']."</option>";
                                                         }
+                                                    }else{
+                                                        echo "<option value='".$desplegar['id']."' >".$desplegar['enombre']."</option>";   
                                                     }
-                                            }
-                                        }else{
-                                                    if($consul){
-                                                        while($desplegar= $consul->fetch_assoc()){
-                                                            echo "<option value='".$desplegar['id']."'>".$desplegar['enombre']."</option>";
-                                                        }
-                                                    }
+                                                }
                                         }
+                                    
                                 ?>
                                 </select>
 
@@ -505,12 +506,15 @@
 
                 <?php
                 $id_user = $_SESSION['id'];
+
+                $fecha_actual = (new DateTime())->format('Y-m-d');
+                                
                 $sql1 = "SELECT * FROM preagendamiento p
                         INNER JOIN citas_agendadas ca ON p.id_preagendamiento = ca.id_preagendamiento 
                         INNER JOIN doctores d ON d.id_doctor = ca.id_DoctorAsignado 
                         INNER JOIN doctor_consultorio dc ON dc.id_doctor = d.id_doctor 
-                        INNER JOIN usuario u ON u.id_usuario = d.id_usuario 
-                        WHERE p.id_usuario = '$id_user'";
+                        INNER JOIN usuario u ON u.id_usuario = d.id_usuario INNER JOIN tipo_cita tc ON tc.id=p.id_tipo_cita
+                        WHERE p.id_usuario = '$id_user' AND FechaAsignada >= '$fecha_actual'";
 
                 $consulta_citas = mysqli_query($conn, $sql1);
                 ?>
@@ -523,7 +527,9 @@
                                 <th>Hora Asignada</th>
                                 <th>Doctor</th>
                                 <th>Consultorio</th>
+                                <th>Tipo de cita</th>
                                 <th>Estado</th>
+
                                 <th>Cancelar</th>
 
                             </tr>
@@ -535,7 +541,10 @@
                                 <td><?php echo $resultado['HoraAsignado']; ?></td>
                                 <td><?php echo $resultado['nombre']; ?></td>
                                 <td><?php echo $resultado['id_consultorio']; ?></td>
+                                <td><?php echo $resultado['enombre']; ?></td>
+
                                 <td>Agendada</td>
+
                                 <td><form method="POST" action="Usuario/cancelar_cita.php" style="display:inline;">
                                     <input type="hidden" name="id_preagendamiento" value="<?php echo $resultado['id_preagendamiento']; ?>">
                                     <button type="submit" class="boton_tabla_eli">Cancelar Cita</button>
@@ -608,8 +617,8 @@
                                 INNER JOIN citas_agendadas ca ON p.id_preagendamiento = ca.id_preagendamiento 
                                 INNER JOIN doctores d ON d.id_doctor = ca.id_DoctorAsignado 
                                 INNER JOIN doctor_consultorio dc ON dc.id_doctor = d.id_doctor 
-                                INNER JOIN usuario u ON u.id_usuario = d.id_usuario 
-                                WHERE p.id_usuario = '$id_user'";
+                                INNER JOIN usuario u ON u.id_usuario = d.id_usuario INNER JOIN tipo_cita tc ON tc.id=p.id_tipo_cita
+                                WHERE p.id_usuario = '$id_user' ORDER BY FechaAsignada DESC";
 
                         $consulta_citas = mysqli_query($conn, $sql1);
                         ?>
@@ -620,8 +629,10 @@
                                     <tr>
                                         <th>Fecha Asignada</th>
                                         <th>Hora Asignada</th>
+                                        <th>Tipo de Cita</th>
                                         <th>Doctor</th>
                                         <th>Consultorio</th>
+
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -629,8 +640,10 @@
                                     <tr>
                                         <td class="t"><?php echo $resultado['FechaAsignada']; ?></td>
                                         <td><?php echo $resultado['HoraAsignado']; ?></td>
+                                        <td><?php echo $resultado['enombre']; ?></td>
                                         <td><?php echo $resultado['nombre']; ?></td>
                                         <td><?php echo $resultado['id_consultorio']; ?></td>
+
                                     </tr>
                                 <?php endwhile; ?>
                                 </tbody>
@@ -659,15 +672,68 @@
     <script src="../Js/User/desabilitadias_calendario.js"></script>                    
     <script src="../Js/User/ajax.js"></script>
     <script src="../Js/User/cargar_img.js"></script>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-    function enviarOpcionSeleccionada(opcionSeleccionada) {
+    <script>
+document.getElementById('generate-pdf').addEventListener('click', function() {
+    const opcionSeleccionada = document.querySelector('input[name="consulta"]:checked').value;
+    let fecha = document.querySelector('input[name="fecha"]').value;
+    let formattedFecha = null;
+
+    if (fecha.trim() !== '') {
+        formattedFecha = formatFecha(fecha);
+    }
+
+    // Send the data to the server
+    enviarOpcionSeleccionada3(opcionSeleccionada, formattedFecha);
+});
+
+// Function to send selected option and date to the server
+function enviarOpcionSeleccionada3(opcionSeleccionada, fecha) {
+    $.ajax({
+        url: "./Usuario/generarPDF.php",
+        type: "POST",
+        data: { 
+            opcion_actual: opcionSeleccionada,
+            id_user: <?php echo json_encode($id_user); ?>,
+            fecha: fecha
+        },
+        success: function(response) {
+            console.log("PDF generado correctamente");
+            console.log(response);
+
+            // Redirigir al usuario a la URL de descarga del PDF
+            window.location.href = './Usuario/generarPDF.php?download=1';
+
+        },
+        error: function() {
+            alert("Error al generar el PDF");
+        },
+        complete: function() {
+            console.log("Solicitud AJAX completa");
+        }
+    });
+
+}
+
+
+// Other functions
+document.addEventListener('DOMContentLoaded', function() {
+
+    function formatFecha(fecha) {
+        const date = new Date(fecha);
+        const year = date.getFullYear();
+        const day = String(date.getDate()+1).padStart(2, '0'); // Ensure 2 digits
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits, months are 0-based
+        return `${year}-${day}-${month}`;
+    }
+
+    function enviarOpcionSeleccionada(opcionSeleccionada, fecha) {
         $.ajax({
             url: "./Usuario/historia_clinica.php",
             type: "POST",
             data: { 
                 opcion_actual: opcionSeleccionada,
-                id_user: <?php echo json_encode($id_user); ?>
+                id_user: <?php echo json_encode($id_user); ?>,
+                fecha: fecha
             },
             success: function(respon3) {
                 document.getElementById('datos').innerHTML = respon3;
@@ -678,13 +744,14 @@
         });
     }
 
-    function enviarOpcionSeleccionada2(opcionSeleccionada) {
+    function enviarOpcionSeleccionada2(opcionSeleccionada, fecha) {
         $.ajax({
             url: "./Usuario/enfermedades.php",
             type: "POST",
             data: { 
                 opcion_actual: opcionSeleccionada,
-                id_user: <?php echo json_encode($id_user); ?>
+                id_user: <?php echo json_encode($id_user); ?>,
+                fecha: fecha
             },
             success: function(respon3) {
                 document.getElementById('anamesis').innerHTML = respon3;
@@ -695,42 +762,29 @@
         });
     }
 
-    const opcionPorDefecto = document.querySelector('input[name="consulta"]:checked').value;
-    enviarOpcionSeleccionada(opcionPorDefecto);
-    enviarOpcionSeleccionada2(opcionPorDefecto);
+    function handleOptionChange() {
+        const opcionSeleccionada = document.querySelector('input[name="consulta"]:checked').value;
+        let fecha = document.querySelector('input[name="fecha"]').value;
+        let formattedFecha = null;
+
+        if (fecha.trim() !== '') {
+            formattedFecha = formatFecha(fecha);
+        }
+
+        enviarOpcionSeleccionada(opcionSeleccionada, formattedFecha);
+        enviarOpcionSeleccionada2(opcionSeleccionada, formattedFecha);
+    }
+
+    handleOptionChange();
 
     document.querySelectorAll('input[name="consulta"]').forEach(radio => {
-        radio.addEventListener('click', () => {
-            const opcionSeleccionada = radio.value;
-            enviarOpcionSeleccionada(opcionSeleccionada);
-            enviarOpcionSeleccionada2(opcionSeleccionada);
-        });
+        radio.addEventListener('click', handleOptionChange);
     });
 
-    document.getElementById('generate-pdf').addEventListener('click', () => {
-        const historialElement = document.getElementById('historial');
+    document.getElementById('consulta_folio').addEventListener('click', function() {
+        handleOptionChange();
+        document.querySelector('input[type="date"]').value = '';
 
-        // Añadir clase CSS antes de la captura
-        historialElement.classList.add('expand-height');
-        historialElement.classList.add('pdf-style');
-
-        html2canvas(historialElement, {
-            useCORS: true
-        }).then(canvas => {
-            // Quitar clase CSS después de la captura
-            historialElement.classList.remove('expand-height');
-            historialElement.classList.remove('pdf-style');
-
-            const imgData = canvas.toDataURL('image/png');
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF('p', 'mm', 'a4');
-            const imgProps = doc.getImageProperties(imgData);
-            const pdfWidth = doc.internal.pageSize.getWidth();
-            const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
-
-            doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-            doc.save('historia_clinica.pdf');
-        });
     });
 });
 
@@ -742,30 +796,30 @@
 // $consulta=mysqli_query($conn,$sql);
 // if(mysqli_num_rows($consulta)>0){
 //     $datos= mysqli_fetch_array($consulta);
-//     $scheduledDates =  $dato[];
+//     $scheduledDates =  $dato['fecha'];
 // }
 
 ?>
 <script>
-    // Pass the PHP array to JavaScript no dejar agendar fechas  que el usuario ya tiene agendado
+    // // Pass the PHP array to JavaScript no dejar agendar fechas  que el usuario ya tiene agendado
     // const scheduledDates = <?php // echo json_encode($scheduledDates); ?>;
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const dateInput = document.getElementById('fecha1');
+    // document.addEventListener("DOMContentLoaded", function() {
+    //     const dateInput = document.getElementById('fecha1');
 
-        dateInput.addEventListener('input', function() {
-            const selectedDate = this.value;
-            if (scheduledDates.includes(selectedDate)) {
-                alert('This date is already scheduled. Please choose another date.');
-                this.value = '';
-            }
-        });
+    //     dateInput.addEventListener('input', function() {
+    //         const selectedDate = this.value;
+    //         if (scheduledDates.includes(selectedDate)) {
+    //             alert('This date is already scheduled. Please choose another date.');
+    //             this.value = '';
+    //         }
+    //     });
 
-        dateInput.addEventListener('focus', function() {
-            this.setAttribute('type', 'text');
-            this.setAttribute('type', 'date');
-        });
-    });
+    //     dateInput.addEventListener('focus', function() {
+    //         this.setAttribute('type', 'text');
+    //         this.setAttribute('type', 'date');
+    //     });
+    // });
 </script>
 
 </body>
