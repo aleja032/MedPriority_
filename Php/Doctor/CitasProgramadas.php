@@ -3,6 +3,7 @@ require_once('../conexion.php');
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    // Solicitud para ver los detalles de la cita
     if(isset($_POST['ver_detalle'])) {
 
     $id=$_POST['ver_detalle'];
@@ -38,8 +39,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                         <input type="text" id="nombre" class="input-field" value="<?php echo $dato['HoraAsignado'] ?>" disabled>
                                     </div>
                                     <div class="campos_form">
-                                        <label for="nombre" class="label">Estado Paciente:</label>
-                                        <select type="text" id="nombre" class="input-field"  >
+                                        <label  class="label">Estado Paciente:</label>
+                                        <select type="text" name="estado_paciente" class="input-field"  >
                                             <?php
                                                     $estado="SELECT * FROM estado";
                                                     $estados=mysqli_query($conn, $estado);
@@ -58,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                     <div class="campos_form">
                                         <label for="nombre" class="label">Patologia:</label>
-                                        <select type="text" id="nombre" class="input-field"  >
+                                        <select type="text" name="patologia" class="input-field"  >
                                             <?php
                                                     $patologia="SELECT * FROM patologias";
                                                     $patologias=mysqli_query($conn, $patologia);
@@ -73,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     </div>
                                     <div class="campos_form large">
                                         <label for="nombre" class="label">Descripcion Enfermedad:</label>
-                                        <input type="text" id="nombre" class="input-field" >
+                                        <input type="text" name="descripcion" class="input-field" >
                                     </div>
                                 </div>
 
@@ -81,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <div class="sub_form1">
                                         <div class="campos_form ampliar">
                                             <label for="nombre" class="label">Observaciones:</label>
-                                            <input type="text" id="nombre" class="input-field" >
+                                            <input type="text" name="observaciones" class="input-field" >
                                         </div>
                                     </div>
                                     <div class="imagen_form">
@@ -90,15 +91,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     
                                 </div>
                                 <div class="contain_botones_form">
-                                    <form class="form_none"><button type="submit" class="button_detalles" >Confirmar</button></form>
-                                    <form class="form_none"><button type="submit" class="button_detalles" style="background-color: #d63232;">No Asistio</button></form>
-                                    <form class="form_none"><button type="submit" class="button_detalles" style="background-color: #8b8686;" onclick="cerrar_modal()">Cancelar</button></form>
+                                    <div class="form_none" >
+                                        <input type="hidden"  name="confirmar" value="<?php echo $id ?>">
+                                        <button type="submit" class="button_detalles" >Confirmar</button>
+                                    </div>
+
 
                                 </div>
                             </form>
+                            <div class="botones_afuera">
+                            <form class="form_none" id="NoAsistio">
+                                        <input type="hidden"  name="NoAsistio" value="<?php echo $id ?>">
+                                        <button type="submit" class="button_detalles" style="background-color: #d63232;">No Asistio</button>
+                                    </form>
+                            <form class="form_none"><button class="button_detalles" style="background-color: #8b8686;" onclick="cerrar_modal()">Cancelar</button></form>
+                            </div>
+
 
                         </div>
                     </div>
+                    <script src="../Js/Doctor/AjaxCitasProgramadas2.js"></script>   
 
         <?php
         
@@ -107,12 +119,99 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     }
 
+    if(isset($_POST['NoAsistio'])) {
+
+        $id_preagendamiento=$_POST['NoAsistio'];
+
+        $sql= "SELECT * FROM citas_agendadas ca INNER JOIN preagendamiento p ON ca.id_preagendamiento=p.id_preagendamiento INNER JOIN usuario u ON p.id_usuario=u.id_usuario INNER JOIN tipo_cita tc ON p.id_tipo_cita=tc.id  WHERE ca.id_preagendamiento='$id_preagendamiento' ";
+        $resultado=mysqli_query($conn, $sql);
+         
+        if($resultado->num_rows){
+            $dato= $resultado->fetch_assoc();
+            $fecha=$dato['FechaAsignada'];
+            $hora=$dato['HoraAsignado'];
+            $id_cita=$dato['id_tipo_cita'];
+            $id_usuario=$dato['id_usuario'];
+            $asistencia=true;
+            $numero_folio=0;
+            $idoc=$_SESSION['idoc'];
+
+        $asistencia = true;
+        $insert_cancelar ="INSERT INTO historia_clinica (
+            id_usuario,
+            id_doctor,
+            id_patologia,
+            fecha_ingreso,
+            numero_folio,
+            enfermedad_actual,
+            id_estado,
+            id_tipocita,
+            aspecto_general,
+            Asistencia,
+            hora
+        ) VALUES ('$id_usuario','$idoc',NULL,'$fecha',NULL,NULL,NULL,'$id_cita',NULL,$asistencia,'$hora');";
+
+    if ($conn->query($insert_cancelar) === TRUE) {
+        echo "cancelado";
+    }
 
 
+    }
+
+}
+    if(isset($_POST['confirmar'])) {
+        $id_preagendamiento=$_POST['confirmar'];
+        $estado_paciente=$_POST['estado_paciente'];
+        $patologia=$_POST['patologia'];
+        $descripcion=$_POST['descripcion'];
+        $observaciones=$_POST['observaciones'];
+        
+
+        $sql= "SELECT * FROM citas_agendadas ca INNER JOIN preagendamiento p ON ca.id_preagendamiento=p.id_preagendamiento INNER JOIN usuario u ON p.id_usuario=u.id_usuario INNER JOIN tipo_cita tc ON p.id_tipo_cita=tc.id  WHERE ca.id_preagendamiento='$id_preagendamiento' ";
+        $resultado=mysqli_query($conn, $sql);
+         
+        if($resultado->num_rows){
+            $dato= $resultado->fetch_assoc();
+            $fecha=$dato['FechaAsignada'];
+            $hora=$dato['HoraAsignado'];
+            $id_cita=$dato['id_tipo_cita'];
+            $id_usuario=$dato['id_usuario'];
+            $asistencia=true;
+            $numero_folio=0;
+            $idoc=$_SESSION['idoc'];
+
+            $contar="SELECT COUNT(*) AS folio FROM historia_clinica WHERE numero_folio IS NOT NULL";
+            $result = $conn->query($contar);
+            if($result->num_rows>0){
+                $pre= $result->fetch_assoc();
+                $numero_folio=$pre['folio']+1;
+            }
+
+            $insert ="INSERT INTO historia_clinica (
+                    id_usuario,
+                    id_doctor,
+                    id_patologia,
+                    fecha_ingreso,
+                    numero_folio,
+                    enfermedad_actual,
+                    id_estado,
+                    id_tipocita,
+                    aspecto_general,
+                    Asistencia,
+                    hora
+                ) VALUES ('$id_usuario','$idoc','$patologia','$fecha','$numero_folio','$descripcion','$estado_paciente','$id_cita','$observaciones',$asistencia,'$hora');";
+
+            if ($conn->query($insert) === TRUE) {
+                echo "Nuevo registro creado exitosamente";
+            }
+
+    }
+}
 
 }
 
 
 ?>
+
 
 

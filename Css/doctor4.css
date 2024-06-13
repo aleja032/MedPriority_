@@ -849,7 +849,7 @@ td{
     width: 70%;
 }
 .form_detalle_cita{
-    width: 100%;
+    width: 90%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -958,6 +958,13 @@ td{
 
 .button_detalles:active {
     background-color: #8b8686;
+}
+
+.botones_afuera{
+    width: 10%;
+    height: 20%;
+    display: flex;
+    justify-content: space-between;
 }
 
 

@@ -432,7 +432,7 @@
     </div>  
     <script src="../Js/User/desplegar_menu.js"></script>
     <script src="../Js/Doctor/Cambiar_Contain.js"></script>
-    <script src="../Js/Doctor/AjaxCitasProgramadas1.js"></script>               
+    <script src="../Js/Doctor/AjaxCitasProgramadas2.js"></script>               
     <script src="../Js/User/cargar_img.js"></script>
 
 <script>
