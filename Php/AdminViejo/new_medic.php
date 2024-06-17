@@ -1,5 +1,5 @@
 <?php
-require_once '../conexion.php';
+require_once 'conexion.php';
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -8,22 +8,22 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Extract data from the JSON object
-    $null = " ";
-    $pat_docType = $data['pat_docType'];
-    $role2 = '2';
-    $pat_idNumber = $data['pat_idNumber'];
-    $pat_name = $data['pat_name'];
-    $pat_age = $data['pat_age'];
-    $pat_phoneNumber = $data['pat_phoneNumber'];
-    $pat_email = $data['pat_email'];
-    $pat_sex = $data['pat_sex'];
-    $pat_afiliation = $data['pat_afiliation'];
+    $null=" ";
+    $docType = "Cedula de Ciudadania";
+    $role = '3';
+    $idNumber = $data['idNumber'];
+    $name = $data['name'];
+    $age = $data['age'];
+    $phoneNumber = $data['phoneNumber'];
+    $email = $data['email'];
+    $sex = $data['sex'];
     // You can extract more fields as needed
     
     // Prepare and execute the SQL statement to insert data into the database
     $stmt = mysqli_prepare($conn, "INSERT INTO usuario (id_usuario, nombre, edad, telefono, correo, genero, tipo_documento, direccion, id_rol, tipo_afiliacion) VALUES (?,?,?,?,?,?,?,?,?,?)");
 
-    mysqli_stmt_bind_param($stmt, "ssssssssss", $pat_idNumber, $pat_name, $pat_age, $pat_phoneNumber, $pat_email, $pat_sex, $pat_docType, $null, $role2, $pat_afiliation);
+    mysqli_stmt_bind_param($stmt, "ssssssssss", $idNumber, $name, $age, $phoneNumber, $email, $sex, $docType, $null, $role, $null);
+
     
     // Check if the statement executed successfully
     if (mysqli_stmt_execute($stmt)) {

@@ -2,33 +2,35 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
-    require_once '../conexion.php';
+    require_once 'conexion.php';
 
     // Decode JSON data sent via AJAX
     $data = json_decode(file_get_contents("php://input"), true);
 
     // Prepare SQL statement
-    $jjk = "UPDATE especialidades SET 
-                especialidad = ?
-                WHERE id_especialidad = ?";
+    $fortnite = "UPDATE patologias SET 
+                nombre_patologia = ?, 
+                puntuacion = ?
+                WHERE id_patologia = ?";
 
-    $stmtspecial = mysqli_prepare($conn, $jjk);
+    $stmtpat = mysqli_prepare($conn, $fortnite);
 
     // Check if the prepare statement was successful
-    if ($stmtspecial) {
+    if ($stmtpat) {
         // Bind parameters
         mysqli_stmt_bind_param(
-            $stmtspecial,
-            "si",
-            $data['ms_name'],
-            $data['ms_id']
+            $stmtpat,
+            "sii",
+            $data['mp_name'],
+            $data['mp_score'],
+            $data['mp_id']
         );
 
         // Execute statement
-        mysqli_stmt_execute($stmtspecial);
+        mysqli_stmt_execute($stmtpat);
 
         // Close statement
-        mysqli_stmt_close($stmtspecial);
+        mysqli_stmt_close($stmtpat);
     } else {
         // If prepare statement failed, handle the error
         echo "Error: " . mysqli_error($conn);

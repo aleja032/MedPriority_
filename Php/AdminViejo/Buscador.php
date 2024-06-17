@@ -1,18 +1,35 @@
-<body>
-<!-- -------------------------------MODAL------------------------------------------ -->
+<?php 
+session_start(); 
+require_once ('conexion.php');
 
-<?php
-    require_once '../conexion.php';
 
-    $bruh = "SELECT * FROM usuario WHERE id_rol='3' OR id_rol='2'";   //jiji
-    $q = mysqli_query( $conn, $bruh );
-        if(mysqli_num_rows($q)>0){
-            while($ff =mysqli_fetch_assoc($q)){
-                $modalId = 'modal_' . $ff['id_usuario'];
-                $identi = $ff['id_usuario'];
 
-                // --------------------------------------
-?>
+//Buscar Paciente------------------------------------------
+if(isset($_POST["btn_medicosP"])){
+
+    $patron=$_POST["btn_medicosP"];
+    $sql = "SELECT * FROM usuario u 
+        INNER JOIN roles r ON u.id_rol = r.id_rol 
+        WHERE u.nombre LIKE '%$patron%' 
+        OR u.edad LIKE '%$patron%' 
+        OR u.telefono LIKE '%$patron%' 
+        OR u.correo LIKE '%$patron%' 
+        OR u.genero LIKE '%$patron%' 
+        OR u.tipo_documento LIKE '%$patron%' 
+        OR u.estado_civil LIKE '%$patron%' 
+        OR u.direccion LIKE '%$patron%' 
+        OR u.id_rol LIKE '%$patron%' 
+        OR u.tipo_afiliacion LIKE '%$patron%'";
+
+    $buscar=mysqli_query($conn,$sql);
+
+    if ($buscar) {
+        while($ff =mysqli_fetch_assoc($buscar)){
+            $modalId = 'modal_' . $ff['id_usuario'];
+            $identi = $ff['id_usuario'];
+        
+        ?>
+
 
 <div class="modal" id="<?php echo $modalId?>">
     <div class="modal-header">
@@ -57,9 +74,8 @@
             </div>
 <?php
             }
-        }
+        
 ?>
-</body>
     
     <table>
         <thead>
@@ -72,17 +88,15 @@
                 <th style="width: 15%;"></th>
             </tr>
         </thead>
+        <?php
+            
+            $buscar1=mysqli_query($conn,$sql);
+
+            while($fila =mysqli_fetch_assoc($buscar1)){
+        
+            ?>
 
         <tbody>
-            <?php 
-            
-            require_once '../conexion.php';
-
-            $sql = "SELECT * FROM usuario WHERE id_rol='3'";    //medico
-            $consulta = mysqli_query($conn, $sql);
-            if(mysqli_num_rows($consulta)>0){
-                while($fila =mysqli_fetch_assoc($consulta)){
-            ?>
             <tr id=table_row_<?php echo $fila['id_usuario']?>>
                 <td> <?php echo $fila['id_usuario'];?></td>
                 <td> <?php echo $fila['nombre'];?></td>
@@ -93,8 +107,16 @@
             </tr>
 
             <?php
-                }
+                
             }
+        }else {
+            echo "Error: ".mysqli_error($con);
+        }
             ?>
         </tbody>
     </table>
+
+    <?php
+                
+            }
+?>

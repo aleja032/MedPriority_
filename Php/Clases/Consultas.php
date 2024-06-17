@@ -312,6 +312,20 @@ class Consultas{
 
     //     return $horariosDisponibles;
     // }
+
+    public function citasAsignadas(){
+        $Sql = mysqli_query($this->Conexion,"SELECT * FROM citas_agendadas WHERE hora_inicio ");
+        $ArregloHoras = array();
+
+        while($Resultado = mysqli_fetch_array($Sql)){
+            
+          array_push($ArregloHoras,$Resultado['hora_inicio']);
+
+        }
+
+        return $ArregloHoras;
+
+    }
 }
         
 

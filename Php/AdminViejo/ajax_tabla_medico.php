@@ -2,7 +2,7 @@
 <!-- -------------------------------MODAL------------------------------------------ -->
 
 <?php
-    require_once '../conexion.php';
+    require_once 'conexion.php';
 
     $bruh = "SELECT * FROM usuario WHERE id_rol='3' OR id_rol='2'";   //jiji
     $q = mysqli_query( $conn, $bruh );
@@ -60,43 +60,41 @@
         }
 ?>
 </body>
-                        
-                        <table>
-                            <thead>
-                            <tr>
-                                <th>Identificación</th>
-                                <th>Nombres</th>
-                                <th>Edad</th>
-                                <th>Género</th>
-                                <th style="width: 15%;"></th>
-                                <th style="width: 15%;"></th>
-                            </tr>
-                            </thead>
-                            
-                            <tbody>
+    
+    <table>
+        <thead>
+            <tr>
+                <th>Identificación</th>
+                <th>Nombres</th>
+                <th>Edad</th>
+                <th>Teléfono</th>
+                <th style="width: 15%;"></th>
+                <th style="width: 15%;"></th>
+            </tr>
+        </thead>
 
-                            <?php
+        <tbody>
+            <?php 
+            
+            require_once 'conexion.php';
 
-                            require_once  '../conexion.php';
- 
-                            $sql2 = "SELECT * FROM usuario WHERE id_rol='2'";   //paciente
-                            $query = mysqli_query($conn, $sql2 );
-                            if(mysqli_num_rows($query)>0){
-                                while($row = mysqli_fetch_assoc($query)){
+            $sql = "SELECT * FROM usuario WHERE id_rol='3'";    //medico
+            $consulta = mysqli_query($conn, $sql);
+            if(mysqli_num_rows($consulta)>0){
+                while($fila =mysqli_fetch_assoc($consulta)){
+            ?>
+            <tr id=table_row_<?php echo $fila['id_usuario']?>>
+                <td> <?php echo $fila['id_usuario'];?></td>
+                <td> <?php echo $fila['nombre'];?></td>
+                <td> <?php echo $fila['edad'];?></td>
+                <td> <?php echo $fila['telefono'];?></td>
+                <td><button data-modal-target="#modal_<?php echo $fila['id_usuario'];?>">Detalles</button></td>
+                <td><button class="delete" data-user-id="<?php echo $fila['id_usuario'];?>" data-role='medico'>Eliminar</button></td>
+            </tr>
 
-                            ?>
-                                <tr id=table_row_<?php echo $row['id_usuario']?>>
-                                    <td><?php echo $row['id_usuario'];?></td>
-                                    <td><?php echo $row['nombre'];?></td>
-                                    <td><?php echo $row['edad'];?></td>
-                                    <td><?php echo $row['genero'];?></td>
-                                    <td><button data-modal-target="#modal_<?php echo $row['id_usuario'];?>">Detalles</button></td>
-                                    <td><button class="delete" data-user-id="<?php echo $row['id_usuario'];?>" data-role='usuario'>Eliminar</button></td>
-                                </tr>
-                                    
-                                <?php
-                                        }
-                                    }
-                                ?>
-                            </tbody>
-                        </table>
+            <?php
+                }
+            }
+            ?>
+        </tbody>
+    </table>

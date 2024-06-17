@@ -132,7 +132,8 @@ foreach ($NodosProcesados[1] as $nodo) {
 
         $actualizar->ActualizarCitasSugerencias($nodo);
 
-    }else{
+    }else
+    {
 
         $insertar->InsertarCitasSugerencias($nodo);
 

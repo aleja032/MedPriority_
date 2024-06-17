@@ -62,5 +62,5 @@ if(mysqli_num_rows($consulta)>0){
         echo "<script> window.location='doctor.php'</script>";
     }
 }
-
+echo "<script> window.location='admin.php'</script>";
 ?>

@@ -175,7 +175,7 @@ class Grafo{
     }
 
 
-    public function filtro3(){
+    /*public function filtro3(){
        
         $consulta = new Consultas($this->Conexion);
         $NodosOrdenados = $this->filtro2();
@@ -227,7 +227,7 @@ class Grafo{
         
         return $NodosFiltrados;
 
-    }
+    }*/
 
     public function filtro4(){
        

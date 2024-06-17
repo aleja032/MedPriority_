@@ -2,7 +2,7 @@
 <!-- -------------------------------MODAL PATOLOGIA------------------------------------------ -->
 
 <?php
-    require_once '../conexion.php';
+    require_once 'conexion.php';
 
     $mod_pato = "SELECT * FROM patologias";   //jiji
     $q = mysqli_query( $conn, $mod_pato );
@@ -29,7 +29,7 @@
             <input type="email" required name=mp_name value="<?php echo htmlspecialchars($quack['nombre_patologia'])?>">
         </div>
         <div class="edit-modal">Puntuacion
-            <input type="text" required name=mp_score value="<?php echo htmlspecialchars($quack['puntuacion_pt'])?>">
+            <input type="text" required name=mp_score value="<?php echo htmlspecialchars($quack['puntuacion'])?>">
         </div>
         <div class="modal-savebutton">
             <input type="hidden" name="id_a_cambiar">
@@ -58,7 +58,7 @@
                                     <tbody>
                                         <?php 
                                         
-                                        require_once '../conexion.php';
+                                        require_once 'conexion.php';
 
                                         $sql4 = "SELECT * FROM patologias";   //patologias
                                         $pato_query = mysqli_query($conn, $sql4);
@@ -68,7 +68,7 @@
                                         <tr id=patotable_row_<?php echo $pato['id_patologia']?>>
                                             <td> <?php echo $pato['id_patologia'];?></td>
                                             <td> <?php echo $pato['nombre_patologia'];?></td>
-                                            <td> <?php echo $pato['puntuacion_pt'];?></td>
+                                            <td> <?php echo $pato['puntuacion'];?></td>
                                             <td><button data-modal-target="#modalpato_<?php echo $pato['id_patologia'];?>">Detalles</button></td>
                                             <td><button class="delete" data-user-id="<?php echo $pato['id_patologia'];?>" data-role="patologia">Eliminar</button></td>
                                         </tr>
