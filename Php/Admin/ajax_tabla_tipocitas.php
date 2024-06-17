@@ -2,7 +2,7 @@
 <!-- -------------------------------MODAL TIPO CITA------------------------------------------ -->
 
 <?php
-    require_once 'conexion.php';
+    require_once '../conexion.php';
 
     $mod_typecita = "SELECT * FROM tipo_cita";
     $queso = mysqli_query( $conn, $mod_typecita );
@@ -54,7 +54,7 @@
                                     <tbody>
                                         <?php 
                                         
-                                        require_once 'conexion.php';
+                                        require_once '../conexion.php';
 
                                         $sql5 = "SELECT * FROM tipo_cita";   //tipo citas
                                         $tcita_query = mysqli_query($conn, $sql5);

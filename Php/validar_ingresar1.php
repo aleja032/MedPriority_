@@ -40,10 +40,27 @@ if(mysqli_num_rows($consulta)>0){
         // echo "<script> window.location='../index.php'</script>";
         echo "<script>window.location.href = '../index.php?success=1'</script>";
     }else{
-        echo "Ventana doctor";
+        echo "<script> window.location='doctor.php'</script>";
     }
 }else{
-    echo "<script>window.location.href = '../index.php?success=3'</script>";
+    //echo "<script>window.location.href = '../index.php?success=3'</script>";
+     $validacion_doc="SELECT * FROM usuario u INNER JOIN doctores dc ON u.id_usuario=dc.id_usuario WHERE  contrasena='$password' AND correo='$correo'";
+    $consulta2= mysqli_query($conn,$validacion_doc);
+    if(mysqli_num_rows($consulta2)>0){
+        $datos= mysqli_fetch_array($consulta2);
+        $nombreCompleto = $datos['nombre'];
+        $partesDelNombre = explode(' ', $nombreCompleto); // Divide la cadena en un array usando el espacio como delimitador
+        $primerNombre = $partesDelNombre[0];     // Accede al primer elemento del array, que sería el primer nombre
+        $_SESSION['nombre'] = $primerNombre;
+        $_SESSION['nombre_completo']= $nombreCompleto;
+        $_SESSION['id']=$datos['id_usuario'];
+        $_SESSION['idoc']=$datos['id_doctor'];
+        $_SESSION['edad']=$datos['edad'];
+        $_SESSION['telefono']=$datos['telefono'];
+        $_SESSION['tipo_documento']=$datos['tipo_documento'];
+        $_SESSION['tipo_afiliacion']=$datos['tipo_afiliacion'];
+        echo "<script> window.location='doctor.php'</script>";
+    }
 }
-
+echo "<script> window.location='admin.php'</script>";
 ?>

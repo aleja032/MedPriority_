@@ -2,7 +2,7 @@
 <!-- -------------------------------MODAL CITAS------------------------------------------ -->
 
 <?php
-    require_once 'conexion.php';
+    require_once '../conexion.php';
 
     $mod_cita = "SELECT * FROM preagendamiento p
     INNER JOIN usuario u ON p.id_usuario = u.id_usuario
@@ -146,7 +146,7 @@
                                     <tbody>
                                         <?php 
                                         
-                                        require_once 'conexion.php';
+                                        require_once '../conexion.php';
 
                                         $sql99 = "SELECT * FROM preagendamiento
                                                 INNER JOIN usuario ON preagendamiento.id_usuario = usuario.id_usuario

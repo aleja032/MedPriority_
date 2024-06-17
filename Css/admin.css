@@ -16,16 +16,18 @@ body {
 
 .general_todo{
     height: 100%;
+    /* width: 100%; */
     display: flex;
     flex-direction: column;
     align-items:center;
     justify-content: space-around;
     /* border: 1px solid greenyellow; */
+    z-index: 0;
 }
 
 .conheader {
     /* border: 1px solid red; */
-    width: 90%;
+    width: 95%;
     height: 15%;
     display: flex;
     border-radius: 10px;
@@ -46,7 +48,7 @@ body {
 
 .img_logo{
 
-    background-image: url(../Img/logo.jpeg);
+    background-image: url(../Img/logo.png);
     width: 20%;
     height: 60%;
     background-size: 100% 100%;
@@ -97,7 +99,7 @@ body {
 
 
 .congeneral {
-    width: 90%;
+    width: 95%;
     height: 80%;
     display: flex;
     /* border-radius: 10px; */
@@ -128,6 +130,7 @@ body {
     height: 100%;
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 .inicio{
     /* border: 1px solid fuchsia; */
@@ -136,10 +139,13 @@ body {
     display: flex;
     text-align: center;
     align-items: center;
+    flex: none;
 
 }
+
 .con_imagen img{
     /* border: 1px solid rebeccapurple; */
+    display: flex;
     width: 80%;
     height: 80%;
     background-size: 100% 100%;
@@ -157,6 +163,7 @@ body {
 
 .secion1{
     display: flex;
+    flex: none;
 }
 .seci_notificaiones{
     width: 50%;
@@ -165,12 +172,26 @@ body {
 
 }
 h2{
-    font-size: 60%;
+    font-size: 70%;
 }
 h4{
-    font-size: 70%;
+    font-size: 80%;
+    display: flex;
+    width: 80%;
+    /* border: 1px solid; */
     /* justify-self: flex-end; */
 }
+
+.con_opcion{
+    width: 100%;
+    height: 100%;
+}
+.con_opcion>h4{
+    width: 100%;
+    height: 100%;
+    font-size: 90%;
+}
+
 .linecita{
     width: 50%;
     height: 30%;
@@ -211,6 +232,7 @@ main {
 .contain_main{
     /* border: 1px solid fuchsia; */
     width: 100%;
+    /* width: calc(100% + 2px); */
     height: 100%; 
     flex: none;
     display: flex;
@@ -227,6 +249,8 @@ main {
     /* border: 1px solid blueviolet; */
     width: 98%;
     height: 15%;
+    margin-left: calc(2% - 3px);
+    margin-bottom: calc(3% - 13px);
     display: flex;
     border-radius: 10px;
     align-items: center;
@@ -236,6 +260,7 @@ main {
     background-position: right;
     background-repeat: no-repeat;
     padding-left: 1%;
+    justify-content: space-between;
 }
 
 .cont_titulo p{
@@ -243,10 +268,29 @@ main {
     font-weight: bold;
 }
 
+.search-container{
+    /* border: 1px solid red; */
+    width: 30%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.search-container input{
+    background-color: #D9D9D9;
+    height: 35%;
+    width: 80%;
+    border-radius: 15px;
+    border: transparent;
+    padding-left: 3%;
+}
+
 .cont_general_all{
     /* border: 1px solid greenyellow; */
     width: 98%;
     height: 80%;
+    margin-left: calc(2% - 3px);
     display: flex;
     flex-direction: column;
     border-radius: 10px;
@@ -259,6 +303,43 @@ main {
     justify-content: center;
 }
 
+
+/* ------------------------- MENU ------------------------------------------- */
+
+.mainmain{
+    /* border: 1px solid blue; */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    background-image: url(../Img/corner-7.png);
+    background-size: calc(100%)calc(100%);
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+
+.maincon{
+    /* border: 1px solid red; */
+    width: 100%;
+    height: 25%;
+    /* height: 33%;  */
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.mainmenu{
+    border: 1px solid black;
+    width: 13%;
+    height: 80%;
+    /* height: 60%; */
+    display: flex;
+    justify-content: space-around;
+    border-radius: 10px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}   
 
 /* -------------------REGISTRAR MEDICOS------------------ */
 
@@ -306,7 +387,7 @@ main {
     /* border: 1px solid blue; */
     height: 60%;
     width: 25%;
-    background-color: rgba(18, 18, 221, 0.856);
+    background-color: rgba(61, 132, 180, 0.856);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -332,30 +413,56 @@ main {
 table{
     /* border: 1px solid red; */
     width: 100%;
-    /* height: 90%; */
+    /* height: 99%; */
     text-align: left;
     justify-self: flex-end;
+    border-collapse: collapse;
+    align-self: flex-start;
 }
 table th{
     /* border: 1px solid black; */
     font-size: larger;
+    padding: 8px;
+    text-align: left;
+    background-color: #dddddd3f; /* Light grey on hover */
 }
 table td{
     /* border: 1px solid black; */
     font-size: medium;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 8px;
+    text-align: left;
+    /* border-bottom: 1px solid rgb(119, 118, 118); */
 }
 table tr{
     justify-content: center;
     text-align: center;
+    height: 30px;
 }
+
+tr:nth-child(even){
+    /* background-color: rgba(145, 142, 142, 0.068); */
+    background-color: #dddddd3f; /* Light grey on hover */
+}
+
+tr:nth-child(odd){
+    /* background-color: white; */
+}
+
+tr:hover {
+    /* background-color: #dddddd3f; Light grey on hover */
+    background-color: rgba(95, 94, 94, 0.171);
+    z-index: 1;
+}
+
 table button{
-    background-color: rgba(18, 18, 221, 0.856);
+    background-color: rgba(61, 132, 180, 0.856);
     border: transparent;
     border-radius: 15px;
     width: 60%;
     color: #ffffff;
     font-size: large;
-    box-shadow: 1px 15px 15px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
 
@@ -412,7 +519,7 @@ table button{
     /* border: 1px solid blue; */
     height: 60%;
     width: 25%;
-    background-color: rgba(18, 18, 221, 0.856);
+    background-color: rgba(61, 132, 180, 0.856);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -470,7 +577,7 @@ table button{
 .modal-header span{
     font-size: x-large;
     font-weight: bold;
-    color: rgba(18, 18, 221, 0.856);
+    color: rgba(61, 132, 180, 0.856);
 }
 
 .modal-header .close-button{
@@ -521,7 +628,7 @@ table button{
 }
 
 .modal-savebutton button{
-    background-color: rgba(18, 18, 221, 0.856);
+    background-color: rgba(61, 132, 180, 0.856);
     border-radius: 15px;
     width: 30%;
     border: transparent;
@@ -547,4 +654,148 @@ table button{
     border: transparent;
     padding-left: 3%;
     justify-self: end;
+}
+
+.edit-modal select{
+    background-color: #D9D9D9;
+    height: 50%;
+    width: 40%;
+    border-radius: 15px;
+    border: transparent;
+    padding-left: 3%;
+}
+
+/* -------------------------ADD CITA-------------------------------- */
+
+.separar{
+    width: 100%;
+    height: 3%;
+}
+.preguntas_formulario{
+    width: 100%;
+    height: 17%;
+  
+    display: flex;
+    justify-content: space-between;
+}
+
+.preguntas_formularioo{
+    width: 100%;
+    height: 17%;
+  
+    display: flex;
+    justify-content: space-between;
+}
+
+.cont_preguntas{
+    width: 33%;
+    height: 100%;
+    /* border: 1px solid red; */
+}
+
+.cont_preguntas_search{
+    /* border: 1px solid green; */
+    width: 33%;
+    height: 100%;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.search{
+    /* border: 1px solid blue; */
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-self: flex-end;
+}
+
+.search-img{
+    height:40%;
+    width: 10%;
+    background-size: 100% 100%;
+    background-image: url(../Img/search.png);
+    /* border: 1px solid; */
+    align-items: center;
+    background-repeat: no-repeat;
+    /* background-size: contain; */
+    background-position: center;
+    border: transparent;
+}
+
+.search-img:hover{
+    cursor: pointer;
+}
+
+.cont_preguntas {
+    margin-bottom: 20px; 
+}
+
+.cont_preguntas label {
+    display: block;
+    margin-bottom: 5px; /* Espacio entre el label y el input */
+    font-weight: bold;
+    margin-left: 5%;
+    font-size: 80%;
+}
+
+.cont_preguntas_search label {
+    display: block;
+    margin-bottom: 5px; /* Espacio entre el label y el input */
+    font-weight: bold;
+    margin-left: 5%;
+    font-size: 80%;
+}
+
+.cont_preguntas input {
+    width: 80%;
+    height: 40%;
+    padding: 8px; /* Ajusta el espacio dentro del input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-sizing: border-box; /* Garantiza que el tamaño total sea correcto */
+    margin-left: 3%;
+}
+
+.cont_preguntas_search input {
+    width: 80%;
+    height: 40%;
+    padding: 8px; /* Ajusta el espacio dentro del input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    box-sizing: border-box; /* Garantiza que el tamaño total sea correcto */
+    margin-left: 3%;
+}
+
+.cont_preguntas select, input[type="time"] {
+    width: 80%; /* Ancho del campo de entrada */
+    height: 40%; /* Altura del campo de entrada */
+    padding: 5px; /* Ajusta el espacio dentro del input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+   font-size: 70%;
+    margin-left: 6%; /* Espacio a la izquierda */
+}
+
+
+.cont_preguntas-search, .cont_preguntas img {
+    width: 60%px; /* Ancho deseado */
+    height: 50%; /* Altura ajustada automáticamente para mantener la proporción */
+    margin-left: 15%;
+}
+
+
+
+.con_opcion select {
+    width: 100%; /* Ancho del campo de entrada */
+    height: 100%; /* Altura del campo de entrada */
+   
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    font-size: 70%;
+    margin-left: 50%; /* Espacio a la izquierda */
 }

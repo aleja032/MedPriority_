@@ -1,5 +1,5 @@
 <?php
-require_once 'conexion.php';
+require_once '../conexion.php';
 
 // Check if the request method is POST
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
@@ -11,10 +11,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $null=" ";
     $valorant='0';
     $cita_idNumber = $data['cita_idNumber'];
-    $cita_docType = $data['cita_docType'];
-    $cita_name = $data['cita_name'];
-    $cita_age = $data['cita_age'];
-    $cita_afiliation = $data['cita_afiliation'];
+    // $cita_docType = $data['cita_docType'];
+    // $cita_name = $data['cita_name'];
+    // $cita_age = $data['cita_age'];
+    // $cita_afiliation = $data['cita_afiliation'];
     $cita_typeCita = $data['cita_typeCita'];
     $cita_date = $data['cita_date'];
     $cita_startTime = $data['cita_startTime'];

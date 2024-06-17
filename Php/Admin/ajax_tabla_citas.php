@@ -14,7 +14,7 @@
                                     <tbody>
                                         <?php 
                                         
-                                        require_once 'conexion.php';
+                                        require_once '../conexion.php';
 
                                         $sql7 = "SELECT c.id_citas, p.id_usuario, u.nombre as usuario_nombre, c.FechaAsignada, c.HoraAsignado, d.id_doctor ,du.nombre as doctor_nombre
                                         FROM citas_agendadas c

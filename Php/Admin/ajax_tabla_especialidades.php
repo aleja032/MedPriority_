@@ -2,7 +2,7 @@
 <!-- -------------------------------MODAL ESPECIALIDAD------------------------------------------ -->
 
 <?php
-    require_once 'conexion.php';
+    require_once '../conexion.php';
 
     $mod_especial = "SELECT * FROM especialidades";   //jiji
     $query_special = mysqli_query( $conn, $mod_especial );
@@ -54,7 +54,7 @@
                                     <tbody>
                                         <?php 
                                         
-                                        require_once 'conexion.php';
+                                        require_once '../conexion.php';
 
                                         $sql6 = "SELECT * FROM especialidades";   //especialidades
                                         $consulta = mysqli_query($conn, $sql6);

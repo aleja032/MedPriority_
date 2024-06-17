@@ -170,16 +170,16 @@ class Grafo{
         array_push($Nodos_2Partes,$NodosOrdenados);
         array_push($Nodos_2Partes,$NodosFilter3);
         
-        return $Nodos_2Partes;
+        return $NodosFiltrados;
 
     }
 
 
-    public function filtro3(){
+    /*public function filtro3(){
        
         $consulta = new Consultas($this->Conexion);
         $NodosOrdenados = $this->filtro2();
-        $NodosOrdenados = $NodosOrdenados[1];
+        //$NodosOrdenados = $NodosOrdenados[1];
         $NodosFiltrados = array();
 
        
@@ -188,23 +188,20 @@ class Grafo{
             if ($NodosOrdenados[$i]->datos['HoraAsignada'] == null) {
                 $NodosOrdenados[$i] ->ModificaInicio(1);
                 $NodosOrdenados[$i] ->ModificaFin(33);
-
+            }
                 $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
-                echo $NodosOrdenados[$i]->datos["HoraInicio"].$NodosOrdenados[$i]->datos["HoraFin"];
 
 
                 // $NodosOrdenados[$i]->AgregarDatoHora(null);
                     $NodosOrdenados[$i]->ModificarHora($ArregloDeHoras[0]);
                     $HoraDisponibilidad =$this->CompararHorasNodos($NodosOrdenados[$i],$ArregloDeHoras,$NodosFiltrados);
-                    echo "<br><br>";
-                    var_dump($HoraDisponibilidad);
                     $NodosOrdenados[$i]->ModificarHora($HoraDisponibilidad);
                     
 
 
                         if ($NodosOrdenados[$i]->datos['HoraAsignada'] === null) {
 
-                            echo "entro en bucle";
+                            
 
                             $datetime = new DateTime($NodosOrdenados[$i] ->datos["FechaSolicitada"]);
 
@@ -217,19 +214,97 @@ class Grafo{
                             $NodosOrdenados[$i] ->fecha2($Nueva_fecha);
 
                             $i--;
+                            $this->eliminarObjeto($NodosFiltrados,$NodosOrdenados[$i]);
                         
                         }
-                }
+                        array_push($NodosFiltrados,$NodosOrdenados[$i]);
+                
 
-            array_push($NodosFiltrados,$NodosOrdenados[$i]);
+            
             }
         
 
         
-        return $NodosOrdenados;
+        return $NodosFiltrados;
+
+    }*/
+
+    public function filtro4(){
+       
+        $consulta = new Consultas($this->Conexion);
+        $NodosOrdenados = $this->filtro2();
+        $NodosYaConHoras = $this->FiltrarNodosNoNull($this->filtro2());
+        $NodosFiltrados = array();
+
+        foreach ($NodosYaConHoras as $num) {
+            $index = array_search($num, $NodosOrdenados);
+            if ($index !== false) {
+                unset($NodosOrdenados[$index]);
+            }
+        }
+
+        $NodosOrdenados = array_values($NodosOrdenados);
+
+       
+        for($i=0 ; $i<count($NodosOrdenados);$i++){
+
+            if ($NodosOrdenados[$i]->datos['HoraAsignada'] == null) {
+                $NodosOrdenados[$i] ->ModificaInicio(1);
+                $NodosOrdenados[$i] ->ModificaFin(33);
+            }
+                $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
+
+
+                // $NodosOrdenados[$i]->AgregarDatoHora(null);
+                    $NodosOrdenados[$i]->ModificarHora($ArregloDeHoras[0]);
+                    $HoraDisponibilidad =$this->CompararHorasNodos($NodosOrdenados[$i],$ArregloDeHoras,$NodosYaConHoras);
+                    $NodosOrdenados[$i]->ModificarHora($HoraDisponibilidad);
+                    
+
+
+                        if ($NodosOrdenados[$i]->datos['HoraAsignada'] === null) {
+
+                            
+
+                            $datetime = new DateTime($NodosOrdenados[$i] ->datos["FechaSolicitada"]);
+
+                            // Sumar un día a la fecha
+                            $datetime->modify('+1 day');
+
+                            // Obtener la fecha resultante en formato 'Y-m-d'
+                            $Nueva_fecha = $datetime->format('Y-m-d');
+
+                            $NodosOrdenados[$i] ->fecha2($Nueva_fecha);
+
+                            $i--;
+                            $this->eliminarObjeto($NodosYaConHoras,$NodosOrdenados[$i]);
+                        
+                        }
+                        array_push($NodosYaConHoras,$NodosOrdenados[$i]);
+                
+
+            
+            }
+        
+
+        
+        return $NodosYaConHoras;
+
+    }
+
+    public function eliminarObjeto(&$arreglo, $objeto) {
+        foreach ($arreglo as $key => $value) {
+            if ($value == $objeto) {
+                unset($arreglo[$key]);
+                break; 
+            }
+        }
+        // Reindexar el arreglo
+        $arreglo = array_values($arreglo);
 
     }
     
+
      
     /* Compara El Nodo al que se le asignara la hora, Con solo los nodos que ya tienen una hora asignada
     Compara Fecha Y Hora para Saber si hay y retornar disponibilidad */
@@ -361,9 +436,29 @@ class Grafo{
 
     public function AsignarMedicoNodos(){
         $Arreglo_final=array();
-        $NodosAgendados=$this->AsignarMedico($this->FiltrarNodosNoNull($this->filtro2()[0]));
-        $NodosSugerencias=$this->AsignarMedico($this->filtro3());
+        $NodosAgendados=$this->AsignarMedico($this->FiltrarNodosNoNull($this->filtro2()));
+        /*$NodosSugerencias=$this->AsignarMedico($this->filtro3());
+
+        foreach ($NodosAgendados as $num) {
+            $index = array_search($num, $NodosSugerencias);
+            if ($index !== false) {
+                unset($NodosSugerencias[$index]);
+            }
+        }*/
         array_push($Arreglo_final,$NodosAgendados);
+
+        
+        //$NodosSugerencias=$this->filtro4();
+        $NodosSugerencias=$this->AsignarMedico($this->filtro4());
+
+        foreach ($NodosAgendados as $num) {
+            $index = array_search($num, $NodosSugerencias);
+            if ($index !== false) {
+                unset($NodosSugerencias[$index]);
+            }
+        }
+
+        //$NodosSugerencias1=$this->AsignarMedico($NodosSugerencias);
         array_push($Arreglo_final,$NodosSugerencias);
         
         return $Arreglo_final;

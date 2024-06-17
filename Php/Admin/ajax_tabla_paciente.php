@@ -2,7 +2,7 @@
 <!-- -------------------------------MODAL------------------------------------------ -->
 
 <?php
-    require_once 'conexion.php';
+    require_once '../conexion.php';
 
     $bruh = "SELECT * FROM usuario WHERE id_rol='3' OR id_rol='2'";   //jiji
     $q = mysqli_query( $conn, $bruh );
@@ -77,7 +77,7 @@
 
                             <?php
 
-                            require_once  'conexion.php';
+                            require_once  '../conexion.php';
  
                             $sql2 = "SELECT * FROM usuario WHERE id_rol='2'";   //paciente
                             $query = mysqli_query($conn, $sql2 );
