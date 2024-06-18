@@ -998,4 +998,203 @@ td{
     .texto_sesion{
         justify-content: center;
     }
+/* modificaciones final*/
+/*----------------------------agregar citas-------------------------------------*/
+.cont_preguntas3_add {
+    display: none;
+  }
+    .img{
+        display: none;
+    }
+   .cont_preguntas3{
+  
+    width: 100%;
+  
+   }
+   .cont_preguntas3 p{
+    font-size: 80%;
+   }
+.cont_preguntas p{
+    font-size: 80%;
+}
+.cont_preguntas2 p{
+    font-size: 80%;
+}
+   #fecha1 {
+    height: 35px; 
+    
+  }
+  #hora_rango1{
+    width: 80px;
+  }
+  #identificacion{
+    height: 35px
+  }
+#tipo_identificacion{
+    height: 35px
+}
+
+#nombre{
+    height: 35px
+}
+
+.cont_enviar .submit-btn {
+   width: 50%;
+  }
+
+#edad{
+    height: 35px
+
+}
+#tipo_afiliacion{
+    height: 35px
+}
+#trabajo{
+    height: 35px
+}
+#enfermedad{
+    height: 35px
+}
+#nivel_gravedad{
+    height: 35px
+}
+#tiposita{
+    height: 37px
+}
+
+#hora_rango1{
+    height: 38px
+}
+#rango{
+    height: 40px
+}
+/*------------------------------------------------------------------------------------*/
+/*------------------estilos notificaciones --------------------------------------------*/
+.boton_tabla_eli {
+    width: 100%;
+  }
+ 
+  #btnagregar{
+    width: 100%;
+    margin-bottom: 4%;
+  }
+  /*-------------------------------------------------------------------------------------*/
+  /* ------------------------ modificar datos------------------------------*/
+  #subirimagen{
+    width: 100px;
+    height: 14%;
+  }
+
+  #btnactualizar{
+    width: 100px;
+    height: 8%;
+  }
+  .cont2_elegir p {
+    font-size: 70%;
+  }
+  #tipo-cita{
+    font-size: 70%;
+  }
+
+#generate-pdf{
+    font-size: 60%;
+    width: 300px;
+    height: 50%;
+    margin-left: 7%;
+}
+#fechacita{
+    font-size: 80%;
+}
+
+#lupa{
+    width: 130px;
+    margin-left: 5%;
+}
+
+#consulta_folio{
+    margin-left: 15%;
+}
+
+/*------------------------------------------------------------------*/
+/*---------------------------------------------historia clinica------------------------------ */
+#med{
+    margin-left: -38%;
+}
+#datos{
+    
+    font-size: 70%;
+   display: flex;
+}
+
+#nompaciente{
+    font-size: 70%;
+}
+#indeti{
+    font-size: 70%;
+}
+
+#dire{
+    font-size: 70%;  
+    margin-left: 0 3%;
+}
+#identi{
+    font-size: 70%;   
+}
+#identis{
+    font-size: 70%;  
+    margin-left: 20%;
+}
+#fecha{
+    font-size: 70%; 
+}
+
+#eda{
+    font-size: 70%;  
+}
+#procede{
+    font-size: 70%;  
+  
+}
+
+#proceden{
+    font-size: 70%;  
+  margin-left: 4%;
+  
+}
+
+#estado{
+    font-size: 70%;  
+}
+#telefo{
+    font-size: 70%; 
+}
+
+#tipodocu{
+    font-size: 70%;
+}
+#sex{
+    font-size: 70%; 
+}
+#tipoafili{
+    font-size: 70%; 
+}
+
+#anamesis{
+    font-size: 70%;  
+}
+
+#title{
+    font-size: 70%; 
+}
+
+#title2{
+    font-size: 70%;
+}
+#titles{
+    font-size: 70%;
+}
+
+
+
+
 }

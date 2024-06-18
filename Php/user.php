@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
-    <link rel="stylesheet" href="../Css/style_user1.css">
+    <link rel="stylesheet" href="../Css/style_user3.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
@@ -140,16 +140,16 @@
                 </div>
         </div>
         <main class="principal">
-            <!--------- -----------------HISTORIA CLINICA---------------------- -->
+             <!--------- -----------------HISTORIA CLINICA---------------------- -->
 
-            <div id="prueba2" class="historialcita">
+             <div id="prueba2" class="historialcita">
                 <div class="cont_titulo">
                     <p> Historia Clinica</p>
                 </div>
 
                 <div class="cont_general_all2" >
                     <div class="cont2_elegir" id="cont2_historial">
-                            <h4>Elige el tipo de historia clinica:</h4>
+                            <h4 id="tipo-cita" >Elige el tipo de historia clinica:</h4>
                             
                             <div class="comb" id="form_1">
                                 <input type="radio" name="consulta" id="radio" value="1" checked>
@@ -170,18 +170,18 @@
                             </div>
                     </div>
                     <form class="consultar">
-                     <h4> Ingrese la fecha de su cita:</h4> <div class="div"><input type="date" name="fecha" id="lupa" required> <i class="fa-solid fa-magnifying-glass" style="color: #000000;" id="consulta_folio"></i></div>
+                     <h4 id="fechacita"  > Ingrese la fecha de su cita:</h4> <div class="div"><input type="date" name="fecha" id="lupa" required> <i class="fa-solid fa-magnifying-glass" style="color: #000000;" id="consulta_folio"></i></div>
                     </form>
                     <div class="historial_clinico" id="historial" >
                         <div class="cont_logo_name">
                             <div class="img_log"></div>
-                            <p>MEDPRIORITY</p>
+                            <p id="med">MEDPRIORITY</p>
                         </div>
                         <p class="nit">Nit:  1122540000-1</p>
 
-                        <div class="datos_historia" id="datos"> </div>
+                        <div class="datos_historia" id="datos">  </div>
                         
-                            <div class="title">DATOS PERSONALES</div>
+                            <div class="title" id="titles">DATOS PERSONALES</div>
 
                             <div class="general">
                                 <?php
@@ -192,25 +192,25 @@
                                     $datos = mysqli_fetch_assoc($consulta);
                                 ?>
                                     <div class="container1">
-                                         <div class="cont-1">    <p class="negrita">Nombre Paciente: </p> <p class="resultados"><?php echo $datos['nombre']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Fecha de Nacimiento: </p><p class="resultados"><?php echo $datos['fecha_nacimiento']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Dirección:</p><p class="resultados"><?php echo $datos['direccion']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Procedencia:</p><p class="resultados"><?php echo $datos['procedencia']; ?></p></div>
-                                         <div class="cont-1">    <p class="negrita">Estado Civil:</p><p class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita" id="nompaciente">Nombre Paciente: </p> <p  id="nompaciente" class="resultados"><?php echo $datos['nombre']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita"  id="fecha">Fecha de Nacimiento: </p><p id="fecha" class="resultados"><?php echo $datos['fecha_nacimiento']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita" id="dire">Dirección:</p><p  id="dire" class="resultados"><?php echo $datos['direccion']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita" id="procede">Procedencia:</p><p id="proceden" class="resultados"><?php echo $datos['procedencia']; ?></p></div>
+                                         <div class="cont-1">    <p class="negrita" id="estado"> Estado Civil:</p><p id="estado" class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
                                     </div>
 
                                     <div class="container1">
-                                    <div class="cont-1">        <p class="negrita">Identificación:</p><p class="resultados"><?php echo $datos['id_usuario']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Edad: </p><p class="resultados"><?php echo $datos['edad']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Teléfono: </p><p class="resultados"><?php echo $datos['telefono']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Tipo de Documento: </p><p class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
-                                    <div class="cont-1">        <p class="negrita">Sexo: </p><p class="resultados"><?php echo $datos['genero']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita"  id="identi">Identificación:</p><p  id="identis" class="resultados"><?php echo $datos['id_usuario']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita" id="eda">Edad: </p><p id="eda" class="resultados"><?php echo $datos['edad']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita" id="telefo">Teléfono: </p><p  id="telefo"class="resultados"><?php echo $datos['telefono']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita" id="tipodocu">Tipo de Documento: </p><p   id="tipodocu"  class="resultados"><?php echo $datos['estado_civil']; ?></p></div>
+                                    <div class="cont-1">        <p class="negrita"  id="sex">Sexo: </p><p id="sex"  class="resultados"><?php echo $datos['genero']; ?></p></div>
     
                                 </div>
                             </div>
                                     <div class="afil">
-                                        <div class="title2">DATOS AFILIACION</div>
-                                        <div class="cont-2">    <p class="afi">Tipo de Afiliación: </p> <p class="resultados"><?php echo $datos['tipo_afiliacion']; ?></p></div>
+                                        <div class="title2" id="title2">DATOS AFILIACION</div>
+                                        <div class="cont-2">    <p class="afi" id="tipoafili">Tipo de Afiliación: </p> <p  id="tipoafili" class="resultados"><?php echo $datos['tipo_afiliacion']; ?></p></div>
 
                                         <!-- <p class="afi">Tipo de Afiliación: <?php echo $datos['tipo_afiliacion']; ?></p> -->
 
@@ -220,7 +220,7 @@
                                                 echo '<p>No se encontraron resultados.</p>';
                                             }
                                             ?>
-                            <div class="title">ANAMNESIS</div>
+                            <div class="title" id="title">ANAMNESIS</div>
 
                             <div class="descripcion_paciente" id="anamesis">
 
@@ -265,9 +265,9 @@
                                             <td><?php echo $resultado['hora_reservada']; ?></td>
                                             <td><?php echo $resultado['estado']; ?></td>
                                             <td>
-                                                <form method="POST" action="Usuario/sugerencias.php" style="display:inline;" id="agendar_suge">
-                                                    <input type="hidden" name="id_sugerencia" value="<?php echo $resultado['id']; ?>">
-                                                    <button type="submit" id="agendar_suge">Agendar</button>
+                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
+                                                    <input type="hidden" name="id_sugerencia" value="<?php echo $id_user; ?>">
+                                                    <button type="submit" class="boton_tabla" id="btnagregar">Agendar</button>
                                                 </form>
                                                 <form method="POST" action="liberar_citas.php" style="display:inline;">
                                                     <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
@@ -302,7 +302,7 @@
                         <p>Mis datos</p>
                     </div>
                     <div class="cont_general_all_modi">
-                        <form action="./Usuario/actualizar_user.php" method="post" class="actualizar" enctype="multipart/form-data">
+                        <form action="./Usuario/actualizar_user.php" method="post" class="actualizar"  id="fotico" enctype="multipart/form-data">
                             <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
                             <div class="part1">
                                 <p class="labels">Telefono</p>
@@ -316,11 +316,11 @@
                             <div class="cont_part3">
                                             <div class="cont_img_subir">
                                                 <input type="file" id="input-foto" name="foto" accept="image/*" style="display:none;">
-                                                <button type="button" class="bto-foto" onclick="document.getElementById('input-foto').click();">Subir foto</button>
+                                                <button type="button" class="bto-foto"   id="subirimagen"      onclick="document.getElementById('input-foto').click();">Subir foto</button>
                                                 <div class="imagen_subir"></div>
                                                 
                                             </div>
-                                            <button type="submit" class="bto-modi">Actualizar</button>
+                                            <button type="submit" id="btnactualizar"  class="bto-modi">Actualizar</button>
                             </div>
 
                             <div class="part2">
@@ -353,11 +353,11 @@
                             <p>Identificación</p>
                             <input type="text" id="identificacion" name="identificacion" value="<?php echo $_SESSION['id'] ?>" disabled>
                         </div>
-                        <div class="cont_preguntas" id="tipo_identificacion">
+                        <div class="cont_preguntas" id="tipo_identificacionn">
                             <p>Tipo de Identificación</p>
                             <input type="text" id="tipo_identificacion" name="tipo_identificacion" value="<?php echo $_SESSION['tipo_documento'] ?>" disabled>
                         </div>
-                        <div class="cont_preguntas" id="nombre">
+                        <div class="cont_preguntas" id="nombres">
                             <p>Nombres</p>
                             <input type="text" id="nombre" name="nombre" value="<?php echo $_SESSION['nombre_completo'] ?>" disabled>
                         </div>
@@ -370,11 +370,11 @@
                                 <p>Edad</p>
                                 <input type="text" id="edad" name="edad" value="<?php echo $_SESSION['edad'] ?>" disabled>
                             </div>
-                            <div class="cont_preguntas2" id="tipo_afiliacion">
+                            <div class="cont_preguntas2" id="tipo_afiliacionn">
                                 <p>Tipo de Afiliación</p>
                                 <input type="text" id="tipo_afiliacion" name="tipo_afiliacion" value="<?php echo $_SESSION['tipo_afiliacion'] ?>" disabled>
                             </div>
-                            <div class="cont_preguntas2" id="trabajo">
+                            <div class="cont_preguntas2" id="trabajos">
                                 <p>Trabajo</p>
                                 <input type="text" id="trabajo" name="trabajo" value="<?php echo $_SESSION['estado'] ?>" disabled>
                             </div>
@@ -387,7 +387,7 @@
                             </div>
                             <div class="cont_preguntas" id="tipo_identificacion">
                             </div>
-                            <div class="cont_preguntas2" id="nivel_gravedad">
+                            <div class="cont_preguntas2" id="nivel_gravedads">
                                 <p>Nivel de Gravedad</p>
                                 <input type="text" id="nivel_gravedad" name="nivel_gravedad"  disabled>
                             </div>
@@ -398,7 +398,7 @@
                     <div class="preguntas_formulario2">
                             <div class="cont_preguntas3">
                                 <p>Tipo de Cita</p>
-                                <select class="tipocita" name="tipocita">
+                                <select     class="tipocita" name="tipocita"  id="tiposita">
                                 <?php
                                         
                                         
@@ -450,7 +450,7 @@
                         </div>
 
                         <div class="cont_preguntas3_add">
-                            <p>Añadir Cita: </p>
+                            <p>Añadir Citas: </p>
                             <div class="img"></div>
                         </div>
 
@@ -493,7 +493,6 @@
                     </form>
                 </div>
             </div>
-        
         <!----------------------------------Estado de la cita ------------------------------------->
                 
         <div id="estadocita" class="historialcita">
