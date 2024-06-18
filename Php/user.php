@@ -267,7 +267,7 @@
                                             <td>
                                                 <form method="POST" action="Usuario/sugerencias.php" style="display:inline;" id="agendar_suge">
                                                     <input type="hidden" name="id_sugerencia" value="<?php echo $resultado['id']; ?>">
-                                                    <button type="submit" id="agendar_suge">Agendar</button>
+                                                    <button type="submit" id="agendar_suge" class="boton_tabla">Agendar</button>
                                                 </form>
                                                 <form method="POST" action="liberar_citas.php" style="display:inline;">
                                                     <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
