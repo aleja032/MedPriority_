@@ -58,7 +58,7 @@ if($ejecutar_consulta){
         //     echo"Algo paso :(";
         // }
        
-        echo "<script>window.location.href = '../user.php?success=1'</script>";
+        // echo "<script>window.location.href = '../user.php?success=1'</script>";
     }
 }else{
     header("Location: ./user.php?success=0");

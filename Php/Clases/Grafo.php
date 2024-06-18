@@ -61,15 +61,47 @@ class Grafo{
 
     }
 
+    public function NodosYaAsignados(){
+
+        $consulta = new Consultas($this->Conexion);
+        $NodosOrdenados = $this->AsignarOrden();
+        $NodosMixtos = array();
+
+        for($i=0 ; $i<count($NodosOrdenados);$i++){
+
+            
+            if($consulta->CitasA($NodosOrdenados[$i]->id) != false){
+                $DatosNodo = $consulta->CitasA($NodosOrdenados[$i]->id);
+
+                $NodosOrdenados[$i]->fecha2($DatosNodo[0]);
+                $NodosOrdenados[$i]->ModificarHora($DatosNodo[1]);
+                $NodosOrdenados[$i]->ModificarMedico($DatosNodo[2]);
+
+            }
+
+
+            array_push($NodosMixtos,$NodosOrdenados[$i]);
+
+        }
+
+        
+        return $NodosMixtos;
+
+
+    }
+
     /* Se Asigna La Menor Hora Posible Dependiendo del rango de horas 
     que se solicito en la cita(Nodo) */
     public function AsginarHora(){
 
         $consulta = new Consultas($this->Conexion);
-        $NodosOrdenados = $this->AsignarOrden();
+        $NodosOrdenados = $this->NodosYaAsignados();
         $NodosFiltrados = array();
 
         for($i=0 ; $i<count($NodosOrdenados);$i++){
+
+            if($NodosOrdenados[$i]->datos['HoraAsignada'] == null && $NodosOrdenados[$i]->datos['MedicoAsignado'] == null){
+
 
            $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
 
@@ -94,6 +126,7 @@ class Grafo{
            }
 
            array_push($NodosFiltrados,$NodosOrdenados[$i]);
+        }
 
         }
 
@@ -412,6 +445,11 @@ class Grafo{
         
         foreach($NodosConHoras as $NodosActuales){
 
+
+            if($NodosActuales->datos['MedicoAsignado'] == null){
+
+
+
            $Medicos=$Consultar->CMEspecialidadActivo($Consultar->EspecialidadPorCita($NodosActuales->datos["IdTipoCita"]));
 
            if($contador==0){
@@ -427,6 +465,7 @@ class Grafo{
 
            array_push($NodosYaAsignados,$NodosActuales);
            $contador++;
+        }
 
         }
 

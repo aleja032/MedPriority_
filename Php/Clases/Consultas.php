@@ -326,6 +326,24 @@ class Consultas{
         return $ArregloHoras;
 
     }
+
+    public function CitasA($id_pre){
+        $Sql = mysqli_query($this->Conexion,"SELECT * FROM citas_agendadas WHERE id_preagendamiento='$id_pre'");
+        $ArregloIds = array();
+
+        if($Resultado = mysqli_fetch_array($Sql)){
+            
+          array_push($ArregloIds,$Resultado['FechaAsignada']);
+          array_push($ArregloIds,$Resultado['HoraAsignado']);
+          array_push($ArregloIds,$Resultado['id_DoctorAsignado']);
+
+          return $ArregloIds;
+
+        }
+
+        return false;
+
+    }
 }
         
 
