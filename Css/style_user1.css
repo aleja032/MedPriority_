@@ -850,7 +850,7 @@ td{
 .expand-height {
     overflow: visible !important;
 } */
-
+/*---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 @media (max-width: 768px)  {
     .conheader{
@@ -998,6 +998,19 @@ td{
     .texto_sesion{
         justify-content: center;
     }
+
+#modificar_datos{
+    margin-left: 0%;
+}
+#iconon{
+    margin-left: 15%;
+}
+#iconos{
+    margin-left: 13%;  
+}
+#iconox{
+    margin-left: 5%;
+}
 /* modificaciones final*/
 /*----------------------------agregar citas-------------------------------------*/
 .cont_preguntas3_add {
@@ -1022,7 +1035,8 @@ td{
 }
    #fecha1 {
     height: 35px; 
-    
+    width: 60%;
+    margin-left: 8%;
   }
   #hora_rango1{
     width: 80px;
@@ -1059,14 +1073,61 @@ td{
     height: 35px
 }
 #tiposita{
-    height: 37px
+    height: 37px;
+    margin-left: 11%;
+
 }
 
 #hora_rango1{
     height: 38px
 }
 #rango{
-    height: 40px
+    height: 40px;
+    margin-left: -10%;
+    
+}
+.preguntas_formulario{
+    margin-left: 2%;
+}
+.preguntas_formulario2{
+margin-left: 2%;
+}
+#fechista{
+    font-size: 130%; 
+    margin-left: 8%;
+}
+
+#tipocicta{
+    margin-left: 8%;
+}
+#horitaincio{
+    margin-left: -15%;
+}
+#hora_rango1{
+    margin-left: -15%;
+}
+#horitafina{
+    margin-left: -10%;
+}
+
+#fecha2{
+    margin-left: 2%;
+    height: 35px;
+}
+#rango_2{
+    margin-left: 5%;
+    height: 38px;
+}
+#hora_rango2{
+    margin-left: 10%;
+    height: 38px;
+}
+#horaini{
+    margin-left: 10%;
+}
+
+#identifi{
+    margin-left: 3%;
 }
 /*------------------------------------------------------------------------------------*/
 /*------------------estilos notificaciones --------------------------------------------*/
@@ -1114,6 +1175,27 @@ td{
 #consulta_folio{
     margin-left: 15%;
 }
+.imagen_subir{
+    height: 40%;
+    width: 100%;
+    margin-left: 30%;
+}
+.part2{
+   margin-left: 8%;
+   width: 40%;
+ 
+}
+.part1{
+    margin-left: 3%;
+    width: 40%;
+ }
+#input_modi{
+    width: 90%;
+    
+}
+.labels{
+    font-size: 80%;
+}
 
 /*------------------------------------------------------------------*/
 /*---------------------------------------------historia clinica------------------------------ */
@@ -1147,6 +1229,7 @@ td{
 #fecha{
     font-size: 70%; 
 }
+
 
 #eda{
     font-size: 70%;  
@@ -1195,6 +1278,27 @@ td{
 }
 
 
+#med{
+   font-size: 80%;
+   
+}
+#nit{
+    
+}
+.cont_logo_name{
+    height: 15%;
+    width: 40%;
+}
+.img_log{
+  background-image: 100% 100%;
 
+}
+
+/*----------------------------- estado cita ---------------------------------*/
+.boton_tabla_eli{
+    width: 100px;
+    height: 90%;
+ 
+}
 
 }

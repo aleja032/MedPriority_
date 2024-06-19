@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
-    <link rel="stylesheet" href="../Css/style_user3.css">
+    <link rel="stylesheet" href="../Css/style_user1.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
@@ -100,7 +100,7 @@
                 <div class="combo1_notificacion" >
                     <a href="#modificar_datos" id="modificar_datos">
                             
-                        <div class="con_imagen_editar" id="icono"> </div>
+                        <div class="con_imagen_editar" id="iconon"> </div>
                     
                         <div class="enunciado2" id="modificar_datos">  Modificar mis datos</div>
                     </a>
@@ -110,7 +110,7 @@
                 <div class="combo1_notificacion" >
                     <a href="#inicio">
                         
-                        <div class="con_imagen3" id="icono"> </div>
+                        <div class="con_imagen3" id="iconox"> </div>
                 
                         <div class="enunciado2" id="historia_clinica">  Historia Clinica</div>
                     </a>
@@ -120,7 +120,7 @@
                 <div class="combo1_notificacion">
                     <div class="menu-item">
                         <div class="menu-title">
-                            <div class="con_imagen4" id="icono"> </div>
+                            <div class="con_imagen4" id="iconos"> </div>
                             <div class="enunciado2">  Citas</div>
                             <i class="fas fa-caret-down"></i>
                         </div>
@@ -173,7 +173,7 @@
                      <h4 id="fechacita"  > Ingrese la fecha de su cita:</h4> <div class="div"><input type="date" name="fecha" id="lupa" required> <i class="fa-solid fa-magnifying-glass" style="color: #000000;" id="consulta_folio"></i></div>
                     </form>
                     <div class="historial_clinico" id="historial" >
-                        <div class="cont_logo_name">
+                        <div class="cont_logo_name" >
                             <div class="img_log"></div>
                             <p id="med">MEDPRIORITY</p>
                         </div>
@@ -317,7 +317,7 @@
                                             <div class="cont_img_subir">
                                                 <input type="file" id="input-foto" name="foto" accept="image/*" style="display:none;">
                                                 <button type="button" class="bto-foto"   id="subirimagen"      onclick="document.getElementById('input-foto').click();">Subir foto</button>
-                                                <div class="imagen_subir"></div>
+                                                <div class="imagen_subir" ></div>
                                                 
                                             </div>
                                             <button type="submit" id="btnactualizar"  class="bto-modi">Actualizar</button>
@@ -350,7 +350,7 @@
                 <div class="cont_general_all">
                     <div class="preguntas_formulario">
                         <div class="cont_preguntas">
-                            <p>Identificación</p>
+                            <p id="identifi">Identificación</p>
                             <input type="text" id="identificacion" name="identificacion" value="<?php echo $_SESSION['id'] ?>" disabled>
                         </div>
                         <div class="cont_preguntas" id="tipo_identificacionn">
@@ -397,7 +397,7 @@
 
                     <div class="preguntas_formulario2">
                             <div class="cont_preguntas3">
-                                <p>Tipo de Cita</p>
+                                <p id="tipocicta">Tipo de Cita</p>
                                 <select     class="tipocita" name="tipocita"  id="tiposita">
                                 <?php
                                         
@@ -424,13 +424,13 @@
 
                             </div>
                         <div class="cont_preguntas3" id="fecha">
-                            <p>Fecha</p>
+                            <p id="fechista">Fecha</p>
                             <input type="date" id="fecha1" name="fecha"  min="<?php echo date('Y-m-d', strtotime('+2 day')); ?>" required>
                         </div>
                         <div class="cont_preguntas3" id="hora_inicio">
-                            <p>Hora Inicio</p>
+                            <p id="horitaincio">Hora Inicio</p>
                             <select name="hora_inicio" id="hora_rango1" required>
-                            <option value="">Seleccionar</option>
+                            <option value=""  id="sele">Seleccionar</option>
 
                             <?php
                                         $sql="SELECT * FROM horarios WHERE EXTRACT(MINUTE FROM hora_inicio) IN (0, 30);";
@@ -445,7 +445,7 @@
                             </select>
                         </div>
                         <div class="cont_preguntas3" id="hora_final">
-                            <p>Hora Final</p>
+                            <p id="horitafina">Hora Final</p>
                             <select name="hora_fin" id="rango" required></select>
                         </div>
 
@@ -463,7 +463,7 @@
 
                         </div>
                         <div class="cont_preguntas2" id="hora_inicio">
-                            <p>Hora Inicio</p>
+                            <p id="horaini">Hora Inicio</p>
 
                             <select name="hora_inicio_2" id="hora_rango2" >
                                     <option value="">Seleccionar</option>
