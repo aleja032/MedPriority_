@@ -12,6 +12,7 @@ $consultar = new Consultas($conn);
 $actualizar = new UpdateBD($conn);
 $insertar = new InsertarBD($conn);
 
+// // $sql = " SELECT * FROM preagendamiento p WHERE NOT EXISTS (SELECT 1 FROM ccitas_agendadas ct WHERE p.id_preagendamiento = ct.id_preagendamiento ";
 $sql = " SELECT * FROM preagendamiento ";
 $ejecutar_consulta = mysqli_query($conn,$sql);
 
@@ -26,71 +27,9 @@ if(mysqli_num_rows($ejecutar_consulta)>0){
 }
 
 
-// echo "NODOS 3<br><br>";
-// $nodosOrdenados = $grafo->FiltrarNodosNoNull($grafo->filtro2());
-// $NodosSinHoraAsignada = array();
-
-// foreach ($nodosOrdenados as $nodo) {
-//     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
-//     if ($nodo->datos['HoraAsignada'] === null) {
-//         // Si es nula, agregamos el nodo a $NodosSinServir
-//         $NodosSinHoraAsignada[] = $nodo;
-        
-//     }
-// }
-
-
-
-//----------------------------------------
-// echo "CITAS SIN FECHA PASA A FILTRO 2<br><br>"; //alejaa
-// // Recorrer $NodosSinServir para ver los datos
-// foreach ($NodosSinServir as $nodoSinHora) {
-//     $sql="SELECT * FROM preagendamiento WHERE id_preagendamiento= $nodoSinHora->id ";
-//     $consulta=mysqli_query($conn,$sql);
-//     $nodoSinHora->fecha2($consul['fecha_2']);
-//     $nodoSinHora->hora_inicio_2($consul['hora_inicio_2']); 
-//     $nodoSinHora->fecha2($consul['hora_fin_2']);
-
-    
-//     /*if(mysqli_num_rows($consulta)>0){
-//         $consul=mysqli_fetch_array($consulta);
-//         $nodo = new Nodo($consul['id_preagendamiento'],array("idUsuario"=>$consul['id_usuario'],"Valoracion"=>$array_consulta['valoracion'],"Registro"=>$array_consulta['registro'],"IdTipoCita"=>$array_consulta['id_tipo_cita'],"HoraAsignada"=>null,"MedicoAsignado"=>null),0 , $nodoSinHora->fecha2($consul['fecha_2']),$nodoSinHora->hora_inicio_2($consul['hora_inicio_2']), $nodoSinHora->fecha2($consul['hora_fin_2']));
-//         $grafo2->AgregarNodo($nodo);
-//     }*/
-// }
-//-----------------------------------------------
-
-// echo "<br><br>NODOS FILTRADOS NO FUNCIONA<br><br>";
-// $nodoshoras1 = $grafo->AsignarMedicoNofunciona();
-
-
-// foreach ($nodoshoras1 as $nodo) {
-//     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
-
-// }
-
-// $a= $consultar->ContarMEspecialidadActivo(1);
-// echo $a;
-// //echo var_dump($nodosOrdenados);
-// $NodosProcesados =$nodoshoras1;
-// echo "<br><br>INSERTS Y UPDATES BD<br><br>";
-
-// foreach ($NodosProcesados as $nodo) {
-
-//     if($consultar->ValidarExistenciaCita($nodo->id)) {
-
-//         $actualizar->ActualizarCitasAsignadas($nodo);
-
-//     }else{
-
-//         $insertar->InsertarCitasOrdenadas($nodo);
-
-//     }
-
-// }
 
 $NodosProcesados = $grafo->AsignarMedicoNodos();
-
+/*
 echo "NODOS QUE IRAN A CITAS AGENDADAS <br>";
 foreach ($NodosProcesados[0] as $nodo) {
     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
@@ -100,7 +39,7 @@ echo "NODOS QUE IRAN A SUGERENCIA CITAS <br>";
 foreach ($NodosProcesados[1] as $nodo) {
     echo "Nodo ID: {$nodo->id},\n Peso(Prioridad): {$nodo->peso}\n Fecha Solicitada = {$nodo->datos['FechaSolicitada']}  HoraAsignada = {$nodo->datos['HoraAsignada']}      MedicoAsignadoo = {$nodo->datos['MedicoAsignado']}<br><br>";
 }
-
+*/
 
 
 // echo "<br>VER<br>";

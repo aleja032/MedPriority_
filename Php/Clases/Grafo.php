@@ -6,7 +6,7 @@ include_once "Consultas.php";
 class Grafo{
 
     public $nodos = array();
-    public $Aristas = array();
+    //public $Aristas = array();
     public $Conexion;
 
     public function __construct($Conexion) {
@@ -65,27 +65,35 @@ class Grafo{
 
         $consulta = new Consultas($this->Conexion);
         $NodosOrdenados = $this->AsignarOrden();
-        $NodosMixtos = array();
+        $GeneralNodos=array();
+        $NodosAsignados = array();
+        $NodosPorAsignar = array();
 
         for($i=0 ; $i<count($NodosOrdenados);$i++){
 
             
-            if($consulta->CitasA($NodosOrdenados[$i]->id) != false){
-                $DatosNodo = $consulta->CitasA($NodosOrdenados[$i]->id);
+            if($consulta->CitasYaAsignadas($NodosOrdenados[$i]->id) != false){
+                $DatosNodo = $consulta->CitasYaAsignadas($NodosOrdenados[$i]->id);
 
                 $NodosOrdenados[$i]->fecha2($DatosNodo[0]);
                 $NodosOrdenados[$i]->ModificarHora($DatosNodo[1]);
                 $NodosOrdenados[$i]->ModificarMedico($DatosNodo[2]);
+                array_push($NodosAsignados,$NodosOrdenados[$i]);
 
+            }else{
+                array_push($NodosPorAsignar,$NodosOrdenados[$i]);
             }
 
 
-            array_push($NodosMixtos,$NodosOrdenados[$i]);
+            
 
         }
 
+        array_push($GeneralNodos,$NodosAsignados);
+        array_push($GeneralNodos,$NodosPorAsignar);
+
         
-        return $NodosMixtos;
+        return $GeneralNodos;
 
 
     }
@@ -95,22 +103,13 @@ class Grafo{
     public function AsginarHora(){
 
         $consulta = new Consultas($this->Conexion);
-        $NodosOrdenados = $this->NodosYaAsignados();
-        $NodosFiltrados = array();
+        $NodosOrdenados = $this->NodosYaAsignados()[1];
+        $NodosFiltrados = $this->NodosYaAsignados()[0];
 
         for($i=0 ; $i<count($NodosOrdenados);$i++){
 
-            if($NodosOrdenados[$i]->datos['HoraAsignada'] == null && $NodosOrdenados[$i]->datos['MedicoAsignado'] == null){
-
-
            $ArregloDeHoras = $consulta->HorasDisponiblesPorRango($NodosOrdenados[$i]->datos["HoraInicio"],$NodosOrdenados[$i]->datos["HoraFin"]);
 
-           if($i==0){
-
-            //$NodosOrdenados[$i]->AgregarDatoHora($ArregloDeHoras[$i]);
-            $NodosOrdenados[$i]->ModificarHora($ArregloDeHoras[$i]);
-
-           }else{
 
            // $NodosOrdenados[$i]->AgregarDatoHora(null);
             $HoraDisponibilidad =$this->CompararHorasNodos($NodosOrdenados[$i],$ArregloDeHoras,$NodosFiltrados);
@@ -123,10 +122,9 @@ class Grafo{
                 $NodosOrdenados[$i] ->ModificaInicio($datossinhora[1]);
                 $NodosOrdenados[$i] ->ModificaFin($datossinhora[2]);
             }
-           }
+           
 
            array_push($NodosFiltrados,$NodosOrdenados[$i]);
-        }
 
         }
 
@@ -163,37 +161,8 @@ class Grafo{
                 if ($NodosOrdenados[$i]->datos['HoraAsignada'] == null) {
 
                     array_push($NodosFilter3,$NodosOrdenados[$i]);
-                    /*$NodosOrdenados[$i] ->ModificaInicio(1);
-                    $NodosOrdenados[$i] ->ModificaFin(34);*/
-                    
 
-
-                    
-
-                    
-                    // $fecha = $NodosOrdenados[$i]->datos["FechaSolicitada"];
-                    // $horaInicio = $NodosOrdenados[$i]->datos["HoraInicio"];
-                    // $horaFin = $NodosOrdenados[$i]->datos["HoraFin"];
-                    // $user = $NodosOrdenados[$i]->datos["idUsuario"];
-                   
-                    
-                //     // Llamar a la función datos_filter3() con la fecha y horas como parámetros
-                //     $horariosDisponibles = $consulta->datos_filter3($NodosOrdenados[$i]->id, $fecha, $horaInicio, $horaFin,$user);
-                   
-                //   //  $consulta->insertar_sugerencias($NodosOrdenados[$i]->datos['idUsuario'], $fecha,$horariosDisponibles[$band],'reservado',$NodosOrdenados[$i]->id);
-                //       // Verificar si la clave existe en el array antes de acceder a ella
-                //         if (isset($horariosDisponibles[0])) {
-                //                // echo "band: " . $band . "<br>";
-                //                 echo "id: " . $NodosOrdenados[$i]->id . " Horarios disponibles para la fecha " . $fecha . ": ";
-                //                 print_r($horariosDisponibles);
-                //                 echo "<br>";
-                            
-                //         } else {
-                //             echo "band:   hay datos nulos<br>";
-
-                //         }
-                //        // $band++;
-                   
+                                  
                 }
            }
 
@@ -445,11 +414,6 @@ class Grafo{
         
         foreach($NodosConHoras as $NodosActuales){
 
-
-            if($NodosActuales->datos['MedicoAsignado'] == null){
-
-
-
            $Medicos=$Consultar->CMEspecialidadActivo($Consultar->EspecialidadPorCita($NodosActuales->datos["IdTipoCita"]));
 
            if($contador==0){
@@ -465,7 +429,6 @@ class Grafo{
 
            array_push($NodosYaAsignados,$NodosActuales);
            $contador++;
-        }
 
         }
 

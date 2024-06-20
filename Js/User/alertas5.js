@@ -23,6 +23,9 @@ function showAlert(title, message) {
                 case '3':
                     showAlert('Cita cancelada correctamente', 'Ahora tienes disponible el formulario para agendar otra cita.');
                     break;
+                case '4':
+                    showAlert('No es posible Agendar una cita', 'Ya tiene citas agendadas');
+                    break;
                 default:
                     showAlert('Error', 'Hubo un problema al enviar la solicitud. Por favor, inténtelo nuevamente.');
                     break;

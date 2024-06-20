@@ -45,10 +45,10 @@ class Consultas{
 
     public function ConultarDoctorByIDUser($DoctorID){
 
-        $SQL = mysqli_query($this->Conexion,"SELECT * FROM doctores dc INNER JOIN especialidades ed ON dc.id_especialidad=ed.id_especialidad INNER JOIN usuario us ON dc.id_usuario=us.id_usuario WHERE id_usuario='$DcotorID'");
+        $SQL = mysqli_query($this->Conexion,"SELECT * FROM doctores dc INNER JOIN especialidades ed ON dc.id_especialidad=ed.id_especialidad INNER JOIN usuario us ON dc.id_usuario=us.id_usuario WHERE id_usuario='$DoctorID'");
         $DatosMedico = array();
 
-        if($Resultado=mysqli-fetch_array($SQL)){
+        if($Resultado=mysqli_fetch_array($SQL)){
 
             $DatosMedico[]=$Resultado['id_doctor'];
             $DatosMedico[]=$Resultado['id_usuario'];
@@ -313,21 +313,7 @@ class Consultas{
     //     return $horariosDisponibles;
     // }
 
-    public function citasAsignadas(){
-        $Sql = mysqli_query($this->Conexion,"SELECT * FROM citas_agendadas WHERE hora_inicio ");
-        $ArregloHoras = array();
-
-        while($Resultado = mysqli_fetch_array($Sql)){
-            
-          array_push($ArregloHoras,$Resultado['hora_inicio']);
-
-        }
-
-        return $ArregloHoras;
-
-    }
-
-    public function CitasA($id_pre){
+    public function CitasYaAsignadas($id_pre){
         $Sql = mysqli_query($this->Conexion,"SELECT * FROM citas_agendadas WHERE id_preagendamiento='$id_pre'");
         $ArregloIds = array();
 
@@ -343,6 +329,19 @@ class Consultas{
 
         return false;
 
+    }
+
+    public function ValidarExitenciaEnSugerencia($id){
+        $Sql = mysqli_query($this->Conexion,"SELECT * FROM sugerencias_citas WHERE id_preagendamiento='$id'");
+
+
+        if(mysqli_num_rows($Sql)>0){
+
+            return true;
+
+        }
+
+        return false;
     }
 }
         

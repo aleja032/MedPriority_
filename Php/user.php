@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
     crossorigin="anonymous" referrerpolicy="no-referrer" /> <!--Libreria de awesone-->
-    <link rel="stylesheet" href="../Css/style_user3.css">
+    <link rel="stylesheet" href="../Css/style_user.css">
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Añadir jQuery aquí -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.3.2/purify.min.js"></script>
@@ -398,9 +398,10 @@
                     <div class="preguntas_formulario2">
                             <div class="cont_preguntas3">
                                 <p>Tipo de Cita</p>
-                                <select     class="tipocita" name="tipocita"  id="tiposita">
+                                <select     class="tipocita" name="tipocita"  id="tiposita" required>
+                                <option value="0">Seleccionar</option>
                                 <?php
-                                        
+                                /*
                                         
                                         $sql="SELECT * FROM tipo_cita";
                                         $consul= mysqli_query($conn,$sql);
@@ -418,7 +419,29 @@
                                                     }
                                                 }
                                         }
-                                    
+                                    */
+
+                                    $fecha_actual = (new DateTime())->format('Y-m-d');
+
+                                        
+                                    $sql="SELECT * FROM tipo_cita";
+                                    $consul= mysqli_query($conn,$sql);
+                                    if(mysqli_num_rows($consul)>0){
+                                            while($desplegar= $consul->fetch_assoc()){ 
+                                                $id=$desplegar['id'];
+                                                 $validar_citas="SELECT * FROM preagendamiento p  LEFT JOIN citas_agendadas ca ON ca.id_preagendamiento= p.id_preagendamiento WHERE id_usuario='$id_user' AND id_tipo_cita = '$id' AND fecha >= '$fecha_actual' AND fecha_2 >='$fecha_actual'";
+                                                 $consul2= mysqli_query($conn,$validar_citas);
+                                                if(mysqli_num_rows($consul2)>0){
+                                                    while($sihay= $consul2->fetch_assoc()){
+                                                        echo "<option value='".$desplegar['id']."' disabled>".$desplegar['enombre']."</option>";
+                                                    }
+                                                }else{
+                                                    echo "<option value='".$desplegar['id']."' >".$desplegar['enombre']."</option>";   
+                                                }
+                                            }
+                                    }
+                                
+                            
                                 ?>
                                 </select>
 
@@ -433,14 +456,31 @@
                             <option value="">Seleccionar</option>
 
                             <?php
+ 
                                         $sql="SELECT * FROM horarios WHERE EXTRACT(MINUTE FROM hora_inicio) IN (0, 30);";
-                                        $consul2= mysqli_query($conn,$sql);
+                                        $consul= mysqli_query($conn,$sql);
+                                        if(mysqli_num_rows($consul)>0){
+                                                while($desplegar= $consul->fetch_assoc()){ 
+                                                    $id=$desplegar['id_horario'];
+                                                    $validar_citas="SELECT * FROM preagendamiento p  LEFT JOIN citas_agendadas ca ON ca.id_preagendamiento= p.id_preagendamiento WHERE id_usuario='$id_user' AND hora_inicio = '$id' AND fecha >= '$fecha_actual' AND fecha_2 >='$fecha_actual'";
+                                                    $consul2= mysqli_query($conn,$validar_citas);
+                                                    if(mysqli_num_rows($consul2)>0){
+                                                        while($sihay= $consul2->fetch_assoc()){
+                                                            echo "<option value='".$desplegar['id_horario']."' disabled>".$desplegar['hora_inicio']."</option>";
+                                                        }
+                                                    }else{
+                                                        echo "<option value='".$desplegar['id_horario']."' >".$desplegar['hora_inicio']."</option>";   
+                                                    }
+                                                }
+                                        }                            
+                                        // $sql="SELECT * FROM horarios WHERE EXTRACT(MINUTE FROM hora_inicio) IN (0, 30);";
+                                        // $consul2= mysqli_query($conn,$sql);
 
-                                        if($consul2){
-                                            while($desplegar2= $consul2->fetch_assoc()){
-                                                echo "<option value='".$desplegar2['id_horario']."'>".$desplegar2['hora_inicio']."</option>";
-                                            }
-                                        }
+                                        // if($consul2){
+                                        //     while($desplegar2= $consul2->fetch_assoc()){
+                                        //         echo "<option value='".$desplegar2['id_horario']."'>".$desplegar2['hora_inicio']."</option>";
+                                        //     }
+                                        // }
                                     ?>
                             </select>
                         </div>
@@ -459,30 +499,38 @@
                        
                         <div class="cont_preguntas2" id="fecha2_">
                             <p>Fecha</p>
-                            <input type="date" id="fecha2" name="fecha2" >
+                            <input type="date" id="fecha2" name="fecha2" required>
 
                         </div>
                         <div class="cont_preguntas2" id="hora_inicio">
                             <p>Hora Inicio</p>
 
-                            <select name="hora_inicio_2" id="hora_rango2" >
+                            <select name="hora_inicio_2" id="hora_rango2" required>
                                     <option value="">Seleccionar</option>
                             <?php
-                                        $sql="SELECT * FROM horarios WHERE EXTRACT(MINUTE FROM hora_inicio) IN (0, 30);";
-                                        $consul2= mysqli_query($conn,$sql);
-
-                                        if($consul2){
-                                            while($desplegar3= $consul2->fetch_assoc()){
-                                                echo "<option value='".$desplegar3['id_horario']."'>".$desplegar3['hora_inicio']."</option>";
-                                            }
-                                        }
+                              $sql="SELECT * FROM horarios WHERE EXTRACT(MINUTE FROM hora_inicio) IN (0, 30);";
+                              $consul= mysqli_query($conn,$sql);
+                              if(mysqli_num_rows($consul)>0){
+                                      while($desplegar= $consul->fetch_assoc()){ 
+                                          $id=$desplegar['id_horario'];
+                                          $validar_citas="SELECT * FROM preagendamiento p  LEFT JOIN citas_agendadas ca ON ca.id_preagendamiento= p.id_preagendamiento WHERE id_usuario='$id_user' AND hora_inicio = '$id' AND fecha >= '$fecha_actual' AND fecha_2 >='$fecha_actual'";
+                                          $consul2= mysqli_query($conn,$validar_citas);
+                                          if(mysqli_num_rows($consul2)>0){
+                                              while($sihay= $consul2->fetch_assoc()){
+                                                  echo "<option value='".$desplegar['id_horario']."' disabled>".$desplegar['hora_inicio']."</option>";
+                                              }
+                                          }else{
+                                              echo "<option value='".$desplegar['id_horario']."' >".$desplegar['hora_inicio']."</option>";   
+                                          }
+                                      }
+                              } 
                                     ?>
                             </select>
                         </div>
 
                         <div class="cont_preguntas2" id="hora_final">
                             <p>Hora Final</p>
-                            <select name="hora_fin2" id="rango_2"></select>
+                            <select name="hora_fin2" id="rango_2" required></select>
                         </div>
 
 
@@ -556,9 +604,8 @@
                     
                 <?php else: ?>
                     <?php
-                            $sql2 = "SELECT * FROM preagendamiento p
-                                    INNER JOIN sugerencias_citas sc ON p.id_preagendamiento = sc.id_preagendamiento 
-                                    WHERE p.id_usuario = '$id_user'";
+                            $sql2 = "SELECT * FROM preagendamiento p LEFT JOIN tipo_cita ON id= id_tipo_cita LEFT JOIN horarios h ON h.id_horario = p.hora_inicio
+                                    WHERE p.id_usuario = '$id_user' AND fecha >= '$fecha_actual' AND fecha_2 >='$fecha_actual'";
 
                             $consulta_sugerencias = mysqli_query($conn, $sql2);
                             ?>
@@ -567,27 +614,61 @@
                                 <table class="tabla">
                                     <thead>
                                         <tr>
-                                            <th>Fecha</th>
-                                            <th>Hora</th>
+                                            <th>Tipo de cita</th>
+                                            <th>Fecha solicitada 1</th>
+                                            <th>Fecha solicitada 2</th>
+                                            <th>Hora solicitada 1</th>
+                                            <th>Hora solicitada 2</th>
                                             <th>Estado</th>
                                             <th>Acciones</th>
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                     <?php while ($resultado = mysqli_fetch_array($consulta_sugerencias)): ?>
                                         <tr>
+                                            <td><?php echo $resultado['enombre']; ?></td>
                                             <td><?php echo $resultado['fecha']; ?></td>
-                                            <td><?php echo $resultado['hora_reservada']; ?></td>
-                                            <td><?php echo $resultado['estado']; ?></td>
+                                            <td><?php echo $resultado['fecha_2']; ?></td>
+                                            <td><?php $id=$resultado['hora_inicio'];
+                                            $sql_inicio = "SELECT * FROM horarios WHERE id_horario='$id'";
+                                            $consulta = mysqli_query($conn, $sql_inicio);
+                                            if(mysqli_num_rows($consulta) > 0){
+                                                $resultado1 = mysqli_fetch_array($consulta);
+                                                echo $resultado1['hora_inicio'];
+                                            }
+                                            $id_fin=$resultado['hora_fin'];
+                                            $sql_fin = "SELECT * FROM horarios WHERE id_horario='$id_fin'";
+                                            $consulta_fin = mysqli_query($conn, $sql_fin);
+                                            if(mysqli_num_rows($consulta_fin) > 0){
+                                                $resultado_fin = mysqli_fetch_array($consulta_fin);
+                                                echo "-".$resultado_fin['hora_inicio'];
+                                            }
+                                            
+                                            
+                                            ?></td>
+                                            <td><?php $id1=$resultado['hora_inicio_2']; 
+                                                  $sql_inicio1 = "SELECT * FROM horarios WHERE id_horario='$id1'";
+                                                  $consulta1 = mysqli_query($conn, $sql_inicio1);
+                                                  if(mysqli_num_rows($consulta1) > 0){
+                                                      $resultado1 = mysqli_fetch_array($consulta1);
+                                                      echo $resultado1['hora_inicio'];
+                                                  }
+                                                  $id_fin=$resultado['hora_fin_2'];
+                                                  $sql_fin = "SELECT * FROM horarios WHERE id_horario='$id_fin'";
+                                                  $consulta_fin = mysqli_query($conn, $sql_fin);
+                                                  if(mysqli_num_rows($consulta_fin) > 0){
+                                                      $resultado_fin = mysqli_fetch_array($consulta_fin);
+                                                      echo "-".$resultado_fin['hora_inicio'];
+                                                  }
+                                            ?></td>
+                                            <td>Procesando</td>
                                             <td>
-                                                <form method="POST" action="citas_confirmadas.php" style="display:inline;">
-                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-                                                    <button type="submit" class="boton_tabla">Agendar</button>
-                                                </form>
-                                                <form method="POST" action="liberar_citas.php" style="display:inline;">
-                                                    <input type="hidden" name="id_user" value="<?php echo $id_user; ?>">
-                                                    <button type="submit" class="boton_tabla">No Agendar</button>
-                                                </form>
+                                            
+                                            <form method="POST" action="Usuario/cancelar_cita.php" style="display:inline;">
+                                                <input type="hidden" name="id_preagendamiento" value="<?php echo $resultado['id_preagendamiento']; ?>">
+                                                <button type="submit" class="boton_tabla_eli">Cancelar Cita</button>
+                                            </form>
                                             </td>
                                         </tr>
                                     <?php endwhile; ?>
@@ -595,7 +676,7 @@
                                 </table>
                             <?php else: ?>
                                 <div class="no-citas">
-                                    <p>No se encontraron citas para este usuario.</p>
+                                    <p>No se encontraron citas procesando para este usuario.</p>
                                 </div>
                             <?php endif; ?>
                 <?php endif; ?>
@@ -612,12 +693,9 @@
                         <div class="notificacion2">
                         <?php
                         $id_user = $_SESSION['id'];
-                        $sql1 = "SELECT * FROM preagendamiento p
-                                INNER JOIN citas_agendadas ca ON p.id_preagendamiento = ca.id_preagendamiento 
-                                INNER JOIN doctores d ON d.id_doctor = ca.id_DoctorAsignado 
-                                INNER JOIN doctor_consultorio dc ON dc.id_doctor = d.id_doctor 
-                                INNER JOIN usuario u ON u.id_usuario = d.id_usuario INNER JOIN tipo_cita tc ON tc.id=p.id_tipo_cita
-                                WHERE p.id_usuario = '$id_user' ORDER BY FechaAsignada DESC";
+                        $sql1 = "SELECT * FROM historia_clinica p INNER JOIN tipo_cita tc ON p.id_tipocita = tc.id
+                                INNER JOIN doctores d ON p.id_doctor= d.id_doctor INNER JOIN usuario u ON d.id_usuario = u.id_usuario
+                                WHERE p.id_usuario = '$id_user' ORDER BY fecha_ingreso DESC";
 
                         $consulta_citas = mysqli_query($conn, $sql1);
                         ?>
@@ -630,18 +708,22 @@
                                         <th>Hora Asignada</th>
                                         <th>Tipo de Cita</th>
                                         <th>Doctor</th>
-                                        <th>Consultorio</th>
+                                        <th>Asistencia</th>
 
                                     </tr>
                                 </thead>
                                 <tbody>
                                 <?php while ($resultado = mysqli_fetch_array($consulta_citas)): ?>
                                     <tr>
-                                        <td class="t"><?php echo $resultado['FechaAsignada']; ?></td>
-                                        <td><?php echo $resultado['HoraAsignado']; ?></td>
+                                        <td class="t"><?php echo $resultado['fecha_ingreso']; ?></td>
+                                        <td><?php echo $resultado['hora']; ?></td>
                                         <td><?php echo $resultado['enombre']; ?></td>
                                         <td><?php echo $resultado['nombre']; ?></td>
-                                        <td><?php echo $resultado['id_consultorio']; ?></td>
+                                        <td><?php if($resultado['Asistencia']==1){
+                                            echo "Asistio";
+                                        }else{
+                                            echo "No Asistio";
+                                        }; ?></td>
 
                                     </tr>
                                 <?php endwhile; ?>
@@ -665,9 +747,9 @@
                                   
 
     </div>  
-    <script src="../Js/User/alertas.js"></script>
+    <script src="../Js/User/alertas5.js"></script>
     <script src="../Js/User/desplegar_menu.js"></script>
-    <script src="../Js/User/desplegar_containers2.js"></script>
+    <script src="../Js/User/desplegar_containers1.js"></script>
     <script src="../Js/User/desabilitadias_calendario.js"></script>                    
     <script src="../Js/User/ajax.js"></script>
     <script src="../Js/User/cargar_img.js"></script>
@@ -684,6 +766,14 @@ document.getElementById('generate-pdf').addEventListener('click', function() {
     // Send the data to the server
     enviarOpcionSeleccionada3(opcionSeleccionada, formattedFecha);
 });
+
+function formatFecha(fecha) {
+        const date = new Date(fecha);
+        const year = date.getFullYear();
+        const day = String(date.getDate()+1).padStart(2, '0'); // Ensure 2 digits
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits, months are 0-based
+        return `${year}-${day}-${month}`;
+    }   
 
 // Function to send selected option and date to the server
 function enviarOpcionSeleccionada3(opcionSeleccionada, fecha) {
@@ -717,13 +807,6 @@ function enviarOpcionSeleccionada3(opcionSeleccionada, fecha) {
 // Other functions
 document.addEventListener('DOMContentLoaded', function() {
 
-    function formatFecha(fecha) {
-        const date = new Date(fecha);
-        const year = date.getFullYear();
-        const day = String(date.getDate()+1).padStart(2, '0'); // Ensure 2 digits
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // Ensure 2 digits, months are 0-based
-        return `${year}-${day}-${month}`;
-    }
 
     function enviarOpcionSeleccionada(opcionSeleccionada, fecha) {
         $.ajax({
@@ -782,7 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('consulta_folio').addEventListener('click', function() {
         handleOptionChange();
-        document.querySelector('input[type="date"]').value = '';
+        // document.querySelector('input[type="date"]').value = '';
 
     });
 });
@@ -800,25 +883,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 ?>
 <script>
-    // // Pass the PHP array to JavaScript no dejar agendar fechas  que el usuario ya tiene agendado
-    // const scheduledDates = <?php // echo json_encode($scheduledDates); ?>;
 
-    // document.addEventListener("DOMContentLoaded", function() {
-    //     const dateInput = document.getElementById('fecha1');
-
-    //     dateInput.addEventListener('input', function() {
-    //         const selectedDate = this.value;
-    //         if (scheduledDates.includes(selectedDate)) {
-    //             alert('This date is already scheduled. Please choose another date.');
-    //             this.value = '';
-    //         }
-    //     });
-
-    //     dateInput.addEventListener('focus', function() {
-    //         this.setAttribute('type', 'text');
-    //         this.setAttribute('type', 'date');
-    //     });
-    // });
 </script>
 
 </body>

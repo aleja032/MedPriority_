@@ -14,19 +14,26 @@ class InsertarBD{
     }
 
     public function InsertarCitasOrdenadas($Nodo){
+        $consulta = new Consultas($this->Conexion);
 
-        $id_preagendamiento =$Nodo->id;
-        $FechaAsignada =$Nodo->datos["FechaSolicitada"];
-        $HoraAsignada =$Nodo->datos["HoraAsignada"];
-        $id_DoctorAsignado =$Nodo->datos["MedicoAsignado"];
-        $Prioridad = $Nodo->peso;
-
-        $SQL = mysqli_query($this->Conexion,"INSERT INTO citas_agendadas (id_preagendamiento,FechaAsignada,HoraAsignado,id_DoctorAsignado,Prioridad) VALUES ('$id_preagendamiento','$FechaAsignada' , '$HoraAsignada' ,'$id_DoctorAsignado','$Prioridad')");
-
-        if($SQL){
-
-            return true;
+        if($consulta->ValidarExitenciaEnSugerencia($Nodo->id)){
+           
+        }else{
+            $id_preagendamiento =$Nodo->id;
+            $FechaAsignada =$Nodo->datos["FechaSolicitada"];
+            $HoraAsignada =$Nodo->datos["HoraAsignada"];
+            $id_DoctorAsignado =$Nodo->datos["MedicoAsignado"];
+            $Prioridad = $Nodo->peso;
+    
+            $SQL = mysqli_query($this->Conexion,"INSERT INTO citas_agendadas (id_preagendamiento,FechaAsignada,HoraAsignado,id_DoctorAsignado,Prioridad) VALUES ('$id_preagendamiento','$FechaAsignada' , '$HoraAsignada' ,'$id_DoctorAsignado','$Prioridad')");
+    
+            if($SQL){
+    
+                return true;
+            }
         }
+
+
         return false;
     }
 
