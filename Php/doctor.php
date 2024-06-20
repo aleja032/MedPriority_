@@ -59,7 +59,7 @@
         </div>
 
         <div class="datos_barra">
-            <div class="name"><p> <?php echo htmlspecialchars($_SESSION['nombre']) ?> </p>  
+            <div class="name"> <p> Doctor: <?php echo htmlspecialchars($_SESSION['nombre']) ?> </p>  
             
 
                 <div class="img_notificaion" ></div>   </div>

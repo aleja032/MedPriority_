@@ -84,9 +84,6 @@ class Grafo{
                 array_push($NodosPorAsignar,$NodosOrdenados[$i]);
             }
 
-
-            
-
         }
 
         array_push($GeneralNodos,$NodosAsignados);

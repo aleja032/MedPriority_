@@ -77,7 +77,6 @@ foreach ($NodosProcesados[1] as $nodo) {
         $insertar->InsertarCitasSugerencias($nodo);
 
     }
-
 }
 
 ?>
