@@ -968,6 +968,58 @@ td{
 }
 
 
+
+
+
+/* boton  eliminar */
+
+.buton_detalles {
+    background-color: #009d05;
+    color: #ffffff;
+    border: 2px solid #009d05;
+    padding: 10px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 5%;
+    transition: all 0.3s ease;
+}
+
+.buton_detalles:hover {
+    background-color: #333;
+    color: white;
+}
+/* estilos label */
+
+input[name="ver_detalle"] {
+    width: 60%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #b8b8b8;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #000000;
+    transition: border-color 0.3s ease;
+    background-color: #f5f5f5;
+}
+
+input[name="ver_detalle"]:focus {
+    border-color: #555;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media (max-width: 768px)  {
     .conheader{
         height: 15%;

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Medpriority ADMIN</title>
-    <link rel="stylesheet" href="../Css/admin.css">
+    <link rel="stylesheet" href="../Css/admin1.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -340,9 +340,14 @@
 
 
             <div class="logo"><!-- contenedor del logo y la letras del logo -->
+
+           
+            <input type="checkbox" id="toggleMenu"  class="menusp">
+            <label for="toggleMenu" id="iconomenu"><i   id="logitomenu"    class="fa fa-bars" class="img_logo"></i></label>
+
                 <div class="img_logo"></div>
                 <div class="letras_logo">
-                    <p>MEDPRIORITY</p>
+                    <p id="med">MEDPRIORITY</p>
                 </div>
             </div>
 
@@ -360,6 +365,37 @@
         <div class="congeneral"><!--contendor 2 general para el menu y los formularios -->
 
             <div class="con_menu"><!-- contenedor del menu -->
+            <div class="check-boton" id="closemenu">
+            <i  class="fa-solid fa-xmark"></i>
+
+            </div>
+
+
+            <script>
+    document.addEventListener('DOMContentLoaded', function () {
+    var toggleMenu = document.getElementById('toggleMenu');
+    var menuContainer = document.querySelector('.con_menu');
+    var closeMenu = document.getElementById('closemenu');
+
+    toggleMenu.addEventListener('change', function () {
+        if (toggleMenu.checked) {
+            menuContainer.classList.add('menu-abierto');
+            menuContainer.style.display='flex';
+            menuContainer.style.visibility='visible';
+            console.log("chekeado");
+
+        } 
+    });
+
+    closeMenu.addEventListener('click', function () {
+        toggleMenu.checked = false;
+        menuContainer.classList.remove('menu-abierto');
+    });
+});</script>
+
+
+
+
                 <div class="cont_menu_sub">
 
 
@@ -637,7 +673,7 @@
                                     </div>
                                     <div class="save">
                                         <div class="save-button" id="guardar-button">
-                                        <a href="#">Guardar</a>
+                                        <a   id="guardar"   href="#">Guardar</a>
                                         </div>
                                     </div>
                                 </div>
@@ -684,7 +720,7 @@
                                             <td> <?php echo $fila['nombre'];?></td>
                                             <td> <?php echo $fila['edad'];?></td>
                                             <td> <?php echo $fila['telefono'];?></td>
-                                            <td><button data-modal-target="#modal_<?php echo $fila['id_usuario'];?>">Detalles</button></td>
+                                            <td><button  id="elimineme"   data-modal-target="#modal_<?php echo $fila['id_usuario'];?>">Detalles</button></td>
                                             <td><button class="delete" id=delete data-user-id="<?php echo $fila['id_usuario'];?>" data-role='medico'>Eliminar</button></td>
                                         </tr>
 
@@ -752,7 +788,7 @@
                                         </div>
                                         <div class="save-patient">
                                             <div class="save-pat-button" id="paciente-nuevo">
-                                                <a href="#">Guardar</a>
+                                                <a  id="guardadito"   href="#">Guardar</a>
                                             </div>
                                         </div>
                                     </div>
@@ -801,7 +837,7 @@
                                     <td><?php echo $row['edad'];?></td>
                                     <td><?php echo $row['genero'];?></td>
                                     <td><?php echo $row['tipo_afiliacion'];?></td>
-                                    <td><button data-modal-target="#modal_<?php echo $row['id_usuario'];?>">Detalles</button></td>
+                                    <td><button id="elimineme"    data-modal-target="#modal_<?php echo $row['id_usuario'];?>">Detalles</button></td>
                                     <td><button class="delete" id=delete data-user-id="<?php echo $row['id_usuario'];?>" data-role='usuario'>Eliminar</button></td>
                                 </tr>
                                     
@@ -986,7 +1022,7 @@
                                             <td> <?php echo $modalci['fecha'];?></td>
                                             <td> <?php echo $modalci['registro'];?></td>
                                             <td> <?php echo htmlspecialchars($modalci['enombre']);?></td>
-                                            <td><button data-modal-target="#modalci_<?php echo $modalci['id_preagendamiento'];?>">Detalles</button></td>
+                                            <td><button  id="elimineme"  data-modal-target="#modalci_<?php echo $modalci['id_preagendamiento'];?>">Detalles</button></td>
                                             <td><button class="delete" id=delete data-user-id="<?php echo $modalci['id_preagendamiento'];?>" data-role='preagendamiento'>Eliminar</button></td>
                                         </tr>
 
@@ -1128,7 +1164,7 @@
                                             <td> <?php echo $pato['id_patologia'];?></td>
                                             <td> <?php echo $pato['nombre_patologia'];?></td>
                                             <td> <?php echo $pato['puntuacion_pt'];?></td>
-                                            <td><button data-modal-target="#modalpato_<?php echo $pato['id_patologia'];?>">Detalles</button></td>
+                                            <td><button  id="elimineme"    data-modal-target="#modalpato_<?php echo $pato['id_patologia'];?>">Detalles</button></td>
                                             <td><button class="delete" id=delete data-user-id="<?php echo $pato['id_patologia'];?>" data-role="patologia">Eliminar</button></td>
                                         </tr>
 
@@ -1201,7 +1237,7 @@
                                         <tr id='tipoctable_row_<?php echo $citaa['id']?>'>
                                             <td> <?php echo $citaa['id'];?></td>
                                             <td> <?php echo $citaa['enombre'];?></td>
-                                            <td><button data-modal-target="#modaltipocita_<?php echo $citaa['id'];?>">Detalles</button></td>
+                                            <td><button id="elimineme"  data-modal-target="#modaltipocita_<?php echo $citaa['id'];?>">Detalles</button></td>
                                             <td><button class="delete" id=delete data-user-id="<?php echo $citaa['id'];?>" data-role="tipocita" >Eliminar</button></td>
                                         </tr>
 
@@ -1274,7 +1310,7 @@
                                         <tr id=specialtable_row_<?php echo $especi['id_especialidad']?>>
                                             <td> <?php echo $especi['id_especialidad'];?></td>
                                             <td> <?php echo $especi['especialidad'];?></td>
-                                            <td><button data-modal-target="#modalspecial_<?php echo $especi['id_especialidad'];?>">Detalles</button></td>
+                                            <td><button  id="elimineme"     data-modal-target="#modalspecial_<?php echo $especi['id_especialidad'];?>">Detalles</button></td>
                                             <td><button class="delete" id=delete data-user-id="<?php echo $especi['id_especialidad'];?>" data-role="especialidad">Eliminar</button></td>
                                         </tr>
 
@@ -1337,6 +1373,7 @@
             </main>
         </div>
     </section>
+
 
 </body>
 <script src="../Js/Admin/sql.js"></script>

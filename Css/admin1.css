@@ -40,6 +40,16 @@ body {
     background-repeat: no-repeat;
 }
 
+
+
+
+.menusp{
+    display: none;
+}
+
+
+
+
 .logo{
     width: 30%;
     height: 100%;
@@ -798,4 +808,207 @@ table button{
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Sombra suave */
     font-size: 70%;
     margin-left: 50%; /* Espacio a la izquierda */
+}
+
+/*-------------------------------------------------diseño responcil------------------------------------------------------- */
+@media (max-width: 768px) {
+    
+.menusp{
+    display: flex;
+   
+}
+
+
+.logo{
+    width: 12%;
+    justify-content: end;
+}
+.img_logo{
+    display: none;
+}
+.logo label i{
+    display: flex;
+    font-size: 5%;
+
+}
+.con_menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:70%;
+    height: 100%;
+    background-color: #F9F9F9;
+    transition: transform 0.3s ease;
+    transform: translateX(-100%);
+    z-index: 1000; /* Asegúrate de que el menú esté sobre otros elementos */
+
+}
+#toggleMenu{
+    width: 100%;
+    height: 100%;
+}
+
+.con_menu.menu-abierto {
+    display: flex;
+    transform: translateX(0);
+}
+
+.check-boton {
+    cursor: pointer;
+    height: 5%;
+    width: 20%;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    background-color: aqua;
+    margin-top: 15%;
+    margin-left: -70%;
+}
+
+#toggleMenu:checked + .con_menu {
+    transform: translateX(0);
+    
+}
+
+#closemenu{
+    display: flex;
+}
+.fa-xmark {
+    cursor: pointer;
+    font-size: 2em;
+    color: black;
+}
+
+
+
+/*header..*/
+.img_usuario
+{
+    display: none;
+}
+.img_logo{
+    display: none;
+}
+
+.img_notificaion{
+    display: none;
+}
+#med{
+    margin-left: 330%;
+}
+
+/* registrar medicos */
+
+.contain_main{
+    
+}
+main{
+    width: 100%;
+}
+#guardar{
+
+width: 100%;
+height: 100%;
+border-radius: 5%;
+margin-left: 25%;
+margin-top: 6%;
+}
+
+#guardadito{
+    width: 100%;
+height: 100%;
+border-radius: 5%;
+margin-left: 25%;
+margin-top: 6%;
+}
+#guardar-button{
+    width: 50%;
+    align-items: center;
+    background-color: #10AE16;
+}
+
+
+#paciente-nuevo{
+    width: 50%;
+    align-items: center;
+    background-color: #10AE16;
+}
+
+
+
+
+
+
+
+/*panel medico*/
+#delete{
+    background-color: #e43535;
+    width: 100px;
+    text-decoration: none;
+
+
+}
+button.delete {
+    background-color: #dc3545; /* Color de fondo rojo */
+    color: #fff; /* Color del texto blanco */
+    border: none; /* Sin bordes */
+    padding: 10px 20px; /* Relleno del botón */
+    font-size: 16px; /* Tamaño de la fuente */
+    border-radius: 5px; /* Bordes redondeados */
+    cursor: pointer; /* Cambia el cursor a mano */
+    text-decoration: none; /* Asegura que no haya subrayado */
+    display: inline-block; /* Asegura que se comporte como un elemento en línea */
+    transition: background-color 0.3s, transform 0.3s; /* Transiciones para el hover */
+}
+
+
+
+a{
+    text-decoration: none;
+}
+
+#doctor_search{
+    margin-left: -100%;
+    width: 150px;
+    background-color: #f0f0f0;
+    border-radius: 8%;
+}
+
+#elimineme{
+    background-color: #10AE16; 
+    color: #dfdfdf; 
+    border: none; 
+    padding: 10px 20px; 
+    font-size: 16px; 
+    border-radius: 5px; 
+    cursor: pointer;
+    text-decoration: none; 
+    display: inline-block; 
+    transition: background-color 0.3s, transform 0.3s;
+    width: 100px;
+}
+
+.search-img{
+    width: 30px;
+    height: 30px;
+}
+
+
+
+
+
+/*registrar paciente*/
+
+
+
+
+
+
+
+
+
+
+
+
 }
