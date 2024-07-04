@@ -29,4 +29,6 @@ El marco teórico de este proyecto se basa en varios conceptos y tecnologías cl
   <li>Ingeniería de Software Ágil: Utilización de metodologías ágiles para el desarrollo del software, permitiendo iteraciones rápidas y ajustes según los requerimientos cambiantes del proyecto.</li>
   <li>Interfaces de Usuario Intuitivas: Diseño de interfaces de usuario que sean accesibles y fáciles de usar, mejorando la experiencia del usuario final y reduciendo la necesidad de soporte técnico.</li>
   <li>Sistemas de Información en Salud (HIS): Integración con sistemas de información en salud existentes para asegurar una interoperabilidad fluida y acceso a datos clínicos relevantes para la toma de decisiones.</li>
+    <li>Se requiere del servidor local Xampp para visualizar el proyecto</li>
+
 </ul>
