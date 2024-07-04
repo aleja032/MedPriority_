@@ -46,7 +46,7 @@ if(mysqli_num_rows($consulta)>0){
 
     }else if($datos['id_rol']==3){
 
-        $validacion_doc="SELECT * FROM usuario u INNER JOIN doctores dc ON u.id_usuario=dc.id_usuario WHERE  contrasena='$password' AND correo='$correo'";
+        $validacion_doc="SELECT * FROM usuario u INNER JOIN doctores dc ON u.id_usuario=dc.id_usuario";
         $consulta2= mysqli_query($conn,$validacion_doc);
         
         if(mysqli_num_rows($consulta2)>0){
@@ -61,5 +61,7 @@ if(mysqli_num_rows($consulta)>0){
         echo "<script> window.location='doctor.php'</script>";
 
     }
+}else{
+    echo "<script> window.location='../index.php'</script>";
 }
 ?>

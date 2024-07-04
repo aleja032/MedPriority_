@@ -1,7 +1,6 @@
 <?php
 //require_once('../conexion.php');
 //session_start();
-echo "a";
 
     if(isset($_SESSION['idoc'])) {
 
