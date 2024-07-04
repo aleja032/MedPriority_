@@ -1,4 +1,5 @@
-
+MedPriority surge como una solución tecnológica que automatiza y optimiza el agendamiento de citas médicas mediante una aplicación web de selección prioritaria, basándose en la historia clínica y condiciones de los pacientes. Esta herramienta no solo mejora la experiencia del paciente, sino que también facilita la gestión para el personal de salud, reduciendo la carga operativa y administrativa.
+# 
 # Problema / Necesidad / Análisis
 
 <ul>
